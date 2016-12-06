@@ -1,0 +1,98 @@
+PODS:
+  - Alamofire (4.2.0)
+  - Crashlytics (3.7.3):
+    - Fabric (~> 1.6.3)
+  - DatePickerDialog (1.1.7)
+  - DZNEmptyDataSet (1.8.1)
+  - Eureka (2.0.0-beta.1)
+  - Fabric (1.6.11)
+  - FaveButton (2.0.2)
+  - GuillotineMenu (3.0)
+  - ImageLoader (0.12.0)
+  - InteractivePlayerView (2.0)
+  - KMPlaceholderTextView (1.3.0)
+  - LiquidFloatingActionButton (1.2.0)
+  - PageMenu (1.2.9)
+  - PullToRefresher (2.0.2)
+  - PureLayout (3.0.2)
+  - QRCodeReader.swift (7.2.0)
+  - SCLAlertView (0.7.0)
+  - StatefulViewController (3.0)
+  - SwiftDate (4.0.7)
+  - SwiftMoment (0.7)
+  - SwiftyJSON (3.1.3)
+
+DEPENDENCIES:
+  - Alamofire
+  - Crashlytics (~> 3.7.0)
+  - DatePickerDialog
+  - DZNEmptyDataSet (from `https://github.com/dzenbot/DZNEmptyDataSet.git`)
+  - Eureka (~> 2.0.0-beta.1)
+  - Fabric
+  - FaveButton (~> 2.0.0)
+  - GuillotineMenu (~> 3.0)
+  - ImageLoader
+  - InteractivePlayerView (from `https://github.com/AhmettKeskin/InteractivePlayerView.git`)
+  - KMPlaceholderTextView (~> 1.3.0)
+  - LiquidFloatingActionButton (from `https://github.com/carloscorreia94/LiquidFloatingActionButton.git`, branch `swift3`)
+  - PageMenu (from `https://github.com/orazz/PageMenu.git`)
+  - PullToRefresher (~> 2.0)
+  - PureLayout
+  - QRCodeReader.swift
+  - SCLAlertView
+  - StatefulViewController
+  - SwiftDate (~> 4.0)
+  - SwiftMoment
+  - SwiftyJSON
+
+EXTERNAL SOURCES:
+  DZNEmptyDataSet:
+    :git: https://github.com/dzenbot/DZNEmptyDataSet.git
+  InteractivePlayerView:
+    :git: https://github.com/AhmettKeskin/InteractivePlayerView.git
+  LiquidFloatingActionButton:
+    :branch: swift3
+    :git: https://github.com/carloscorreia94/LiquidFloatingActionButton.git
+  PageMenu:
+    :git: https://github.com/orazz/PageMenu.git
+
+CHECKOUT OPTIONS:
+  DZNEmptyDataSet:
+    :commit: e7e101bf821e0acbb26c46e6547c347ec97e3a7a
+    :git: https://github.com/dzenbot/DZNEmptyDataSet.git
+  InteractivePlayerView:
+    :commit: 09c9125e84503b444cceea9b7357baaf17afcaf4
+    :git: https://github.com/AhmettKeskin/InteractivePlayerView.git
+  LiquidFloatingActionButton:
+    :commit: abba6fabb856e0eb51f7fe58257b4572fc1a7978
+    :git: https://github.com/carloscorreia94/LiquidFloatingActionButton.git
+  PageMenu:
+    :commit: ace3d8d095c9c165113d3ac797f317fe7faecbae
+    :git: https://github.com/orazz/PageMenu.git
+
+SPEC CHECKSUMS:
+  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  Crashlytics: 76f6beaff70acf226139582c09c78461597c2b98
+  DatePickerDialog: bd5e7e92e4da2c6a8966b28d5f5d8f335d6c2c63
+  DZNEmptyDataSet: b94434220f87d9dda46660eb4f07a424778e93b4
+  Eureka: d014adf16406745e1a78d5790ea37ed130a0a8e5
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  FaveButton: e26f7964669b4befda7d92a6779be7b2a70ab161
+  GuillotineMenu: 611ccb58ae092f2d929535377570ef25a7b5bc63
+  ImageLoader: e55ba1da78f5b007d177d9d0aa05156fd56a021a
+  InteractivePlayerView: 630fe0184ce7400a8db4ce39ece45c146e040c13
+  KMPlaceholderTextView: 2bbcd19a273648a80a61e1e48f9743a24d8930e3
+  LiquidFloatingActionButton: 9c28961915754e08cf596ea6bdd60f9cd949f172
+  PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
+  PullToRefresher: 5e101a8c3523e67ee0291375ba932ef59e0853c2
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  QRCodeReader.swift: 2ddf74993243106dd2be5cf9f6e13c7a3e9a2d00
+  SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
+  StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
+  SwiftDate: 0efb04a6751b1ab804049b2b09a69848cd304c12
+  SwiftMoment: dc6dd27012e267819104cbb03f74ff9192dd0b42
+  SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
+
+PODFILE CHECKSUM: 1dbef67c94ab431d040036314b3ff2e7969582c3
+
+COCOAPODS: 1.2.0.beta.1
