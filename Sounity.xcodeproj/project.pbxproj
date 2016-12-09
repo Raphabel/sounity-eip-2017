@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DB541A91DF96216004C2A07 /* Timeline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB541A81DF96216004C2A07 /* Timeline.storyboard */; };
+		2DB541AB1DF96385004C2A07 /* TimelineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB541AA1DF96385004C2A07 /* TimelineController.swift */; };
+		2DB541AD1DF96E55004C2A07 /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */; };
 		5409393E1DF7693A0011052A /* ActivitiesEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540939391DF7693A0011052A /* ActivitiesEventController.swift */; };
 		5409393F1DF7693A0011052A /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5409393A1DF7693A0011052A /* ChatController.swift */; };
 		540939401DF7693A0011052A /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5409393B1DF7693A0011052A /* EventController.swift */; };
@@ -138,6 +141,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2DB541A81DF96216004C2A07 /* Timeline.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Timeline.storyboard; sourceTree = "<group>"; };
+		2DB541AA1DF96385004C2A07 /* TimelineController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineController.swift; sourceTree = "<group>"; };
+		2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
 		540939391DF7693A0011052A /* ActivitiesEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesEventController.swift; sourceTree = "<group>"; };
 		5409393A1DF7693A0011052A /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		5409393B1DF7693A0011052A /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
@@ -294,6 +300,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2DB541A71DF961E0004C2A07 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				2DB541A81DF96216004C2A07 /* Timeline.storyboard */,
+				2DB541AA1DF96385004C2A07 /* TimelineController.swift */,
+				2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */,
+			);
+			name = Timeline;
+			sourceTree = "<group>";
+		};
 		540939361DF768180011052A /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -664,6 +680,7 @@
 		54AE84701DEF40F3003715EE /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				2DB541A71DF961E0004C2A07 /* Timeline */,
 				54E2816C1DF1BEF70070317C /* EventPlayer */,
 				54E281791DF1C3B50070317C /* Menu */,
 				547D90441DF1E428008C636A /* Profile */,
@@ -974,6 +991,7 @@
 				54AE843F1DEF3A66003715EE /* Assets.xcassets in Resources */,
 				540939441DF769410011052A /* Event.storyboard in Resources */,
 				549405AC1DF5DA83007F5D4A /* Default-568h@2x.png in Resources */,
+				2DB541A91DF96216004C2A07 /* Timeline.storyboard in Resources */,
 				54E281811DF1D3EB0070317C /* Search.storyboard in Resources */,
 				54DD13B91DF487B500E8C021 /* InteractivePlayerView.xib in Resources */,
 			);
@@ -1159,6 +1177,7 @@
 				541BFAF21DEF839D006334A0 /* UserSearchCustomTableCell.swift in Sources */,
 				545F44111DF78358001C7D73 /* SocketStringReader.swift in Sources */,
 				547D90551DF1E44B008C636A /* SearchMusicLocalTableViewCell.swift in Sources */,
+				2DB541AB1DF96385004C2A07 /* TimelineController.swift in Sources */,
 				54AE847D1DEF430F003715EE /* RgPageViewController.swift in Sources */,
 				54DD13BC1DF487B500E8C021 /* InteractivePlayerView-dummy.m in Sources */,
 				54E281731DF1BF240070317C /* Event.swift in Sources */,
@@ -1207,6 +1226,7 @@
 				54AE846B1DEF3E35003715EE /* Reachability.swift in Sources */,
 				54E281741DF1BF240070317C /* MessageChat.swift in Sources */,
 				547D905D1DF1EA2F008C636A /* SearchMusicLocalTableViewController.swift in Sources */,
+				2DB541AD1DF96E55004C2A07 /* TimelineTableViewCell.swift in Sources */,
 				547D904F1DF1E44B008C636A /* DescriptionPlaylistCell.swift in Sources */,
 				547D90541DF1E44B008C636A /* PlaylistToEventCell.swift in Sources */,
 				545F44101DF78358001C7D73 /* SocketParsable.swift in Sources */,
