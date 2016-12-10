@@ -16,7 +16,7 @@ import AddressBook
 import LiquidFloatingActionButton
 
 class AroundMeViewController: UIViewController {
-
+    
     // MARK: Infos user connected
     var user = UserConnect()
     
@@ -37,18 +37,19 @@ class AroundMeViewController: UIViewController {
     var cells: [LiquidFloatingCell] = []
     var floatingActionButton: LiquidFloatingActionButton!
     
-    //MARK: Variables used
-    var resultAroundMe = [EventsAround]()
-    var latitudeUpdate: Double?
-    var longitudeUpdate: Double?
-    let coordLabel = UILabel(frame: CGRect(origin: CGPoint(x: 10,y :100), size: CGSize(width: 400, height: 50))) //UILabel(frame: CGRectMake(10,100,400,50))
+    //MARK: Location Manager variables
     var locationManager = CLLocationManager()
     var currentLocation = CLLocation()
+    var latitudeUpdate: Double?
+    var longitudeUpdate: Double?
     
+    //MARK: Other Variables used
+    var resultAroundMe = [EventsAround]()
+    let coordLabel = UILabel(frame: CGRect(origin: CGPoint(x: 10,y :100), size: CGSize(width: 400, height: 50)))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         super.viewDidLoad()
         
         if (CLLocationManager.locationServicesEnabled()) {
@@ -64,7 +65,7 @@ class AroundMeViewController: UIViewController {
         
         self.setFloatingButton()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         if (!user.checkUserConnected() && self.isViewLoaded) {
             DispatchQueue.main.async(execute: { () -> Void in
@@ -85,13 +86,12 @@ class AroundMeViewController: UIViewController {
         self.resultAroundMe.removeAll()
         loadEventsAroundMe()
     }
-
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
- }
+}
 
 // MARK: Location manager delegate
 extension AroundMeViewController : CLLocationManagerDelegate {
@@ -191,7 +191,7 @@ extension AroundMeViewController : MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         var view = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationViewID") as? MKPinAnnotationView
-
+        
         if annotation is MKUserLocation { return nil }
         if view == nil{
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationViewIDk")
@@ -266,7 +266,7 @@ extension AroundMeViewController {
         self.present(navController, animated: true, completion: nil)
         
     }
-
+    
 }
 
 //MARK: FLOATING BUTOTN
