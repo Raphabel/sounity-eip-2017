@@ -79,13 +79,13 @@ extension MenuViewController {
 }
 
 // MARK: Go to Around Me Button
-/*extension MenuViewController {
+extension MenuViewController {
     @IBAction func aroundMeButtonTapped(sender: AnyObject) {
         let eventStoryBoard: UIStoryboard = UIStoryboard(name: "AroundMe", bundle: nil)
-        let vc = eventStoryBoard.instantiateViewControllerWithIdentifier("AroundMeViewID") as! AroundMeController
-        self.presentViewController(vc, animated: true, completion: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "AroundMeViewID") as! AroundMeViewController
+        self.present(vc, animated: true, completion: nil)
     }
-}*/
+}
 
 // MARK: Logout Button
 extension MenuViewController {
