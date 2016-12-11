@@ -8,6 +8,7 @@
 
 import UIKit
 import Eureka
+import Photos
 import Alamofire
 import SwiftyJSON
 import SwiftMoment
@@ -88,7 +89,7 @@ extension UserSettingsViewController {
     }
     
     @IBAction func showAlert() {
-        //var newCoverURL: URL?
+        var newCoverURL: URL?
         let allFormData = form.values()
         
         let nickname = allFormData["nickname"] as? String
@@ -98,9 +99,9 @@ extension UserSettingsViewController {
         let date = allFormData["birthday"] as? NSDate
         
         
-        /*if let rowCover = self.form.rowBy(tag: "picture")! as? ImageRow {
+        if let rowCover = self.form.rowBy(tag: "picture")! as? ImageRow {
             newCoverURL = rowCover.imageURL ?? URL(string: "")
-        }*/
+        }
         
         if (Reachability.isConnectedToNetwork() == false) {
             let alert = DisplayAlert(title: "No internet", message: "Please find an internet connection")
@@ -150,11 +151,11 @@ extension UserSettingsViewController {
                             self.user.setHisBirthday(jsonResponse["birth_date"].stringValue)
                             self.user.setHisDescription(jsonResponse["description"].stringValue)
                             
-                            //if (String(newCoverURL!).isEmpty) {
-                            self.dismiss(animated: true, completion: nil)
-                            //} else {
-                            //self.uploadPicture(newCoverURL!)
-                            //}
+                            if (String(describing: newCoverURL!).isEmpty) {
+                                self.dismiss(animated: true, completion: nil)
+                            } else {
+                                self.uploadPicture(path: newCoverURL! as NSURL)
+                            }
                             
                             let alert = DisplayAlert(title: ("Profil settings"), message: "Your profile has been uploaded")
                             alert.openAlertError()
@@ -164,35 +165,41 @@ extension UserSettingsViewController {
         }
     }
     
-    /*func uploadPicture(path: NSURL) {
-        getImageFromPath(path, onComplete: {image in
-            let api = SounityAPI()
-            let headersUpload = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
-            let urlUploadImage:String = (api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/image")
-            
-            Alamofire.upload(.POST, urlUploadImage, headers: headersUpload, multipartFormData: { multipartFormData in
-                if let imageData = UIImageJPEGRepresentation(image!, 1) {
-                    multipartFormData.appendBodyPart(data: imageData, name: "image", fileName: "user-\(self.user.id)", mimeType: "image/png")
-                }},
-                encodingMemoryThreshold: Manager.MultipartFormDataEncodingMemoryThreshold,
-                encodingCompletion: { encodingResult in
-                    switch encodingResult {
-                    case .Success(let upload, _, _):
-                        upload.responseJSON { response in
-                            debugPrint(response)
-                            //let data = JSON(response)
-                            //self.user.setHisPicture(data["url"].stringValue)
-                            let alert = DisplayAlert(title: "Profil settings", message: "Information has been saved.")
-                            alert.openAlertSuccess()
-                        }
-                    case .Failure(let encodingError):
-                        print(encodingError)
-                        let alert = DisplayAlert(title: ("Upload Picture"), message: String(encodingError))
-                        alert.openAlertError()
-                    }
-            })
-        })
-    }*/
+    func uploadPicture(path: NSURL) {
+        let fetchResult = PHAsset.fetchAssets(withALAssetURLs: [path.absoluteURL!], options: nil)
+        if let photo = fetchResult.firstObject {
+            PHImageManager.default().requestImage(for: photo, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: nil) {
+                image, info in
+                
+                let api = SounityAPI()
+                //let headersUpload = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
+                let urlUploadImage:String = (api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/image")
+                
+                Alamofire.upload(multipartFormData: { multipartFormData in
+                    if let imageData = UIImageJPEGRepresentation(image!, 1) {
+                        multipartFormData.append(imageData, withName: "image")
+                    }},
+                    to: urlUploadImage,
+                    encodingCompletion: { encodingResult in
+                        switch encodingResult {
+                            case .success(let upload, _, _):
+                                upload.responseJSON { response in
+                                    let data = JSON(response)
+                                    print(data)
+                                    self.user.setHisPicture(data["url"].stringValue)
+                                    let alert = DisplayAlert(title: "Profil settings", message: "Information has been saved.")
+                                    alert.openAlertSuccess()
+                                }
+                            case .failure(let encodingError):
+                                print(encodingError)
+                                let alert = DisplayAlert(title: ("Upload Picture"), message: String(describing: encodingError))
+                                alert.openAlertError()
+                            }
+                    })
+                }
+            }
+        }
+        
 }
 
 // MARK: Navigation functions
@@ -248,15 +255,15 @@ extension UserSettingsViewController {
                 row.value = user.lastname
             }
             
-            /*<<< ImageRow("picture"){
+            <<< ImageRow("picture"){
                 $0.title = "Picture"
                 $0.tag = "picture"
                 $0.sourceTypes = .PhotoLibrary
                 $0.clearAction = .no
                 let picPath = NSURL(string: self.user.picture)
                 let data = NSData(contentsOf: picPath! as URL)
-                $0.value = UIImage(data:data! as Data)
-            }*/
+                $0.value = UIImage(data:data! as Data) != nil ? UIImage(data:data! as Data) : UIImage(named: "emptyPicture")
+            }
             
             <<< DateRow("Bith"){
                 $0.title = "Birthday"

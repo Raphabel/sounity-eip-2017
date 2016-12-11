@@ -14,8 +14,9 @@ import SwiftMoment
 import SCLAlertView
 import PullToRefresh
 import DZNEmptyDataSet
+import StatefulViewController
 
-class AllPlaylistsTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+class AllPlaylistsTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, StatefulViewController {
     
     // MARK: UIElements variables
     @IBOutlet var PlaylistTableView: UITableView!
@@ -67,6 +68,9 @@ class AllPlaylistsTableViewController: UITableViewController, DZNEmptyDataSetSou
     
     override func viewWillAppear(_ animated: Bool) {
         loadSamplePLaylist()
+        
+        loadingView = LoadingView(_view: self.view)
+        setupInitialViewState()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -157,6 +161,7 @@ extension AllPlaylistsTableViewController {
 // MARK: Get all playlists user
 extension AllPlaylistsTableViewController {
     func loadSamplePLaylist() {
+        self.startLoading()
         let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)"
         let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
         
@@ -180,6 +185,7 @@ extension AllPlaylistsTableViewController {
                         self.tableView.reloadData()
                     }
                 }
+                self.endLoading()
         }
     }
 }
