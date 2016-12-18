@@ -8,6 +8,7 @@
 
 import UIKit
 import Eureka
+import Photos
 import Alamofire
 import SwiftyJSON
 import SwiftMoment
@@ -267,7 +268,7 @@ extension UserSettingsViewController {
                 let data = NSData(contentsOf: picPath! as URL)
                 $0.value = data != nil ? UIImage(data:data! as Data) : UIImage(named: "UnknownUserCover")
             }
-    
+
             <<< DateRow("Bith"){
                 $0.title = "Birthday"
                 if (user.birthday.isEmpty == false) {$0.value = moment(user.birthday)?.date}
