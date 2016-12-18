@@ -309,17 +309,15 @@ extension AroundMeViewController : LiquidFloatingActionButtonDelegate, LiquidFlo
 
 //MARK: GuillotineTransitionAnimation
 extension AroundMeViewController: UIViewControllerTransitioningDelegate {
-    
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         presentationAnimator.mode = .presentation
         return presentationAnimator
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         presentationAnimator.mode = .dismissal
         return presentationAnimator
     }
-    
 }
 
 //MARK: Exntension of MAPVIEW
@@ -331,6 +329,12 @@ extension MKMapView {
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
         
         setRegion(region, animated: true)
+    }
+}
+
+extension AroundMeViewController {
+    override var prefersStatusBarHidden : Bool {
+        return true
     }
 }
 

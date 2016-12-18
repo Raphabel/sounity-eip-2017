@@ -112,17 +112,22 @@ extension TimelineController: UITableViewDataSource, UITableViewDelegate {
         }
             
         else if self.newfeeds[indexPath.row].message.lowercased().range(of: "profile") != nil {
-            let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
-            
-            let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileViewID") as! ConsultProfileController
-            vc.IDUserConsulted = self.newfeeds[indexPath.row].user.id
-            vc.nicknameUserConsulted = self.newfeeds[indexPath.row].user.nickname
-            vc.descriptionUserConsulted = self.newfeeds[indexPath.row].user.description
-            vc.pictureUserConsulted = self.newfeeds[indexPath.row].user.picture
-            
-            let navController = UINavigationController.init(rootViewController: vc)
-            
-            self.present(navController, animated: true, completion: nil)
+            if (self.newfeeds[indexPath.row].user.id == user.id) {
+                let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Profile", bundle: nil)
+                let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileViewID") as! UserHomeViewController
+                self.present(vc, animated: true, completion: nil)
+            } else {
+                let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+                let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileViewID") as! ConsultProfileController
+
+                vc.IDUserConsulted = self.newfeeds[indexPath.row].user.id
+                vc.nicknameUserConsulted = self.newfeeds[indexPath.row].user.nickname
+                vc.descriptionUserConsulted = self.newfeeds[indexPath.row].user.description
+                vc.pictureUserConsulted = self.newfeeds[indexPath.row].user.picture
+                
+                let navController = UINavigationController.init(rootViewController: vc)
+                self.present(navController, animated: true, completion: nil)
+            }
         }
             
         else if self.newfeeds[indexPath.row].message.lowercased().range(of: "following") != nil {

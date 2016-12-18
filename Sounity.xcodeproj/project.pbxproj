@@ -343,9 +343,9 @@
 		2DB541A71DF961E0004C2A07 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
-				2DB541A81DF96216004C2A07 /* Timeline.storyboard */,
-				2DB541AA1DF96385004C2A07 /* TimelineController.swift */,
-				2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */,
+				54382BE11E06E6D30029231B /* Controllers */,
+				54382BE01E06E6CB0029231B /* UI */,
+				54382BDF1E06E6C20029231B /* StoryBoard */,
 			);
 			name = Timeline;
 			sourceTree = "<group>";
@@ -465,6 +465,30 @@
 				541BFADE1DEF839D006334A0 /* MusicSearchController.swift */,
 			);
 			name = Musics;
+			sourceTree = "<group>";
+		};
+		54382BDF1E06E6C20029231B /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				2DB541A81DF96216004C2A07 /* Timeline.storyboard */,
+			);
+			name = StoryBoard;
+			sourceTree = "<group>";
+		};
+		54382BE01E06E6CB0029231B /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		54382BE11E06E6D30029231B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2DB541AA1DF96385004C2A07 /* TimelineController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		545BAEB01DF4CC5700FC1282 /* Storyboard */ = {
