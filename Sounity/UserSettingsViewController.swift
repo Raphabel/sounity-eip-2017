@@ -151,14 +151,13 @@ extension UserSettingsViewController {
                             self.user.setHisBirthday(jsonResponse["birth_date"].stringValue)
                             self.user.setHisDescription(jsonResponse["description"].stringValue)
                             
-                            if (String(describing: newCoverURL!).isEmpty) {
+                            if (newCoverURL == nil) {
                                 self.dismiss(animated: true, completion: nil)
+                                let alert = DisplayAlert(title: ("Profil settings"), message: "Your profile has been updated")
+                                alert.openAlertSuccess()
                             } else {
                                 self.uploadPicture(path: newCoverURL! as NSURL)
                             }
-                            
-                            let alert = DisplayAlert(title: ("Profil settings"), message: "Your profile has been uploaded")
-                            alert.openAlertError()
                         }
                     }
                 }
@@ -172,26 +171,31 @@ extension UserSettingsViewController {
                 image, info in
                 
                 let api = SounityAPI()
-                //let headersUpload = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
+                let headersUpload = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
                 let urlUploadImage:String = (api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/image")
                 
                 Alamofire.upload(multipartFormData: { multipartFormData in
                     if let imageData = UIImageJPEGRepresentation(image!, 1) {
-                        multipartFormData.append(imageData, withName: "image")
+                        multipartFormData.append(imageData, withName: "image", fileName: "image.png", mimeType: "image/png")
                     }},
-                    to: urlUploadImage,
+                    to: urlUploadImage, headers: headersUpload,
                     encodingCompletion: { encodingResult in
                         switch encodingResult {
                             case .success(let upload, _, _):
                                 upload.responseJSON { response in
-                                    let data = JSON(response)
-                                    print(data)
-                                    self.user.setHisPicture(data["url"].stringValue)
-                                    let alert = DisplayAlert(title: "Profil settings", message: "Information has been saved.")
-                                    alert.openAlertSuccess()
+                                    if (response.result.isFailure) {
+                                        let alert = DisplayAlert(title: ("Upload Picture"), message: "Error while uploading picture")
+                                        alert.openAlertError()
+                                    } else {
+                                        let data = JSON(response.result.value!)
+                                        if (data["url"].exists()) {
+                                            self.user.setHisPicture(data["url"].stringValue)
+                                        }
+                                        let alert = DisplayAlert(title: "Profil settings", message: "Information has been saved.")
+                                        alert.openAlertSuccess()
+                                    }
                                 }
                             case .failure(let encodingError):
-                                print(encodingError)
                                 let alert = DisplayAlert(title: ("Upload Picture"), message: String(describing: encodingError))
                                 alert.openAlertError()
                             }
@@ -262,7 +266,7 @@ extension UserSettingsViewController {
                 $0.clearAction = .no
                 let picPath = NSURL(string: self.user.picture)
                 let data = NSData(contentsOf: picPath! as URL)
-                $0.value = UIImage(data:data! as Data) != nil ? UIImage(data:data! as Data) : UIImage(named: "emptyPicture")
+                $0.value = data != nil ? UIImage(data:data! as Data) : UIImage(named: "UnknownUserCover")
             }
             
             <<< DateRow("Bith"){

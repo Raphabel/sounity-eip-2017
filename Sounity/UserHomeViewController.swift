@@ -35,8 +35,6 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.nickname.text = user.username
-        self.descriptionUser.text = user.descriptionUser
         self.UserGetInfo()
         self.setUpHeaderProfil()
     }
@@ -45,6 +43,13 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
         super.viewWillAppear(animated)
         
         UserGetInfo()
+        
+        if user.picture == "" {
+            self.imageView.image = UIImage(named: "UnknownUserCover")!
+        }
+        else if (Reachability.isConnectedToNetwork() == true) {
+            self.imageView.imageFromServerURL(urlString: self.user.picture)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -89,6 +94,9 @@ extension UserHomeViewController {
                         self.user.setHisLastName(jsonResponse["last_name"].stringValue)
                         self.user.setHisBirthday(jsonResponse["birth_date"].stringValue)
                         self.user.setHisDescription(jsonResponse["description"].stringValue)
+                        
+                        self.nickname.text = self.user.username
+                        self.descriptionUser.text = self.user.descriptionUser
                     }
                 }
         }

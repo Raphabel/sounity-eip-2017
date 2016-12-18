@@ -101,14 +101,13 @@ extension ConsultEventController {
                         alert.openAlertError()
                     }
                     else {
-                        print("Implement EventController")
-                        /*let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Event", bundle: nil)
-                        let vc = eventStoryBoard.instantiateViewControllerWithIdentifier("EventViewID") as! EventController
+                        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Event", bundle: nil)
+                        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "EventViewID") as! EventController
                         vc.nameEvent = self.navigationItem.title!
                         vc.idEventSent = self.idEventSent
-                        vc.owner = !self.settingsEvent.hidden
+                        vc.owner = !self.settingsEvent.isHidden
                         self.user.setHisEventJoined(self.idEventSent)
-                        self.presentViewController(vc, animated: true, completion: nil)*/
+                        self.present(vc, animated: true, completion: nil)
                     }
                 }
         }
@@ -156,10 +155,6 @@ extension ConsultEventController {
                         self.dismiss(animated: true, completion: nil)
                         let alert = DisplayAlert(title: "Consult Event", message: jsonResponse["message"].stringValue)
                         alert.openAlertError()
-                 
-                    
-                    
-                    
                     }
                     else {
                         self.navigationItem.title = jsonResponse["name"].stringValue
