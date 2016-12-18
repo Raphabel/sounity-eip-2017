@@ -157,7 +157,7 @@ extension AllPlaylistsTableViewController {
 // MARK: Get all playlists user
 extension AllPlaylistsTableViewController {
     func loadSamplePLaylist() {
-        let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)"
+        let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/\(user.id)/playlists"
         let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
         
         Alamofire.request(url, method: .get, headers: headers)
@@ -173,7 +173,7 @@ extension AllPlaylistsTableViewController {
                     else {
                         self.playlists.removeAll()
                         
-                        for (_,subJson):(String, JSON) in jsonResponse["playlists"] {
+                        for (_,subJson):(String, JSON) in jsonResponse {
                             self.playlists.append(Playlist(name: subJson["name"].stringValue, create_date: subJson["create_date"].stringValue, id: subJson["id"].intValue, desc: subJson["description"].stringValue, _picture: subJson["picture"].stringValue))
                         }
                         self.tableView.endRefreshing(at: Position.top)
