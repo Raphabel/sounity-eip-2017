@@ -163,6 +163,7 @@ extension UserSettingsViewController {
                     }
                 }
         }
+        dismiss(animated: true, completion: nil)
     }
     
     func uploadPicture(path: NSURL) {

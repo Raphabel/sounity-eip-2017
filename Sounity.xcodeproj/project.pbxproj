@@ -1127,14 +1127,14 @@
 		};
 		549405AA1DF5D9FC007F5D4A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 180ab2d0ae3bb00bc51b501aebc6c76ba12a42f0 b03240907fd78ed5db48ed58159c88fa1c4a72d36238579d5a049b1d5615e2a8";
 		};
@@ -1487,7 +1487,7 @@
 				DEVELOPMENT_TEAM = 6K53GFFFAN;
 				INFOPLIST_FILE = Sounity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.epitech.Sounity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.epitech.SounityFinal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1501,7 +1501,7 @@
 				DEVELOPMENT_TEAM = 6K53GFFFAN;
 				INFOPLIST_FILE = Sounity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.epitech.Sounity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.epitech.SounityFinal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

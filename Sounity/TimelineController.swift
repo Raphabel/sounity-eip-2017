@@ -83,11 +83,11 @@ extension TimelineController: UITableViewDataSource, UITableViewDelegate {
         cell!.date.text = self.newfeeds[indexPath.row].created_date
         cell?.timelineUserInfo.text = self.newfeeds[indexPath.row].message
         
-        if (self.newfeeds[indexPath.row].picture == "") {
+        if (self.newfeeds[indexPath.row].user.picture == "") {
             cell?.picture.image = UIImage(named: "UnknownUserCover")!
         }
         else if (Reachability.isConnectedToNetwork() == true) {
-            cell?.picture.imageFromServerURL(urlString: self.newfeeds[indexPath.row].picture)
+            cell?.picture.imageFromServerURL(urlString: self.newfeeds[indexPath.row].user.picture)
             MakeElementRounded().makeElementRounded(cell?.picture, newSize: cell?.picture.frame.width)
         }
         return cell!
@@ -164,10 +164,9 @@ extension TimelineController: DZNEmptyDataSetSource {
 extension TimelineController {
     func GetTimelineUser() {
         
-        let minDate = currentWeek.toString()
         let url = api.getRoute(SounityAPI.ROUTES.TIMELINE)
         let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
-        let parameters: [String : AnyObject] = ["id": user.id as AnyObject, "minDate": minDate as AnyObject]
+        let parameters: [String : AnyObject] = ["id": user.id as AnyObject]
         
         Alamofire.request(url, method: .get, parameters : parameters, headers : headers)
             .validate(statusCode: 200..<501)
