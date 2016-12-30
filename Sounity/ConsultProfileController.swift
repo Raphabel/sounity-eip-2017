@@ -120,7 +120,7 @@ extension ConsultProfileController {
         self.user.setIDprofile(IDUserConsulted!)
         
         self.imageView.layer.masksToBounds = true
-        _ = self.putShadowOnView(self.imageView, shadowColor: UIColor(white: 100, alpha: 100), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
+        _ = self.putShadowOnView(self.imageView, shadowColor: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
         
         if self.pictureUserConsulted == "" {
             self.imageView.image = UIImage(named: "UnknownUserCover")!
@@ -136,8 +136,8 @@ extension ConsultProfileController {
     
     func putShadowOnView(_ viewToWorkUpon:UIView, shadowColor:UIColor, radius:CGFloat, offset:CGSize, opacity:Float)-> UIView{
         var shadowFrame = CGRect.zero
-        shadowFrame.size.width = 500
-        shadowFrame.size.height = 500
+        shadowFrame.size.width = viewToWorkUpon.frame.width
+        shadowFrame.size.height = viewToWorkUpon.frame.height
         shadowFrame.origin.x = 0
         shadowFrame.origin.y = 0
         

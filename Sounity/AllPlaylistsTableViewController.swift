@@ -58,12 +58,6 @@ class AllPlaylistsTableViewController: UITableViewController, DZNEmptyDataSetSou
                 self.present(vc, animated: true, completion: nil)
             })
         }
-        
-        if (Reachability.isConnectedToNetwork() == false) {
-            let alert = DisplayAlert(title: "No internet", message: "Please find an internet connection")
-            alert.openAlertError()
-            return
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
