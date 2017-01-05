@@ -58,8 +58,7 @@ class ChatController: UIViewController, UITableViewDelegate, DZNEmptyDataSetDele
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         tabItem.badgeValue = nil
         
-        tableview.reloadData()
-        self.tableview.scrollToBottom()
+        self.tableview.reloadData()
     }
 }
 
@@ -152,13 +151,12 @@ extension ChatController: UITableViewDataSource {
     {
         let cell:ChatMessageTableCell = tableView.dequeueReusableCell(withIdentifier: "ChatMessageCustomTableCell", for: indexPath) as! ChatMessageTableCell
         
-        
         if (user.username == self.chatMessages[indexPath.row].nickname) {
             cell.viewOwnUser.isHidden = false
             cell.viewOtherUser.isHidden = true
             cell.viewOwnUser.layer.cornerRadius = 6
             cell.nicknameOwn.text = "You"
-            cell.timeOwn.text = moment(self.chatMessages[indexPath.row].time)?.format("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            cell.timeOwn.text = moment(self.chatMessages[indexPath.row].time)?.format("EEE, HH:mm")
             cell.messageOwn.text = self.chatMessages[indexPath.row].message
             if (self.chatMessages[indexPath.row].picture != "" && Reachability.isConnectedToNetwork() == true) {
                 cell.pictureOwnUser.load.request(with: self.chatMessages[indexPath.row].picture)
@@ -169,7 +167,7 @@ extension ChatController: UITableViewDataSource {
             cell.viewOwnUser.isHidden = true
             cell.viewOtherUser.layer.cornerRadius = 6
             cell.nicknameOther.text = user.username == self.chatMessages[indexPath.row].nickname ? "You" : self.chatMessages[indexPath.row].nickname
-            cell.timeOther.text = moment(self.chatMessages[indexPath.row].time)?.format("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            cell.timeOther.text = moment(self.chatMessages[indexPath.row].time)?.format("EEE, HH:mm")
             cell.messageOther.text = self.chatMessages[indexPath.row].message
             if (self.chatMessages[indexPath.row].picture != "" && Reachability.isConnectedToNetwork() == true) {
                 

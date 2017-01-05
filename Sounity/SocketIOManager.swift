@@ -28,6 +28,11 @@ class SocketIOManager: NSObject {
     func closeConnection() {
         socket.disconnect()
     }
+
+    func restartConnection() {
+        socket.disconnect()
+        socket.connect()
+    }
     
     func setCurrentTransactionId(idTransactionReceived: Int) {
         self.idLastTransaction = idTransactionReceived
@@ -51,6 +56,14 @@ class SocketIOManager: NSObject {
     
     func sendMessageToEventChat(datas: [String: AnyObject], completionHandler: @escaping (_ datasList: JSON) -> Void) {
         socket.emitWithAck("chat:message", datas).timingOut(after: 10) { data in
+            let jsonResponse = JSON(data)
+            completionHandler(jsonResponse[0])
+            self.idLastTransaction = self.idLastTransaction + 1
+        }
+    }
+    
+    func banUserFromEvent(datas: [String: AnyObject], completionHandler: @escaping (_ datasList: JSON) -> Void) {
+        socket.emitWithAck("event:ban", datas).timingOut(after: 10) { data in
             let jsonResponse = JSON(data)
             completionHandler(jsonResponse[0])
             self.idLastTransaction = self.idLastTransaction + 1

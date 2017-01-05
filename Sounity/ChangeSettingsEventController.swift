@@ -42,6 +42,19 @@ class ChangeSettingsEventController: FormViewController {
         super.didReceiveMemoryWarning()
     }
     
+    // Segue that show the setting's event page
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showManagerUsersEvent") {
+            let vc = segue.destination as! ManageAdminEvent
+            vc.idEventSent = self.idEventSent
+        }
+        
+        else if (segue.identifier == "showUsersEvent") {
+            let vc = segue.destination as! ManageUserEvent
+            vc.idEventSent = self.idEventSent
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if (!user.checkUserConnected() && self.isViewLoaded) {
             (DispatchQueue.main).async(execute: { () -> Void in
@@ -264,10 +277,16 @@ extension ChangeSettingsEventController {
                                 $0.title = "Max_users"
                                 $0.value = Double(self.eventInfo.user_max)
                             }
-                            /*<<< ButtonRow("Managed Users") {
-                             $0.title = $0.tag
-                             $0.presentationMode = .SegueName(segueName: "showManagerUsersEvent", completionCallback: nil)
-                             }*/
+                            
+                            +++ Section("Managed Users")
+                            <<< ButtonRow("Admins") {
+                                $0.title = $0.tag
+                                $0.presentationMode = .segueName(segueName: "showManagerUsersEvent", onDismiss: nil)
+                            }
+                            <<< ButtonRow("Users") {
+                                $0.title = $0.tag
+                                $0.presentationMode = .segueName(segueName: "showUsersEvent", onDismiss: nil)
+                            }
                             
                             +++ Section("Event info time")
                             <<< DateTimeInlineRow("expired_date") {
