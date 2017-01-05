@@ -235,6 +235,6 @@ extension ConsultEventController {
 //MARK: Hide status bar
 extension ConsultEventController {
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }

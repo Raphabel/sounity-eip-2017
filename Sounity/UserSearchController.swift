@@ -111,12 +111,12 @@ extension UserSearchController {
         if Reachability.isConnectedToNetwork() == true {
             self.startLoading()
             Alamofire.request(api.getRoute(SounityAPI.ROUTES.SEARCH_USER), method: .post, parameters : parameters, headers : headers)
-                .validate(statusCode: 200..<305)
+                .validate(statusCode: 200..<501)
                 .validate(contentType: ["application/json"])
                 .responseJSON { response in
                     if let apiResponse = response.result.value {
                         let jsonResponse = JSON(apiResponse)
-                        if ((response.response?.statusCode)! != 200) {
+                        if ((response.response?.statusCode)! == 400) {
                             let alert = DisplayAlert(title: "Search User", message: jsonResponse["message"].stringValue)
                             alert.openAlertError()
                         }

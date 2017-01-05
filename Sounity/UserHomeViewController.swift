@@ -182,6 +182,6 @@ extension UserHomeViewController: UIViewControllerTransitioningDelegate {
 // MARK: Hide status bar
 extension UserHomeViewController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }

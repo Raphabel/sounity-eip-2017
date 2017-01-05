@@ -36,7 +36,7 @@ class LoginSignUpController: RGPageViewController, RGPageViewControllerDelegate 
     
     override var tabbarPosition: RGTabbarPosition {
         get {
-            return RGTabbarPosition.top
+            return .bottom
         }
     }
     
@@ -91,6 +91,6 @@ extension LoginSignUpController: RGPageViewControllerDataSource {
 // MARK: Hide Top Bar
 extension LoginSignUpController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }

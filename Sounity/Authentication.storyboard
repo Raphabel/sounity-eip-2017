@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oyr-nH-Cix">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oyr-nH-Cix">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,7 +46,7 @@
                                     <constraint firstAttribute="height" constant="30" id="yRg-lj-7aJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qj7-16-fZI" userLabel="Login" customClass="HexagonalButton" customModule="Sounity" customModuleProvider="target">
                                 <rect key="frame" x="77" y="475" width="220" height="30"/>
@@ -65,7 +65,7 @@
                                     <constraint firstAttribute="width" constant="220" id="zxq-wl-7Hl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchIconWhite" translatesAutoresizingMaskIntoConstraints="NO" id="GVr-5b-6IM">
                                 <rect key="frame" x="37" y="76" width="300" height="65"/>
@@ -78,9 +78,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.1960784314" green="0.18039215689999999" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="WcH-KP-3i5" firstAttribute="centerX" secondItem="GVr-5b-6IM" secondAttribute="centerX" id="5eu-Su-JQe"/>
                             <constraint firstItem="1dz-kj-gDq" firstAttribute="top" secondItem="qj7-16-fZI" secondAttribute="bottom" constant="162" id="6oe-ei-J4D"/>
                             <constraint firstItem="GVr-5b-6IM" firstAttribute="top" secondItem="Sz0-ns-nWc" secondAttribute="bottom" constant="56" id="AjN-2k-Fnt"/>
-                            <constraint firstItem="GVr-5b-6IM" firstAttribute="centerX" secondItem="WcH-KP-3i5" secondAttribute="centerX" id="BZz-Z7-ig6"/>
                             <constraint firstItem="8um-3j-vyG" firstAttribute="centerX" secondItem="qj7-16-fZI" secondAttribute="centerX" id="UJ3-oj-f1e"/>
                             <constraint firstItem="WcH-KP-3i5" firstAttribute="leading" secondItem="8um-3j-vyG" secondAttribute="leading" id="ZiD-k3-Q3F"/>
                             <constraint firstItem="WcH-KP-3i5" firstAttribute="trailing" secondItem="8um-3j-vyG" secondAttribute="trailing" id="efg-Lk-Shy"/>
@@ -128,7 +128,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="oFg-ID-jsR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8AM-aG-kNA" userLabel="Email" customClass="HexagonalTextFieldWithIcon" customModule="Sounity" customModuleProvider="target">
                                 <rect key="frame" x="77" y="368" width="220" height="30"/>
@@ -137,7 +137,7 @@
                                     <constraint firstAttribute="height" constant="30" id="u1M-88-B3o"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pnr-3E-UoN" userLabel="Password" customClass="HexagonalTextFieldPassword" customModule="Sounity" customModuleProvider="target">
                                 <rect key="frame" x="77" y="413" width="220" height="30"/>
@@ -146,7 +146,7 @@
                                     <constraint firstAttribute="height" constant="30" id="ath-kZ-vcA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ojy-W8-S73" userLabel="Password Check" customClass="HexagonalTextFieldPassword" customModule="Sounity" customModuleProvider="target">
                                 <rect key="frame" x="77" y="457" width="220" height="30"/>
@@ -155,7 +155,7 @@
                                     <constraint firstAttribute="height" constant="30" id="dSY-fJ-UO8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchIconWhite" translatesAutoresizingMaskIntoConstraints="NO" id="xKm-kX-pea">
                                 <rect key="frame" x="37" y="76" width="300" height="65"/>

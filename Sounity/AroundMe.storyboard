@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sdp-ry-O9C">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,12 +24,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gxs-ft-tBT">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="hD6-bB-OQP"/>
+                                </constraints>
                                 <items>
                                     <navigationItem title="Around Me" id="Wux-n5-syo">
                                         <barButtonItem key="leftBarButtonItem" id="M13-wp-2kq">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eTQ-cP-9Zk">
-                                                <rect key="frame" x="16" y="14" width="15" height="15"/>
+                                                <rect key="frame" x="16" y="30" width="15" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="ic_menu"/>
                                                 <connections>
@@ -53,15 +56,15 @@
                                 </items>
                             </navigationBar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="AnnotationViewID" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="r9k-MS-Nl5">
-                                <rect key="frame" x="-4" y="44" width="383" height="623"/>
+                                <rect key="frame" x="-4" y="60" width="383" height="607"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Gxs-ft-tBT" firstAttribute="leading" secondItem="REe-XG-dKr" secondAttribute="leading" id="3oX-Va-0g5"/>
+                            <constraint firstItem="r9k-MS-Nl5" firstAttribute="top" secondItem="Gxs-ft-tBT" secondAttribute="bottom" id="LPp-Zl-fr8"/>
                             <constraint firstItem="bW1-I4-3Wl" firstAttribute="top" secondItem="r9k-MS-Nl5" secondAttribute="bottom" id="caP-fH-rWL"/>
-                            <constraint firstItem="Gxs-ft-tBT" firstAttribute="top" secondItem="REe-XG-dKr" secondAttribute="top" id="ftN-3A-1VY"/>
-                            <constraint firstItem="r9k-MS-Nl5" firstAttribute="top" secondItem="Gxs-ft-tBT" secondAttribute="bottom" id="gLf-P4-gp3"/>
+                            <constraint firstItem="Gxs-ft-tBT" firstAttribute="top" secondItem="REe-XG-dKr" secondAttribute="top" symbolic="YES" id="ftN-3A-1VY"/>
                             <constraint firstItem="r9k-MS-Nl5" firstAttribute="leading" secondItem="REe-XG-dKr" secondAttribute="leadingMargin" constant="-20" id="pwi-hl-UYU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="r9k-MS-Nl5" secondAttribute="trailing" constant="-20" id="rzr-Uw-FI4"/>
                             <constraint firstAttribute="trailing" secondItem="Gxs-ft-tBT" secondAttribute="trailing" id="x6N-hh-U9n"/>
@@ -73,7 +76,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ETl-rF-LfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="49" y="178"/>
+            <point key="canvasLocation" x="48.799999999999997" y="177.66116941529236"/>
         </scene>
     </scenes>
     <resources>

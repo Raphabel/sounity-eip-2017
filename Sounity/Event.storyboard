@@ -110,7 +110,7 @@
                                             <constraint firstAttribute="height" constant="30" id="7CA-Ne-KCe"/>
                                         </constraints>
                                         <inset key="imageEdgeInsets" minX="80" minY="0.0" maxX="80" maxY="0.0"/>
-                                        <state key="normal" image="9927BD1C-5B8D-4163-8C56-09661FD9995D"/>
+                                        <state key="normal" image="74269114-DF18-4BDD-9E5F-796ED3158330"/>
                                         <connections>
                                             <action selector="nextButtonTapped:" destination="Wd6-bq-Avc" eventType="touchUpInside" id="WAf-Jf-uhF"/>
                                         </connections>
@@ -140,13 +140,16 @@
                                     <segue destination="ghz-HS-hH4" kind="embed" id="O31-2N-iPN"/>
                                 </connections>
                             </containerView>
-                            <navigationBar contentMode="scaleToFill" misplaced="YES" restorationIdentifier="EventPageID" translatesAutoresizingMaskIntoConstraints="NO" id="Wnn-cC-Ng7">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <navigationBar contentMode="scaleToFill" restorationIdentifier="EventPageID" translatesAutoresizingMaskIntoConstraints="NO" id="Wnn-cC-Ng7">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Z2Y-ep-Bll"/>
+                                </constraints>
                                 <items>
                                     <navigationItem id="Dtt-uf-uLL">
                                         <barButtonItem key="leftBarButtonItem" id="Ihq-yf-ifk">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="vZY-7O-uDb" userLabel="Bar Button">
-                                                <rect key="frame" x="20" y="14" width="15" height="15"/>
+                                                <rect key="frame" x="16" y="30" width="15" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="ic_menu"/>
                                                 <connections>
@@ -752,7 +755,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="9927BD1C-5B8D-4163-8C56-09661FD9995D" width="128" height="128">
+        <image name="74269114-DF18-4BDD-9E5F-796ED3158330" width="128" height="128">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

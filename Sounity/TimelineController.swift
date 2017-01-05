@@ -244,7 +244,7 @@ extension TimelineController: UIViewControllerTransitioningDelegate {
 // MARK: Hide status bar
 extension TimelineController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }
 
