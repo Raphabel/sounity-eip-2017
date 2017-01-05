@@ -302,7 +302,7 @@ extension ChangeSettingsEventController {
 
 extension ChangeSettingsEventController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }
 

@@ -369,6 +369,6 @@ extension ConsultProfileController: UITableViewDataSource {
 
 extension ConsultProfileController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }

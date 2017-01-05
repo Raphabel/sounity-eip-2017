@@ -119,7 +119,7 @@ extension HomeController {
 //MARK: Hide status bar
 extension HomeController {
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }
 

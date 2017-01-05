@@ -12,11 +12,11 @@ import SwiftyJSON
 //import GoogleSignIn
 //import Google
 
-class SignInController: UIViewController/*, GIDSignInUIDelegate, GIDSignInDelegate*/ {
+class SignInController: UIViewController {
     
     // MARK: StoryBoard UIElements
-    @IBOutlet weak var UserName: HexagonalTextFieldWithIcon!
-    @IBOutlet weak var Password: HexagonalTextFieldPassword!
+    @IBOutlet weak var UserName: UITextField!
+    @IBOutlet weak var Password: UITextField!
     
     // MARK: Variables
     var dataObject: [String: AnyObject]!
@@ -27,21 +27,14 @@ class SignInController: UIViewController/*, GIDSignInUIDelegate, GIDSignInDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*var error: NSError?
-        GGLContext.sharedInstance().configureWithError(&error)
+        UserName.delegate = self
+        Password.delegate = self
         
-        if error != nil {
-            print(error)
-            return
-        }
+        UserName.autocorrectionType = .no
+        Password.autocorrectionType = .no
         
-        GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().delegate = self
-        
-        let signInButton = GIDSignInButton(frame: CGRectMake(0, 0, 100, 50))
-        signInButton.center = view.center
-        
-        view.addSubview(signInButton)*/
+        NotificationCenter.default.addObserver(self, selector: #selector(SignInController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SignInController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,22 +61,40 @@ class SignInController: UIViewController/*, GIDSignInUIDelegate, GIDSignInDelega
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
+    
 }
 
-extension SignInController {
-    /*func signIn(_ signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
-        if error != nil {
-            print(error)
-            return
+// MARK: Setup of the keyboard
+extension SignInController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        switch textField
+        {
+        case UserName:
+            Password.becomeFirstResponder()
+            break
+        default:
+            textField.resignFirstResponder()
         }
+        return true
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
         
-        print("email -> \(user.profile.email)")
-        print("picture -> \(user.profile.imageURLWithDimension(400))")
-        print("firstname -> \(user.profile.name)")
-        print("lastname -> \(user.profile.familyName)")
-        print("token -> \(user.authentication.accessToken)")
-    }*/
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
+    }
 }
 
 // MARK: Check if user is logged
@@ -132,13 +143,5 @@ extension SignInController {
                     }
                 }
         }
-    }
-}
-
-//MARK: Hide status bar
-extension SignInController
-{
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
 }

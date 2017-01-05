@@ -735,6 +735,6 @@ extension MediaPlayerViewController: DZNEmptyDataSetSource {
 // MARK: Hide status bar
 extension MediaPlayerViewController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }

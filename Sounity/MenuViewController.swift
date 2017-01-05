@@ -113,6 +113,6 @@ extension MenuViewController {
 // MARK: Hide Top Bar
 extension MenuViewController {
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }

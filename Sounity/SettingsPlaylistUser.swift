@@ -256,6 +256,6 @@ class SettingsPlaylistUser: FormViewController {
 
 extension SettingsPlaylistUser {
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }

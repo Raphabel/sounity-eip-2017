@@ -221,6 +221,6 @@ extension CreateEventController {
 //MARK: Hide status bar
 extension CreateEventController {
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }

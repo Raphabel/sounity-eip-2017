@@ -299,6 +299,6 @@ extension UserSettingsViewController {
 // MARK: Hide Top Bar
 extension UserSettingsViewController {
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }
