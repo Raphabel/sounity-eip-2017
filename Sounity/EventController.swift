@@ -66,6 +66,12 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         self.listenMusicChanged()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        // In order to make user aware the user has left the event
+        print("Close socket connection")
+        SocketIOManager.sharedInstance.restartConnection()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if (!user.checkUserConnected() && self.isViewLoaded) {
             DispatchQueue.main.async(execute: { () -> Void in

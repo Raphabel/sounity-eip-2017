@@ -88,13 +88,19 @@ extension PlaylistEventController {
 
 // MARK: Playlist handler functions
 extension PlaylistEventController {
+    func getBackHomePage () {
+        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     func getPlaylistEvent () {
         SocketIOManager.sharedInstance.connectToEventWithToken(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
                 if !(datasList.null != nil) {
                     if (datasList["status"] == 400) {
                         let alert = DisplayAlert(title: "Event", message: datasList["message"].stringValue)
-                        alert.openAlertError()
+                        alert.openAlertConfirmationWithCallbackNoOption(self.getBackHomePage)
                         return
                     } else {
                         SocketIOManager.sharedInstance.setCurrentTransactionId(idTransactionReceived: datasList["transactionId"].intValue)
@@ -157,7 +163,17 @@ extension PlaylistEventController {
     func listenBannedSocket() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.BANNED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
-            print("You have been banned -> \(data)")
+            print("User has been banned -> \(data)")
+            
+            SocketIOManager.sharedInstance.restartConnection()
+            
+            let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+            let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
+            self.present(vc, animated: true, completion: nil)
+            
+            let alert = DisplayAlert(title: "Event", message: data["message"].stringValue)
+            alert.openAlertError()
+
         }
     }
     
@@ -165,6 +181,15 @@ extension PlaylistEventController {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.BAN.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
             print("User has been banned -> \(data)")
+            
+            let barViewControllers = self.tabBarController?.viewControllers
+            let svc = barViewControllers![EventController.TABITEM.activity.rawValue] as! ActivitiesEventController
+            svc.addActivitiesTimeline("User has been banned", content: data["message"].stringValue, type: ActivitiesEventController.TYPE_ACTIVITY_ICON.BANNED, extra: "")
+            
+            if (!SocketIOManager.sharedInstance.registerNewTransaction(idTransactionReceived: data["transactionId"].intValue)) {
+                let controllerEvent = self.parent?.parent as! EventController
+                controllerEvent.reloadEvent()
+            }
         }
     }
     
@@ -176,7 +201,7 @@ extension PlaylistEventController {
             
             let barViewControllers = self.tabBarController?.viewControllers
             let svc = barViewControllers![EventController.TABITEM.activity.rawValue] as! ActivitiesEventController
-            svc.addActivitiesTimeline(data["message"].stringValue, content: ActivitiesEventController.TYPE_ACTIVITY.LEFT, type: ActivitiesEventController.TYPE_ACTIVITY_ICON.JOINED, extra: "")
+            svc.addActivitiesTimeline("User has left", content: data["message"].stringValue, type: ActivitiesEventController.TYPE_ACTIVITY_ICON.LEFT, extra: "")
             
             if (!SocketIOManager.sharedInstance.registerNewTransaction(idTransactionReceived: data["transactionId"].intValue)) {
                 let controllerEvent = self.parent?.parent as! EventController
