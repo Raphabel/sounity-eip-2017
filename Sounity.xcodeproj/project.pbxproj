@@ -38,6 +38,9 @@
 		541BFAF01DEF839D006334A0 /* MusicSearchCustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE21DEF839D006334A0 /* MusicSearchCustomTableCell.swift */; };
 		541BFAF11DEF839D006334A0 /* SounityTrackResearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE31DEF839D006334A0 /* SounityTrackResearch.swift */; };
 		541BFAF21DEF839D006334A0 /* UserSearchCustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */; };
+		5449E5051E1964110080C41C /* ManageAdminEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5449E5041E1964110080C41C /* ManageAdminEvent.swift */; };
+		5449E5071E1964690080C41C /* InfoUsersEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5449E5061E1964690080C41C /* InfoUsersEventCell.swift */; };
+		5449E5091E1995980080C41C /* ManageUserEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5449E5081E1995980080C41C /* ManageUserEvent.swift */; };
 		545BAEAC1DF4CC4400FC1282 /* AllPlaylistsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BAEA81DF4CC4400FC1282 /* AllPlaylistsTableViewController.swift */; };
 		545BAEAD1DF4CC4400FC1282 /* MediaPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BAEA91DF4CC4400FC1282 /* MediaPlayerViewController.swift */; };
 		545BAEAE1DF4CC4400FC1282 /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BAEAA1DF4CC4400FC1282 /* UserHomeViewController.swift */; };
@@ -175,6 +178,9 @@
 		541BFAE21DEF839D006334A0 /* MusicSearchCustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSearchCustomTableCell.swift; sourceTree = "<group>"; };
 		541BFAE31DEF839D006334A0 /* SounityTrackResearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SounityTrackResearch.swift; sourceTree = "<group>"; };
 		541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchCustomTableCell.swift; sourceTree = "<group>"; };
+		5449E5041E1964110080C41C /* ManageAdminEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAdminEvent.swift; sourceTree = "<group>"; };
+		5449E5061E1964690080C41C /* InfoUsersEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InfoUsersEventCell\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010.swift"; sourceTree = "<group>"; };
+		5449E5081E1995980080C41C /* ManageUserEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageUserEvent.swift; sourceTree = "<group>"; };
 		545BAEA81DF4CC4400FC1282 /* AllPlaylistsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPlaylistsTableViewController.swift; sourceTree = "<group>"; };
 		545BAEA91DF4CC4400FC1282 /* MediaPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPlayerViewController.swift; sourceTree = "<group>"; };
 		545BAEAA1DF4CC4400FC1282 /* UserHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
@@ -406,6 +412,7 @@
 				541BFAE11DEF839D006334A0 /* EventSearchCustomTableCell.swift */,
 				541BFAE21DEF839D006334A0 /* MusicSearchCustomTableCell.swift */,
 				541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */,
+				5449E5061E1964690080C41C /* InfoUsersEventCell.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -444,6 +451,8 @@
 				541BFAD81DEF839D006334A0 /* ConsultEventController.swift */,
 				541BFADB1DEF839D006334A0 /* CreateEventController.swift */,
 				541BFADC1DEF839D006334A0 /* EventSearchController.swift */,
+				5449E5041E1964110080C41C /* ManageAdminEvent.swift */,
+				5449E5081E1995980080C41C /* ManageUserEvent.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -1004,7 +1013,7 @@
 				TargetAttributes = {
 					54AE84331DEF3A66003715EE = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 6K53GFFFAN;
+						DevelopmentTeam = CU3VFVSKVK;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -1267,6 +1276,7 @@
 				545F440B1DF78358001C7D73 /* SocketIOClientOption.swift in Sources */,
 				541BFAE61DEF839D006334A0 /* ConsultEventController.swift in Sources */,
 				545F44031DF78358001C7D73 /* SocketEnginePacketType.swift in Sources */,
+				5449E5091E1995980080C41C /* ManageUserEvent.swift in Sources */,
 				5409394A1DF7695C0011052A /* ChatMessageTableCell.swift in Sources */,
 				547D906A1DF1EE56008C636A /* RoutesAPIDeezer.swift in Sources */,
 				54FFF2DD1DF49FB700E6DA7B /* LocationRow.swift in Sources */,
@@ -1317,6 +1327,7 @@
 				5409393F1DF7693A0011052A /* ChatController.swift in Sources */,
 				2D0DE3641DFBF86D0042E116 /* AroundMeViewController.swift in Sources */,
 				545F43FE1DF78358001C7D73 /* SocketAckManager.swift in Sources */,
+				5449E5071E1964690080C41C /* InfoUsersEventCell.swift in Sources */,
 				545BAEAE1DF4CC4400FC1282 /* UserHomeViewController.swift in Sources */,
 				545F440E1DF78358001C7D73 /* SocketLogger.swift in Sources */,
 				545F44091DF78358001C7D73 /* SocketIOClient.swift in Sources */,
@@ -1328,6 +1339,7 @@
 				2D0DE3661DFBF9D80042E116 /* AroundMe.swift in Sources */,
 				54FFF2DF1DF4A15F00E6DA7B /* ImageRow.swift in Sources */,
 				545F440D1DF78358001C7D73 /* SocketIOClientStatus.swift in Sources */,
+				5449E5051E1964110080C41C /* ManageAdminEvent.swift in Sources */,
 				547D90521DF1E44B008C636A /* NamePlaylistCell.swift in Sources */,
 				54AE847A1DEF430F003715EE /* LoginSignUpController.swift in Sources */,
 				545BAEAD1DF4CC4400FC1282 /* MediaPlayerViewController.swift in Sources */,
@@ -1484,10 +1496,10 @@
 			baseConfigurationReference = FA613755F610EDD35CB96E66 /* Pods-Sounity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6K53GFFFAN;
+				DEVELOPMENT_TEAM = CU3VFVSKVK;
 				INFOPLIST_FILE = Sounity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.epitech.SounityFinal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sounity.Sounity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1498,10 +1510,10 @@
 			baseConfigurationReference = D7C48F4B6E96085F7968657D /* Pods-Sounity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6K53GFFFAN;
+				DEVELOPMENT_TEAM = CU3VFVSKVK;
 				INFOPLIST_FILE = Sounity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.epitech.SounityFinal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sounity.Sounity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

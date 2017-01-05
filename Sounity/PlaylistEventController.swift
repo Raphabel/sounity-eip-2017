@@ -47,6 +47,7 @@ class PlaylistEventController: UIViewController, UITableViewDelegate, DZNEmptyDa
         self.listenNewMusicAddedSocket()
         self.listenNewJoined()
         self.listenMusicLiked()
+        self.listenMusicLiked()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -87,13 +88,19 @@ extension PlaylistEventController {
 
 // MARK: Playlist handler functions
 extension PlaylistEventController {
+    func getBackHomePage () {
+        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     func getPlaylistEvent () {
         SocketIOManager.sharedInstance.connectToEventWithToken(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
                 if !(datasList.null != nil) {
                     if (datasList["status"] == 400) {
                         let alert = DisplayAlert(title: "Event", message: datasList["message"].stringValue)
-                        alert.openAlertError()
+                        alert.openAlertConfirmationWithCallbackNoOption(self.getBackHomePage)
                         return
                     } else {
                         SocketIOManager.sharedInstance.setCurrentTransactionId(idTransactionReceived: datasList["transactionId"].intValue)
@@ -142,7 +149,59 @@ extension PlaylistEventController {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.NEW_MESSAGE.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
             
+            print("New message received -> \(data)")
+            
             self.addNewBadgeOnTabBar(EventController.TABITEM.chat)
+            
+            if (!SocketIOManager.sharedInstance.registerNewTransaction(idTransactionReceived: data["transactionId"].intValue)) {
+                let controllerEvent = self.parent?.parent as! EventController
+                controllerEvent.reloadEvent()
+            }
+        }
+    }
+    
+    func listenBannedSocket() {
+        SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.BANNED.rawValue) { (dataArray, Socket) -> Void in
+            let data = JSON(dataArray[0])
+            print("User has been banned -> \(data)")
+            
+            SocketIOManager.sharedInstance.restartConnection()
+            
+            let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+            let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
+            self.present(vc, animated: true, completion: nil)
+            
+            let alert = DisplayAlert(title: "Event", message: data["message"].stringValue)
+            alert.openAlertError()
+
+        }
+    }
+    
+    func listenBanSocket() {
+        SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.BAN.rawValue) { (dataArray, Socket) -> Void in
+            let data = JSON(dataArray[0])
+            print("User has been banned -> \(data)")
+            
+            let barViewControllers = self.tabBarController?.viewControllers
+            let svc = barViewControllers![EventController.TABITEM.activity.rawValue] as! ActivitiesEventController
+            svc.addActivitiesTimeline("User has been banned", content: data["message"].stringValue, type: ActivitiesEventController.TYPE_ACTIVITY_ICON.BANNED, extra: "")
+            
+            if (!SocketIOManager.sharedInstance.registerNewTransaction(idTransactionReceived: data["transactionId"].intValue)) {
+                let controllerEvent = self.parent?.parent as! EventController
+                controllerEvent.reloadEvent()
+            }
+        }
+    }
+    
+    func listenLeftSocket() {
+        SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.LEFT.rawValue) { (dataArray, Socket) -> Void in
+            let data = JSON(dataArray[0])
+            
+            print("User has left -> \(data)")
+            
+            let barViewControllers = self.tabBarController?.viewControllers
+            let svc = barViewControllers![EventController.TABITEM.activity.rawValue] as! ActivitiesEventController
+            svc.addActivitiesTimeline("User has left", content: data["message"].stringValue, type: ActivitiesEventController.TYPE_ACTIVITY_ICON.LEFT, extra: "")
             
             if (!SocketIOManager.sharedInstance.registerNewTransaction(idTransactionReceived: data["transactionId"].intValue)) {
                 let controllerEvent = self.parent?.parent as! EventController
@@ -155,6 +214,8 @@ extension PlaylistEventController {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_LIKED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
             
+            print("New music liked -> \(data)")
+
             if (!SocketIOManager.sharedInstance.registerNewTransaction(idTransactionReceived: data["transactionId"].intValue)) {
                 let controllerEvent = self.parent?.parent as! EventController
                 controllerEvent.reloadEvent()
@@ -184,6 +245,9 @@ extension PlaylistEventController {
     func listenNewJoined() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.NEW_JOINED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
+            
+            print("New user joinned -> \(data)")
+            
             let barViewControllers = self.tabBarController?.viewControllers
             let svc = barViewControllers![EventController.TABITEM.activity.rawValue] as! ActivitiesEventController
             svc.addActivitiesTimeline(data["nickname"].stringValue, content: ActivitiesEventController.TYPE_ACTIVITY.JOINED, type: ActivitiesEventController.TYPE_ACTIVITY_ICON.JOINED, extra: "")
@@ -194,6 +258,8 @@ extension PlaylistEventController {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_ADDED.rawValue) { (dataArray, Socket) -> Void in
             let subJson = JSON(dataArray[0])
             
+            print("New music added -> \(subJson)")
+            
             if (!SocketIOManager.sharedInstance.registerNewTransaction(idTransactionReceived: subJson["transactionId"].intValue)) {
                 let controllerEvent = self.parent?.parent as! EventController
                 controllerEvent.reloadEvent()
@@ -203,8 +269,6 @@ extension PlaylistEventController {
                 dateFormatter.locale = enUSPosixLocale as Locale!
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                 let myDate = dateFormatter.string(from: NSDate() as Date)
-                
-                print("pourquoi tu ajoutes")
                 
                 self.playlist.insert(MusicPlaylistEvent(_id: subJson["id"].intValue, _apiId: subJson["apiId"].intValue, _artist: subJson["artist"].stringValue, _title: subJson["title"].stringValue, _url: subJson["url"].stringValue, _cover: subJson["cover"].stringValue, _duration: subJson["duration"].doubleValue, _addedBy: subJson["nickname"].stringValue, _addedAt: myDate, _like: 1, _dislike: 0, _liked: false, _disliked: false), at: subJson["newPos"].intValue)
                 

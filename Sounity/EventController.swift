@@ -66,6 +66,12 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         self.listenMusicChanged()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        // In order to make user aware the user has left the event
+        print("Close socket connection")
+        SocketIOManager.sharedInstance.restartConnection()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if (!user.checkUserConnected() && self.isViewLoaded) {
             DispatchQueue.main.async(execute: { () -> Void in
@@ -348,12 +354,19 @@ extension EventController {
                         
                         self.titleMusic.text = self.trackPlayed.title
                         self.typeMusic.text = self.trackPlayed.artist
-                        if (self.trackPlayed.cover == "") {
+                        if (self.trackPlayed.cover.isEmpty) {
                             self.InteractivePView.coverImage = UIImage(named: "defaultCoverIPV")
                         }
                         else if (Reachability.isConnectedToNetwork() == true) {
                             self.blurImage.imageFromServerURL(urlString: self.trackPlayed.cover)
-                            self.InteractivePView.coverImage = self.blurImage.image
+                            
+                            let urlCover = URL(string: self.trackPlayed.cover)
+                            DispatchQueue.global().async {
+                                let data = try? Data(contentsOf: urlCover!)
+                                DispatchQueue.main.async {
+                                    self.InteractivePView.coverImage = UIImage(data: data!)
+                                }
+                            }
                         }
                         
                         self.playerItem = AVPlayerItem( url:NSURL( string:self.trackPlayed.streamLink )! as URL )
@@ -415,12 +428,19 @@ extension EventController {
                         
                         self.titleMusic.text = self.trackPlayed.title
                         self.typeMusic.text = self.trackPlayed.artist
-                        if (self.trackPlayed.cover == "") {
+                        if (self.trackPlayed.cover.isEmpty) {
                             self.InteractivePView.coverImage = UIImage(named: "defaultCoverIPV")
                         }
                         else if (Reachability.isConnectedToNetwork() == true) {
                             self.blurImage.imageFromServerURL(urlString: self.trackPlayed.cover)
-                            self.InteractivePView.coverImage = self.blurImage.image
+                            
+                            let urlCover = URL(string: self.trackPlayed.cover)
+                            DispatchQueue.global().async {
+                                let data = try? Data(contentsOf: urlCover!)
+                                DispatchQueue.main.async {
+                                    self.InteractivePView.coverImage = UIImage(data: data!)
+                                }
+                            }
                         }
                         
                         self.playerItem = AVPlayerItem( url:NSURL( string:self.trackPlayed.streamLink )! as URL )

@@ -11,6 +11,7 @@ import Foundation
 class SounityAPI {
     enum ROUTES: String {
         case LOGIN = "/login"
+        case TOKEN = "/token"
         case CREATE_USER = "/user"
         case CHECK_NICKNAME = "/user/check/nickname"
         case COUNTRIES = "/countries"
@@ -37,6 +38,9 @@ class SounityAPI {
         case MUSIC_PAUSED = "music:paused"
         case MUSIC_CHANGED = "music:changed"
         case NEW_JOINED = "event:joined"
+        case BANNED = "event:banned"
+        case LEFT = "event:left"
+        case BAN = "event:ban"
     }
     
     enum PROVIDER_MUSIC: String {

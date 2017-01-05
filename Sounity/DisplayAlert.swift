@@ -61,6 +61,24 @@ class DisplayAlert {
         _ = alert.showCustom(self.title, subTitle: self.message, color: colorError, icon: UIImage(named: "iconSounityWhite")!, closeButtonTitle: "OK")
     }
     
+    func openAlertConfirmationWithCallbackNoOption(_ callback: @escaping () -> ()) {
+        let alertAppearance = SCLAlertView.SCLAppearance(
+            showCircularIcon: true,
+            kCircleIconHeight: 30,
+            kCircleHeight: 55,
+            showCloseButton: false,
+            shouldAutoDismiss: false,
+            hideWhenBackgroundViewIsTapped: true
+        )
+        let alert = SCLAlertView(appearance: alertAppearance)
+        alert.addButton("Ok") {
+            callback()
+            alert.hideView()
+        }
+        let colorError = UIColor(red: CGFloat(0xF4)/255 ,green: CGFloat(0x43)/255 ,blue: CGFloat(0x36)/255 ,alpha: 1)
+        _ = alert.showCustom(self.title, subTitle: self.message, color: colorError, icon: UIImage(named: "iconSounityWhite")!)
+    }
+    
     func openAlertConfirmationWithCallback(_ callback: @escaping () -> ()) {
         let alertAppearance = SCLAlertView.SCLAppearance(
             showCircularIcon: true,
