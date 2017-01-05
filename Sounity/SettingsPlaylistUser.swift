@@ -112,7 +112,7 @@ class SettingsPlaylistUser: FormViewController {
             .responseJSON { response in
                 if let apiResponse = response.result.value {
                     let jsonResponse = JSON(apiResponse)
-                    if ((response.response?.statusCode)! != 200) {
+                    if ((response.response?.statusCode)! == 400) {
                         let alert = DisplayAlert(title: ("Playlist Save"), message: jsonResponse["message"].stringValue)
                         alert.openAlertError()
                     }
