@@ -89,7 +89,7 @@ extension HomeController {
             .selectedMenuItemLabelColor(ColorSounity.orangeSounity)
         ]
         
-        swiftPagesView = CAPSPageMenu(viewControllers: controllersArray, frame: CGRect(x: 0.0, y: 42.0, width: self.view.frame.width, height: self.view.frame.height), pageMenuOptions: parameters)
+        swiftPagesView = CAPSPageMenu(viewControllers: controllersArray, frame: CGRect(x: 0.0, y: 60.0, width: self.view.frame.width, height: self.view.frame.height), pageMenuOptions: parameters)
         swiftPagesView.viewBackgroundColor = ColorSounity.swfitPagesBackgroundColor
         swiftPagesView.enableHorizontalBounce = true
         
@@ -119,7 +119,7 @@ extension HomeController {
 //MARK: Hide status bar
 extension HomeController {
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }
 

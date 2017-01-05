@@ -175,6 +175,6 @@ extension SearchMusicLocalTableViewController: UITableViewDataSource {
 // MARK: Hide status bar
 extension SearchMusicLocalTableViewController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }
