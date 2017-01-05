@@ -11,6 +11,7 @@ import Foundation
 class SounityAPI {
     enum ROUTES: String {
         case LOGIN = "/login"
+        case TOKEN = "/token"
         case CREATE_USER = "/user"
         case CHECK_NICKNAME = "/user/check/nickname"
         case COUNTRIES = "/countries"

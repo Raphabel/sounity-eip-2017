@@ -47,9 +47,24 @@ class SignInController: UIViewController/*, GIDSignInUIDelegate, GIDSignInDelega
     override func viewDidAppear(_ animated: Bool) {
         if (user.checkUserConnected() && self.isViewLoaded) {
             DispatchQueue.main.async(execute: { () -> Void in
-                let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
-                let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
-                self.present(vc, animated: true, completion: nil)
+                /*let api = SounityAPI()
+                let parameters: Parameters = ["token" : self.user.token as String]
+                Alamofire.request(api.getRoute(SounityAPI.ROUTES.TOKEN), method: .post, parameters: parameters, headers: nil)
+                    .validate(statusCode: 200..<501)
+                    .validate(contentType: ["application/json"])
+                    .responseJSON { response in
+                        if let apiResponse = response.result.value {
+                            let jsonResponse = JSON(apiResponse)
+                            if ((response.response?.statusCode)! == 400) {
+                                let alert = DisplayAlert(title: "Login", message: jsonResponse["message"].stringValue)
+                                alert.openAlertError()
+                            } else {*/
+                                let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+                                let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
+                                self.present(vc, animated: true, completion: nil)
+                            /*}
+                        }
+                }*/
             })
         }
     }
