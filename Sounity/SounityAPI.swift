@@ -38,6 +38,9 @@ class SounityAPI {
         case MUSIC_PAUSED = "music:paused"
         case MUSIC_CHANGED = "music:changed"
         case NEW_JOINED = "event:joined"
+        case BANNED = "event:banned"
+        case LEFT = "event:left"
+        case BAN = "event:ban"
     }
     
     enum PROVIDER_MUSIC: String {

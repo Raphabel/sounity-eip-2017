@@ -623,7 +623,6 @@
         <!--Manage Admin Event-->
         <scene sceneID="LQE-qY-qbz">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3Th-ad-DvV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Yt2-76-VHZ" customClass="ManageAdminEvent" customModule="Sounity" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ng1-pB-ySW"/>
@@ -701,6 +700,7 @@
                         <outlet property="userSearchBox" destination="Oba-lR-BWX" id="0F8-Vl-QJr"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Th-ad-DvV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3309.5999999999999" y="-3349.4752623688159"/>
         </scene>

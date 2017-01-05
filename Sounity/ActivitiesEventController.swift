@@ -28,10 +28,13 @@ class ActivitiesEventController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: Enumeration about activity icon and title
     enum TYPE_ACTIVITY_ICON: String {
-        case NEW_SONG = "UnknownMusicCover"
-        case LIKE = "musicLiked"
-        case DISLIKE = "musicDisliked"
-        case JOINED = "UnknownUserCover"
+        case NEW_SONG = "activitiesSong"
+        case LIKE = "activitiesLiked"
+        case DISLIKE = "activitiesDisliked"
+        case UNDO = "activitiesUndo"
+        case JOINED = "activitiesJoinned"
+        case BANNED = "activitiesBanned"
+        case LEFT = "activitiesLeft"
     }
 
     enum TYPE_ACTIVITY: String {
@@ -41,6 +44,7 @@ class ActivitiesEventController: UIViewController, UITableViewDataSource, UITabl
         case DISLIKE = "Disliked a song in the playlist."
         case UNDISLIKE = "Undisliked a song in the playlist."
         case JOINED = "Joined the event."
+        case LEFT = ""
     }
     
     // MARK: Override functions

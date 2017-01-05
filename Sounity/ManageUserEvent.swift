@@ -104,7 +104,7 @@ extension ManageUserEvent: UICollectionViewDataSource {
         })
         
         if (tmp[indexPath.item].banned) {
-            cell.backgroundColor = ColorSounity.orangeSounity
+            cell.backgroundColor = UIColor(red: CGFloat(0xF4)/255 ,green: CGFloat(0x43)/255 ,blue: CGFloat(0x36)/255 ,alpha: 1)
         } else if (!tmp[indexPath.item].banned && tmp[indexPath.item].participating) {
             cell.backgroundColor = ColorSounity.navigationBarColor
         } else {
@@ -179,24 +179,15 @@ extension ManageUserEvent {
     }
     
     func banUserToEvent(_ user: UserBasicInfo) {
-        let idUserToRemove = user.id
-        
-        let api = SounityAPI()
-        let url = (api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT) + "/" + String(self.idEventSent) + "/" + "ban")
-        let headers = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
-        
-        Alamofire.request(url, method: .post, parameters : ["id": idUserToRemove], headers: headers)
-            .validate(statusCode: 200..<500)
-            .validate(contentType: ["application/json"])
-            .responseJSON { response in
-                if let apiResponse = response.result.value {
-                    let jsonResponse = JSON(apiResponse)
-                    if ((response.response?.statusCode)! != 200) {
-                        let alert = DisplayAlert(title: "Ban User", message: jsonResponse["message"].stringValue)
+        SocketIOManager.sharedInstance.banUserFromEvent(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject, "userId": user.id as AnyObject], completionHandler: { (datasList) -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
+                if !(datasList.null != nil) {
+                    if (datasList["status"] == 400) {
+                        let alert = DisplayAlert(title: "Ban User", message: datasList["message"].stringValue)
                         alert.openAlertError()
                     }
                     else {
-                        let alert = DisplayAlert(title: "Ban User", message: ("The user : '\(user.nickname)' has been banned."))
+                        let alert = DisplayAlert(title: "Ban User", message: datasList["message"].stringValue)
                         alert.openAlertSuccess()
                         
                         for (index, elem) in self.resultResearch.enumerated() {
@@ -216,22 +207,32 @@ extension ManageUserEvent {
                         self.UsersEvent.reloadData()
                     }
                 }
-        }
+            })
+        })
     }
     
     func showOptionsUser(userInfo: UserBasicInfo) {
-        let optionMenu = UIAlertController(title: nil, message: userInfo.nickname, preferredStyle: .actionSheet)
+        var message = userInfo.nickname
         
-        let unbannedUser = UIAlertAction(title: "Unbanned user", style: .destructive, handler: {
+        if (userInfo.banned) {
+            message = "\(message) is banned"
+        } else if (userInfo.participating) {
+            message = "\(message) is participating"
+        } else {
+            message = "\(message) is not participating"
+        }
+        
+        let optionMenu = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+        
+        /*let unbannedUser = UIAlertAction(title: "Unbanned user", style: .destructive, handler: {
             (alert: UIAlertAction!) -> Void in
             let alert = DisplayAlert(title: "Remove ban user", message: ("This function hasn't been coded yet..."))
             alert.openAlertError()
-        })
+        })*/
         
         let bannedUser = UIAlertAction(title: "Ban user", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            let alert = DisplayAlert(title: "Ban user", message: ("This function hasn't been coded yet..."))
-            alert.openAlertError()
+            self.banUserToEvent(userInfo)
         })
         
         let inviteUser = UIAlertAction(title: "Invite user", style: .default, handler: {
@@ -240,22 +241,22 @@ extension ManageUserEvent {
             alert.openAlertError()
         })
         
-        let kickUser = UIAlertAction(title: "Kick user", style: .default, handler: {
+        /*let kickUser = UIAlertAction(title: "Kick user", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             let alert = DisplayAlert(title: "Kick user", message: ("This function hasn't been coded yet..."))
             alert.openAlertError()
-        })
+        })*/
         
         let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: {
             (alert: UIAlertAction!) -> Void in })
         
         if (userInfo.banned) {
-            optionMenu.addAction(unbannedUser)
+            //optionMenu.addAction(unbannedUser)
         } else if (!userInfo.banned && !userInfo.participating) {
             optionMenu.addAction(inviteUser)
         } else  {
             optionMenu.addAction(bannedUser)
-            optionMenu.addAction(kickUser)
+            //optionMenu.addAction(kickUser)
         }
         optionMenu.addAction(cancel)
         
@@ -370,6 +371,8 @@ extension ManageUserEvent {
                     }
                     else {
                         self.usersEvent.removeAll()
+                        
+                        print(jsonResponse)
                         
                         self.navigationItem.title = "Event's users"
                         
