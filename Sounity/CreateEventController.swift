@@ -21,7 +21,7 @@ class CreateEventController: UIViewController, MKMapViewDelegate, CLLocationMana
     //MARK: UIElements variables
     @IBOutlet var nameEvent: UITextField!
     @IBOutlet var locationNameEvent: UITextField!
-    @IBOutlet var descriptionEvent: KMPlaceholderTextView!
+    @IBOutlet var descriptionEvent: UITextView!
     @IBOutlet var publicEvent: UISwitch!
     @IBOutlet var maxUserEvent: UILabel!
     @IBOutlet var stepperEvent: UIStepper!
@@ -43,6 +43,13 @@ class CreateEventController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        nameEvent.delegate = self
+        locationNameEvent.delegate = self
+        descriptionEvent.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(CreateEventController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CreateEventController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         loadInitEvent()
     }
@@ -222,5 +229,54 @@ extension CreateEventController {
 extension CreateEventController {
     override var prefersStatusBarHidden: Bool {
         return false
+    }
+}
+
+// MARK: Setup of the keyboard
+extension CreateEventController : UITextFieldDelegate, UITextViewDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        switch textField
+        {
+        case nameEvent:
+            locationNameEvent.becomeFirstResponder()
+            break
+        case locationNameEvent:
+            descriptionEvent.becomeFirstResponder()
+            break
+        case descriptionEvent:
+            descriptionEvent.resignFirstResponder()
+            break
+        default:
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
+    {
+        if(text == "\n")
+        {
+            view.endEditing(true)
+            return false
+        }
+        else { return true }
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if ((notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= 0
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if ((notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += 0
+            }
+        }
     }
 }
