@@ -11,6 +11,7 @@ import InteractivePlayerView
 import GuillotineMenu
 import AVFoundation
 import Alamofire
+import SCLAlertView
 import SwiftyJSON
 
 class EventController: UIViewController, InteractivePlayerViewDelegate {
@@ -27,6 +28,8 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     @IBOutlet var navItem: UINavigationItem!
     @IBOutlet var barButton: UIButton!
     @IBOutlet var settingsButton: UIButton!
+    @IBOutlet var addPlaylistButton: UIBarButtonItem!
+    
     
     // MARK: Media player variables
     var playerItem:AVPlayerItem?
@@ -49,6 +52,12 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         case activity = 3
     }
     
+    //MARK: User's playlist
+    var ownPlaylist = [Playlist]()
+    
+    //MARK: Tableview prgramatically created to display user's playlists
+    var tableviewPopup = UITableView()
+    
     // MARK: Guillotine menu variable
     fileprivate lazy var presentationAnimator = GuillotineTransitionAnimation()
     
@@ -61,6 +70,7 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         self.view.backgroundColor = UIColor.clear
 
         self.initPlayer()
+        self.getUserOwnPlaylists()
         
         self.listenMusicPlayed()
         self.listenMusicPaused()
@@ -124,6 +134,127 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     }
 }
 
+// MARK: Playlists User Manager
+extension EventController: UITableViewDelegate, UITableViewDataSource {
+    @IBAction func displayPopupAddToPlaylist(_ sender: AnyObject) {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCircularIcon: true,
+            kCircleIconHeight: 30,
+            kCircleHeight: 55,
+            showCloseButton: true,
+            shouldAutoDismiss: false,
+            hideWhenBackgroundViewIsTapped: true
+        )
+        
+        // Initialize SCLAlertView using custom Appearance
+        let alert = SCLAlertView(appearance: appearance)
+        
+        // Create the subview
+        let subview = UIView(frame: CGRect(x: 0,y: 10,width: 200,height: 250))
+        
+        // Add subtitle
+        let label = UILabel(frame: CGRect(x: ((subview.frame.width - 180) / 2),y: 0,width: 190,height: 20))
+        label.font = UIFont(name: "TimesNewRomanPS-ItalicMT", size: 12)
+        label.text = "Add this playlist to your event"
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        subview.addSubview(label)
+        
+        // Add tableview
+        self.tableviewPopup.frame =  CGRect(x: ((subview.frame.width - 180) / 2),y: 40,width: 180,height: 200)
+        self.tableviewPopup.delegate = self
+        self.tableviewPopup.dataSource = self
+        self.tableviewPopup.allowsSelection = true
+        self.tableviewPopup.register(UITableViewCell.self, forCellReuseIdentifier: "cellPlaylistName")
+        if (self.ownPlaylist.count > 0) {
+            subview.addSubview(self.tableviewPopup)
+        } else {
+            // Add message no playlist
+            let labelEmptyPlaylistsList = UILabel(frame: CGRect(x: ((subview.frame.width - 180) / 2),y: 40,width: 190,height: 20))
+            labelEmptyPlaylistsList.font = UIFont(name: "TimesNewRomanPS-BoldMT", size: 12)
+            labelEmptyPlaylistsList.text = "You don't have any playlist"
+            labelEmptyPlaylistsList.textAlignment = .center
+            labelEmptyPlaylistsList.lineBreakMode = .byWordWrapping
+            labelEmptyPlaylistsList.numberOfLines = 0
+            
+            subview.addSubview(labelEmptyPlaylistsList)
+            subview.frame = CGRect(x: 0,y: 10,width: 200,height: 90)
+        }
+        alert.customSubview = subview
+        _ = alert.showCustom(self.nameEvent, subTitle: "", color: ColorSounity.navigationBarColor, icon: UIImage(named: "iconSounityWhite")!, closeButtonTitle: "Cancel")
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellPlaylistName", for: indexPath)
+        cell.isUserInteractionEnabled = true
+        cell.textLabel?.text = self.ownPlaylist[indexPath.row].name
+        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(EventController.addPlaylistToUserEvent)))
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ownPlaylist.count
+    }
+    
+    func getUserOwnPlaylists() {
+        let api = SounityAPI()
+        let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)/playlists"
+        let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
+        
+        Alamofire.request(url, method: .get, headers: headers)
+            .validate(statusCode: 200..<501)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response in
+                if let apiResponse = response.result.value {
+                    let jsonResponse = JSON(apiResponse)
+                    if ((response.response?.statusCode)! != 200) {
+                        let alert = DisplayAlert(title: "Load your playlist", message: jsonResponse["message"].stringValue)
+                        alert.openAlertError()
+                    }
+                    else {
+                        for (_,subJson):(String, JSON) in jsonResponse {
+                            self.ownPlaylist.append(Playlist(name: subJson["name"].stringValue, create_date: subJson["create_date"].stringValue, id: subJson["id"].intValue, desc: subJson["description"].stringValue, _picture: subJson["picture"].stringValue))
+                        }
+                    }
+                }
+        }
+    }
+    
+    func addPlaylistToUserEvent(_ sender: UITapGestureRecognizer) {
+        let touch = sender.location(in: tableviewPopup)
+        if let indexPath = tableviewPopup.indexPathForRow(at: touch) {
+            let api = SounityAPI()
+            let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
+            let parameters : [String : AnyObject] = [
+                "id": self.ownPlaylist[indexPath.row].id as AnyObject,
+            ]
+            
+            Alamofire.request(api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT) + "/" + "\(self.idEventSent)" + "/" + "playlist", method: .post, parameters : parameters, headers: headers)
+                .validate(statusCode: 200..<500)
+                .validate(contentType: ["application/json"])
+                .responseJSON { response in
+                    if let apiResponse = response.result.value {
+                        let jsonResponse = JSON(apiResponse)
+                        if ((response.response?.statusCode)! == 400) {
+                            let alert = DisplayAlert(title: "Add playlist", message: jsonResponse["message"].stringValue)
+                            alert.openAlertError()
+                        }
+                        else {
+                            let alert = DisplayAlert(title: "Add Playlist", message: ("The playlist : '\(self.ownPlaylist[indexPath.row].name)' has been added to the event."))
+                            alert.openAlertSuccess()
+                        }
+                    }
+            }
+            
+        }
+    }
+}
+
 // MARK: Media player functions
 extension EventController {
     func initPlayer() {
@@ -152,6 +283,7 @@ extension EventController {
             self.playPauseView.isHidden = true
             self.player?.isMuted = true
             self.settingsButton.isHidden = true
+            self.addPlaylistButton.isEnabled = false
         }
     }
     
