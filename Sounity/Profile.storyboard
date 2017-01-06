@@ -539,7 +539,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="settingsMenu"/>
                                                 <connections>
-                                                    <action selector="settingsButtonTapped:" destination="Ymz-I8-amC" eventType="touchUpInside" id="P4J-sj-Fqg"/>
+                                                    <segue destination="1XP-IP-101" kind="show" identifier="changemysettings" id="a1M-0f-da1"/>
                                                 </connections>
                                             </button>
                                         </barButtonItem>
@@ -614,9 +614,6 @@
                         <outlet property="imageView" destination="q1R-SC-Nk0" id="mhp-9y-9Ae"/>
                         <outlet property="nickname" destination="7zS-Tp-Ucb" id="b8d-gh-CC9"/>
                         <outlet property="tableView" destination="NBm-c0-X2Z" id="6n1-pD-w9D"/>
-                        <segue destination="1XP-IP-101" kind="show" identifier="changemysettings" id="8oe-zX-1cr">
-                            <nil key="action"/>
-                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tVN-Fy-5Az" userLabel="First Responder" sceneMemberID="firstResponder"/>

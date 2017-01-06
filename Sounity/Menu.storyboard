@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oN0-bM-Gbi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oN0-bM-Gbi">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,18 +22,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14Y-ya-cDW">
-                                <rect key="frame" x="17" y="38" width="16" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="15" id="1x5-6T-JGQ"/>
-                                    <constraint firstAttribute="width" constant="16" id="CyH-dN-Qes"/>
-                                    <constraint firstAttribute="height" constant="16" id="DAx-y4-UQR"/>
-                                </constraints>
-                                <state key="normal" image="ic_menu"/>
-                                <connections>
-                                    <action selector="closeMenu:" destination="oN0-bM-Gbi" eventType="touchUpInside" id="JZM-dk-jmD"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoSounity" translatesAutoresizingMaskIntoConstraints="NO" id="7X6-IW-wTJ">
                                 <rect key="frame" x="59" y="94" width="257" height="70"/>
                                 <constraints>
@@ -48,7 +36,7 @@
                                     <constraint firstAttribute="width" constant="190" id="8ae-vQ-qbo"/>
                                     <constraint firstAttribute="height" constant="30" id="8mb-yZ-3lB"/>
                                 </constraints>
-                                <inset key="titleEdgeInsets" minX="-160" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="titleEdgeInsets" minX="-163" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="150" maxY="0.0"/>
                                 <state key="normal" title="Home" image="searchMenu">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -97,7 +85,7 @@
                                     <constraint firstAttribute="width" constant="190" id="Gyg-cF-hBf"/>
                                     <constraint firstAttribute="height" constant="30" id="XtD-tJ-oQj"/>
                                 </constraints>
-                                <inset key="titleEdgeInsets" minX="-65" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="titleEdgeInsets" minX="-145" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="150" maxY="0.0"/>
                                 <state key="normal" title="Timeline" image="timelineIcon">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -116,7 +104,7 @@
                                     <constraint firstAttribute="height" constant="30" id="RH0-c3-DSt"/>
                                     <constraint firstAttribute="width" constant="190" id="WCZ-aM-UtT"/>
                                 </constraints>
-                                <inset key="titleEdgeInsets" minX="-65" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="titleEdgeInsets" minX="-61" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="150" maxY="0.0"/>
                                 <state key="normal" title="Around me" image="aroundMenu">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -125,11 +113,23 @@
                                     <action selector="aroundMeButtonTappedWithSender:" destination="oN0-bM-Gbi" eventType="touchUpInside" id="ygv-1s-Pew"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14Y-ya-cDW">
+                                <rect key="frame" x="16" y="28" width="16" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="15" id="1x5-6T-JGQ"/>
+                                    <constraint firstAttribute="width" constant="16" id="CyH-dN-Qes"/>
+                                    <constraint firstAttribute="height" constant="16" id="DAx-y4-UQR"/>
+                                </constraints>
+                                <state key="normal" image="ic_menu"/>
+                                <connections>
+                                    <action selector="closeMenu:" destination="oN0-bM-Gbi" eventType="touchUpInside" id="JZM-dk-jmD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.25490196079999999" green="0.24313725489999999" blue="0.30980392159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Mf5-Vm-YkR" firstAttribute="centerY" secondItem="enC-7L-nB2" secondAttribute="centerY" id="56O-C7-n43"/>
-                            <constraint firstItem="14Y-ya-cDW" firstAttribute="leading" secondItem="enC-7L-nB2" secondAttribute="leadingMargin" constant="1" id="5ju-gy-G5o"/>
+                            <constraint firstItem="14Y-ya-cDW" firstAttribute="leading" secondItem="enC-7L-nB2" secondAttribute="leadingMargin" id="5ju-gy-G5o"/>
                             <constraint firstItem="7X6-IW-wTJ" firstAttribute="centerX" secondItem="enC-7L-nB2" secondAttribute="centerX" id="5wC-SW-aSt"/>
                             <constraint firstItem="uwh-GR-dhe" firstAttribute="trailing" secondItem="Mf5-Vm-YkR" secondAttribute="trailing" id="9Bo-5f-05c"/>
                             <constraint firstItem="WMh-zW-kWp" firstAttribute="leading" secondItem="0IC-Hb-fIp" secondAttribute="leading" id="Adr-46-mJc"/>
@@ -140,7 +140,7 @@
                             <constraint firstItem="Mf5-Vm-YkR" firstAttribute="leading" secondItem="0IC-Hb-fIp" secondAttribute="leading" id="Rtn-c4-tBR"/>
                             <constraint firstItem="uwh-GR-dhe" firstAttribute="leading" secondItem="7X6-IW-wTJ" secondAttribute="leading" constant="33" id="Wd1-xx-fca"/>
                             <constraint firstItem="0IC-Hb-fIp" firstAttribute="leading" secondItem="ODb-iA-znE" secondAttribute="leading" id="Xll-Zm-RNb"/>
-                            <constraint firstItem="Y43-52-HWQ" firstAttribute="top" secondItem="14Y-ya-cDW" secondAttribute="bottom" constant="613" id="ahu-zY-HD1"/>
+                            <constraint firstItem="Y43-52-HWQ" firstAttribute="top" secondItem="14Y-ya-cDW" secondAttribute="bottom" constant="623" id="ahu-zY-HD1"/>
                             <constraint firstItem="uwh-GR-dhe" firstAttribute="top" secondItem="7X6-IW-wTJ" secondAttribute="bottom" constant="100" id="cxs-sF-IFO"/>
                             <constraint firstItem="0IC-Hb-fIp" firstAttribute="top" secondItem="Mf5-Vm-YkR" secondAttribute="bottom" constant="25" id="gnD-yx-1HC"/>
                             <constraint firstItem="Mf5-Vm-YkR" firstAttribute="top" secondItem="uwh-GR-dhe" secondAttribute="bottom" constant="25" id="lBf-El-UUH"/>
@@ -161,6 +161,6 @@
         <image name="logoutMenu" width="128" height="128"/>
         <image name="profileMenu" width="128" height="128"/>
         <image name="searchMenu" width="128" height="128"/>
-        <image name="timelineIcon" width="50" height="50"/>
+        <image name="timelineIcon" width="128" height="128"/>
     </resources>
 </document>

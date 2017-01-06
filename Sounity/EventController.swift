@@ -26,6 +26,7 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     @IBOutlet var typeMusic: UILabel!
     @IBOutlet var navItem: UINavigationItem!
     @IBOutlet var barButton: UIButton!
+    @IBOutlet var settingsButton: UIButton!
     
     // MARK: Media player variables
     var playerItem:AVPlayerItem?
@@ -68,7 +69,7 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         // In order to make user aware the user has left the event
-        print("Close socket connection")
+        print("Restart socket connection")
         SocketIOManager.sharedInstance.restartConnection()
     }
     
@@ -150,6 +151,7 @@ extension EventController {
         if (owner == false) {
             self.playPauseView.isHidden = true
             self.player?.isMuted = true
+            self.settingsButton.isHidden = true
         }
     }
     
@@ -472,6 +474,17 @@ extension EventController {
                     }
                 }
         }
+    }
+}
+
+// MARK: Go to settings 
+extension EventController {
+    @IBAction func goToSettingsEvent (_ sender: UIButton) {
+        print("coucou")
+        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ChangeSettingsEventView") as! ChangeSettingsEventController
+        vc.idEventSent = self.idEventSent
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
