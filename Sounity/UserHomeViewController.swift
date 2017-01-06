@@ -118,11 +118,6 @@ extension UserHomeViewController {
         presentationAnimator.animationDuration = 0.3
         self.present(menuVC, animated: true, completion: nil)
     }
-    
-    
-    @IBAction func settingsButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "changemysettings", sender: self)
-    }
 }
 
 // MARK: Initialisation functions 
