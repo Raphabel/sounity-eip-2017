@@ -12,6 +12,7 @@ import SwiftDate
 import SwiftyJSON
 import SwiftMoment
 import CoreLocation
+import Photos
 
 class ChangeSettingsEventController: FormViewController {
     
@@ -29,11 +30,29 @@ class ChangeSettingsEventController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ImageRow.defaultCellUpdate = { cell, row in
+            cell.accessoryView?.layer.cornerRadius = 17
+            cell.accessoryView?.frame = CGRect(0, 0, 34, 34)
+        }
+        
         self.loadEventInfo()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // Segue that show the setting's event page
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showManagerUsersEvent") {
+            let vc = segue.destination as! ManageAdminEvent
+            vc.idEventSent = self.idEventSent
+        }
+        
+        else if (segue.identifier == "showUsersEvent") {
+            let vc = segue.destination as! ManageUserEvent
+            vc.idEventSent = self.idEventSent
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -87,6 +106,7 @@ extension ChangeSettingsEventController {
     }
     
     func saveSettingsEvent() {
+        var newCoverURL: URL?
         let api = SounityAPI()
         let headers = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
         
@@ -108,6 +128,9 @@ extension ChangeSettingsEventController {
         if let rowLocation = self.form.rowBy(tag: "location_event")! as? LocationRow {
             self.eventInfo.longitude = rowLocation.value?.coordinate.longitude ?? self.eventInfo.longitude
             self.eventInfo.latitude = rowLocation.value?.coordinate.latitude ?? self.eventInfo.latitude
+        }
+        if let rowCover = self.form.rowBy(tag: "picture")! as? ImageRow {
+            newCoverURL = rowCover.imageURL ?? URL(string: "")
         }
         
         let parameters: Parameters = [
@@ -135,12 +158,56 @@ extension ChangeSettingsEventController {
                         alert.openAlertError()
                     }
                     else {
-                        let alert = DisplayAlert(title: "Save Event", message: "Information has been saved.")
-                        alert.openAlertSuccess()
+                        if (newCoverURL == nil) {
+                            let alert = DisplayAlert(title: ("Event settings"), message: "Your event has been updated")
+                            alert.openAlertSuccess()
+                        } else {
+                            self.uploadPicture(path: newCoverURL! as NSURL)
+                        }
                     }
                 }
         }
         
+    }
+    
+    func uploadPicture(path: NSURL) {
+        let fetchResult = PHAsset.fetchAssets(withALAssetURLs: [path.absoluteURL!], options: nil)
+        if let photo = fetchResult.firstObject {
+            PHImageManager.default().requestImage(for: photo, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: nil) {
+                image, info in
+                
+                let api = SounityAPI()
+                let headersUpload = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
+                let urlUploadImage:String = (api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT) + "/\(self.idEventSent)/image")
+                
+                Alamofire.upload(multipartFormData: { multipartFormData in
+                    if let imageData = UIImageJPEGRepresentation(image!, 1) {
+                        multipartFormData.append(imageData, withName: "image", fileName: "image.png", mimeType: "image/png")
+                    }},
+                    to: urlUploadImage, headers: headersUpload,
+                    encodingCompletion: { encodingResult in
+                        switch encodingResult {
+                            case .success(let upload, _, _):
+                                upload.responseJSON { response in
+                                    if (response.result.isFailure) {
+                                        let alert = DisplayAlert(title: ("Upload Picture"), message: "Error while uploading picture")
+                                        alert.openAlertError()
+                                    } else {
+                                        let data = JSON(response.result.value!)
+                                        if (data["url"].exists()) {
+                                            self.user.setHisPicture(data["url"].stringValue)
+                                        }
+                                        let alert = DisplayAlert(title: "Playlist settings", message: "Information has been saved.")
+                                        alert.openAlertSuccess()
+                                    }
+                                }
+                            case .failure(let encodingError):
+                                let alert = DisplayAlert(title: ("Upload Picture"), message: String(describing: encodingError))
+                                alert.openAlertError()
+                            }
+                })
+            }
+        }
     }
 }
 
@@ -184,11 +251,16 @@ extension ChangeSettingsEventController {
                             }
                             
                             
-                            /*+++ Section("Event cover")
-                            <<< ImageRow(){
-                                $0.title = "Cover"
-                                $0.value = UIImage(named: "UnknownEventCover")
-                            }*/
+                            +++ Section("Event cover")
+                            <<< ImageRow("picture"){
+                                $0.title = "Picture"
+                                $0.tag = "picture"
+                                $0.sourceTypes = .PhotoLibrary
+                                $0.clearAction = .no
+                                let picPath = NSURL(string: self.eventInfo.picture)
+                                let data = NSData(contentsOf: picPath! as URL)
+                                $0.value = data != nil ? UIImage(data:data! as Data) : UIImage(named: "UnknownEventCover")
+                            }
                             
                             +++ Section("Event info users")
                             <<< SwitchRow("public_event") {
@@ -205,10 +277,16 @@ extension ChangeSettingsEventController {
                                 $0.title = "Max_users"
                                 $0.value = Double(self.eventInfo.user_max)
                             }
-                            /*<<< ButtonRow("Managed Users") {
-                             $0.title = $0.tag
-                             $0.presentationMode = .SegueName(segueName: "showManagerUsersEvent", completionCallback: nil)
-                             }*/
+                            
+                            +++ Section("Managed Users")
+                            <<< ButtonRow("Admins") {
+                                $0.title = $0.tag
+                                $0.presentationMode = .segueName(segueName: "showManagerUsersEvent", onDismiss: nil)
+                            }
+                            <<< ButtonRow("Users") {
+                                $0.title = $0.tag
+                                $0.presentationMode = .segueName(segueName: "showUsersEvent", onDismiss: nil)
+                            }
                             
                             +++ Section("Event info time")
                             <<< DateTimeInlineRow("expired_date") {
@@ -243,7 +321,7 @@ extension ChangeSettingsEventController {
 
 extension ChangeSettingsEventController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }
 

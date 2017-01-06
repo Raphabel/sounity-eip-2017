@@ -26,6 +26,7 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     @IBOutlet var typeMusic: UILabel!
     @IBOutlet var navItem: UINavigationItem!
     @IBOutlet var barButton: UIButton!
+    @IBOutlet var settingsButton: UIButton!
     
     // MARK: Media player variables
     var playerItem:AVPlayerItem?
@@ -64,6 +65,12 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         self.listenMusicPlayed()
         self.listenMusicPaused()
         self.listenMusicChanged()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        // In order to make user aware the user has left the event
+        print("Restart socket connection")
+        SocketIOManager.sharedInstance.restartConnection()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -144,6 +151,7 @@ extension EventController {
         if (owner == false) {
             self.playPauseView.isHidden = true
             self.player?.isMuted = true
+            self.settingsButton.isHidden = true
         }
     }
     
@@ -348,12 +356,19 @@ extension EventController {
                         
                         self.titleMusic.text = self.trackPlayed.title
                         self.typeMusic.text = self.trackPlayed.artist
-                        if (self.trackPlayed.cover == "") {
+                        if (self.trackPlayed.cover.isEmpty) {
                             self.InteractivePView.coverImage = UIImage(named: "defaultCoverIPV")
                         }
                         else if (Reachability.isConnectedToNetwork() == true) {
                             self.blurImage.imageFromServerURL(urlString: self.trackPlayed.cover)
-                            self.InteractivePView.coverImage = self.blurImage.image
+                            
+                            let urlCover = URL(string: self.trackPlayed.cover)
+                            DispatchQueue.global().async {
+                                let data = try? Data(contentsOf: urlCover!)
+                                DispatchQueue.main.async {
+                                    self.InteractivePView.coverImage = UIImage(data: data!)
+                                }
+                            }
                         }
                         
                         self.playerItem = AVPlayerItem( url:NSURL( string:self.trackPlayed.streamLink )! as URL )
@@ -415,12 +430,19 @@ extension EventController {
                         
                         self.titleMusic.text = self.trackPlayed.title
                         self.typeMusic.text = self.trackPlayed.artist
-                        if (self.trackPlayed.cover == "") {
+                        if (self.trackPlayed.cover.isEmpty) {
                             self.InteractivePView.coverImage = UIImage(named: "defaultCoverIPV")
                         }
                         else if (Reachability.isConnectedToNetwork() == true) {
                             self.blurImage.imageFromServerURL(urlString: self.trackPlayed.cover)
-                            self.InteractivePView.coverImage = self.blurImage.image
+                            
+                            let urlCover = URL(string: self.trackPlayed.cover)
+                            DispatchQueue.global().async {
+                                let data = try? Data(contentsOf: urlCover!)
+                                DispatchQueue.main.async {
+                                    self.InteractivePView.coverImage = UIImage(data: data!)
+                                }
+                            }
                         }
                         
                         self.playerItem = AVPlayerItem( url:NSURL( string:self.trackPlayed.streamLink )! as URL )
@@ -452,6 +474,17 @@ extension EventController {
                     }
                 }
         }
+    }
+}
+
+// MARK: Go to settings 
+extension EventController {
+    @IBAction func goToSettingsEvent (_ sender: UIButton) {
+        print("coucou")
+        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ChangeSettingsEventView") as! ChangeSettingsEventController
+        vc.idEventSent = self.idEventSent
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -495,7 +528,7 @@ extension EventController {
 // MARK: Hide status bar
 extension EventController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }
 

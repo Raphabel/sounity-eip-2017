@@ -28,10 +28,13 @@ class ActivitiesEventController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: Enumeration about activity icon and title
     enum TYPE_ACTIVITY_ICON: String {
-        case NEW_SONG = "UnknownMusicCover"
-        case LIKE = "musicLiked"
-        case DISLIKE = "musicDisliked"
-        case JOINED = "UnknownUserCover"
+        case NEW_SONG = "activitiesSong"
+        case LIKE = "activitiesLiked"
+        case DISLIKE = "activitiesDisliked"
+        case UNDO = "activitiesUndo"
+        case JOINED = "activitiesJoinned"
+        case BANNED = "activitiesBanned"
+        case LEFT = "activitiesLeft"
     }
 
     enum TYPE_ACTIVITY: String {
@@ -65,7 +68,6 @@ class ActivitiesEventController: UIViewController, UITableViewDataSource, UITabl
         tabItem.badgeValue = nil
         
         self.tableview.reloadData()
-        self.tableview.scrollToBottom()
     }
 }
 
@@ -74,7 +76,23 @@ extension ActivitiesEventController {
     func addActivitiesTimeline(_ username: String, content: TYPE_ACTIVITY, type: TYPE_ACTIVITY_ICON, extra: String) {
         self.activities.append(Activity(_username: username, _content: content.rawValue, _picture: type.rawValue, _extra: extra))
         self.tableview?.reloadData()
-        self.tableview?.scrollToBottom()
+        
+        if (self.tabBarController?.tabBar.selectedItem == self.tabBarController?.tabBar.items?[3]) {
+            return
+        }
+        
+        if let badgeValue = self.tabBarController?.tabBar.items?[3].badgeValue {
+            if let nextValue: Int = ((Int(badgeValue))! + 1) {
+                self.tabBarController?.tabBar.items?[3].badgeValue = String(nextValue)
+            }
+        } else {
+            self.tabBarController?.tabBar.items?[3].badgeValue = "1"
+        }
+    }
+    
+    func addActivitiesTimeline(_ username: String, content: String, type: TYPE_ACTIVITY_ICON, extra: String) {
+        self.activities.append(Activity(_username: username, _content: content, _picture: type.rawValue, _extra: extra))
+        self.tableview?.reloadData()
         
         if (self.tabBarController?.tabBar.selectedItem == self.tabBarController?.tabBar.items?[3]) {
             return

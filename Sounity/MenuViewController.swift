@@ -61,13 +61,13 @@ extension MenuViewController {
 }
 
 // MARK: Go to Timeline Button
-/*extension MenuViewController {
+extension MenuViewController {
     @IBAction func timelineButtonTapped(sender: UIButton) {
         let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Timeline", bundle: nil)
-        let vc = eventStoryBoard.instantiateViewControllerWithIdentifier("TimelineViewID") as! TimelineController
-        self.presentViewController(vc, animated: true, completion: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "TimelineViewID") as! TimelineController
+        self.present(vc, animated: true, completion: nil)
     }
-}*/
+}
 
 // MARK: Go to My Profile Button
 extension MenuViewController {
@@ -79,13 +79,13 @@ extension MenuViewController {
 }
 
 // MARK: Go to Around Me Button
-/*extension MenuViewController {
+extension MenuViewController {
     @IBAction func aroundMeButtonTapped(sender: AnyObject) {
         let eventStoryBoard: UIStoryboard = UIStoryboard(name: "AroundMe", bundle: nil)
-        let vc = eventStoryBoard.instantiateViewControllerWithIdentifier("AroundMeViewID") as! AroundMeController
-        self.presentViewController(vc, animated: true, completion: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "AroundMeViewID") as! AroundMeViewController
+        self.present(vc, animated: true, completion: nil)
     }
-}*/
+}
 
 // MARK: Logout Button
 extension MenuViewController {
@@ -113,6 +113,6 @@ extension MenuViewController {
 // MARK: Hide Top Bar
 extension MenuViewController {
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }

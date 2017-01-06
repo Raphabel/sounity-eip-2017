@@ -103,7 +103,7 @@ extension SearchMusicLocalTableViewController {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) { searchActive = true; }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) { searchActive = false; }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) { searchActive = false; }
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) { searchActive = false; }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) { searchActive = false; searchBar.resignFirstResponder() }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         timer?.invalidate()
@@ -175,6 +175,6 @@ extension SearchMusicLocalTableViewController: UITableViewDataSource {
 // MARK: Hide status bar
 extension SearchMusicLocalTableViewController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }

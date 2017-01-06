@@ -35,8 +35,6 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.nickname.text = user.username
-        self.descriptionUser.text = user.descriptionUser
         self.UserGetInfo()
         self.setUpHeaderProfil()
     }
@@ -45,6 +43,13 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
         super.viewWillAppear(animated)
         
         UserGetInfo()
+        
+        if user.picture == "" {
+            self.imageView.image = UIImage(named: "UnknownUserCover")!
+        }
+        else if (Reachability.isConnectedToNetwork() == true) {
+            self.imageView.imageFromServerURL(urlString: self.user.picture)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -89,6 +94,9 @@ extension UserHomeViewController {
                         self.user.setHisLastName(jsonResponse["last_name"].stringValue)
                         self.user.setHisBirthday(jsonResponse["birth_date"].stringValue)
                         self.user.setHisDescription(jsonResponse["description"].stringValue)
+                        
+                        self.nickname.text = self.user.username
+                        self.descriptionUser.text = self.user.descriptionUser
                     }
                 }
         }
@@ -110,11 +118,6 @@ extension UserHomeViewController {
         presentationAnimator.animationDuration = 0.3
         self.present(menuVC, animated: true, completion: nil)
     }
-    
-    
-    @IBAction func settingsButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "changemysettings", sender: self)
-    }
 }
 
 // MARK: Initialisation functions 
@@ -122,7 +125,7 @@ extension UserHomeViewController {
     func setUpHeaderProfil () {
         self.imageView.layer.cornerRadius = imageView.frame.width/2
         self.imageView.layer.masksToBounds = true
-        _ = self.putShadowOnView(imageView, shadowColor: UIColor(white: 100, alpha: 100), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
+        _ = self.putShadowOnView(imageView, shadowColor: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
         
         if user.picture == "" {
             self.imageView.image = UIImage(named: "UnknownUserCover")!
@@ -137,8 +140,8 @@ extension UserHomeViewController {
 extension UserHomeViewController {
     func putShadowOnView(_ viewToWorkUpon:UIView, shadowColor:UIColor, radius:CGFloat, offset:CGSize, opacity:Float)-> UIView{
         var shadowFrame = CGRect.zero // Modify this if needed
-        shadowFrame.size.width = 500
-        shadowFrame.size.height = 500
+        shadowFrame.size.width = viewToWorkUpon.frame.width
+        shadowFrame.size.height = viewToWorkUpon.frame.height
         shadowFrame.origin.x = 0
         shadowFrame.origin.y = 0
         
@@ -174,6 +177,6 @@ extension UserHomeViewController: UIViewControllerTransitioningDelegate {
 // MARK: Hide status bar
 extension UserHomeViewController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }

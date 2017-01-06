@@ -13,11 +13,11 @@ import SwiftyJSON
 class SignUpController: UIViewController {
     
     // MARK: UIElements variables
-    @IBOutlet weak var PasswordCheck: HexagonalTextFieldPassword!
-    @IBOutlet weak var UserName: HexagonalTextFieldWithIcon!
-    @IBOutlet weak var Password: HexagonalTextFieldPassword!
+    @IBOutlet weak var PasswordCheck: UITextField!
+    @IBOutlet weak var UserName: UITextField!
+    @IBOutlet weak var Password: UITextField!
     @IBOutlet weak var ButtonCreateAccount: HexagonalButton!
-    @IBOutlet weak var Email: HexagonalTextFieldWithIcon!
+    @IBOutlet weak var Email: UITextField!
     @IBOutlet weak var TextFieldPicker: UITextField!
     
     // MARK: Picker view variables
@@ -35,6 +35,19 @@ class SignUpController: UIViewController {
     // MARK: Override functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        UserName.delegate = self
+        Email.delegate = self
+        Password.delegate = self
+        PasswordCheck.delegate = self
+        
+        UserName.autocorrectionType = .no
+        Email.autocorrectionType = .no
+        Password.autocorrectionType = .no
+        PasswordCheck.autocorrectionType = .no
+
+        NotificationCenter.default.addObserver(self, selector: #selector(SignUpController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SignUpController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         //Set pickOptions
         getCountriesAndLanguages();
@@ -61,6 +74,48 @@ class SignUpController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+}
+
+// MARK: Setup of the keyboard
+extension SignUpController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        switch textField
+        {
+        case UserName:
+            Email.becomeFirstResponder()
+            break
+        case Email:
+            Password.becomeFirstResponder()
+            break
+        case Password:
+            PasswordCheck.becomeFirstResponder()
+            break
+        case PasswordCheck:
+            PasswordCheck.resignFirstResponder()
+            break
+        default:
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
     }
 }
 
@@ -131,7 +186,7 @@ extension SignUpController {
                 if let apiResponse = response.result.value {
                     let jsonResponse = JSON(apiResponse)
                     
-                    if ((response.response?.statusCode)! != 200) {
+                    if ((response.response?.statusCode)! == 400) {
                         let alert = DisplayAlert(title: "Create Account", message: jsonResponse["message"].stringValue)
                         alert.openAlertError()
                     }
@@ -197,12 +252,5 @@ extension SignUpController: UIPickerViewDataSource, UIPickerViewDelegate {
         let color = pickOption[0][pickerView.selectedRow(inComponent: 0)]
         let model = pickOption[1][pickerView.selectedRow(inComponent: 1)]
         TextFieldPicker.text = color + " | " + model
-    }
-}
-
-//MARK: Hide status bar
-extension SignUpController {
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
 }

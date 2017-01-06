@@ -11,7 +11,7 @@ import Alamofire
 import SwiftDate
 import SwiftyJSON
 import CoreLocation
-//import AssetsLibrary
+import Photos
 
 class SettingsPlaylistUser: FormViewController {
     
@@ -22,6 +22,11 @@ class SettingsPlaylistUser: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ImageRow.defaultCellUpdate = { cell, row in
+            cell.accessoryView?.layer.cornerRadius = 17
+            cell.accessoryView?.frame = CGRect(0, 0, 34, 34)
+        }
+
         loadEventInfo()
     }
     
@@ -73,6 +78,7 @@ class SettingsPlaylistUser: FormViewController {
     }
     
     func saveSettingPlaylist() {
+        var newCoverURL: URL?
         var newName: String? = ""
         var newDescription: String? = ""
         var newPublicInfo: Bool? = true
@@ -89,17 +95,16 @@ class SettingsPlaylistUser: FormViewController {
         if let rowPublic = self.form.rowBy(tag: "public_playlist")! as? SwitchRow {
             newPublicInfo = rowPublic.value ?? true
         }
-        /*if let rowCover = self.form.rowBy(tag: "picturePlaylist")! as? ImageRow {
+        if let rowCover = self.form.rowBy(tag: "picture")! as? ImageRow {
             newCoverURL = rowCover.imageURL ?? URL(string: "")
-        }*/
+        }
         
         let parameters: Parameters = [
             "id": self.idPlaylistSent,
             "name": newName!,
             "description": newDescription!,
             "public": newPublicInfo!,
-            "picture": /*String(newCoverURL!).isEmpty ? */"http://pepseo.fr/wp-content/uploads/2015/03/Live-Events-01.jpg"// : newCoverURL!
-            ]
+        ]
         
         Alamofire.request(api.getRoute(SounityAPI.ROUTES.PLAYLIST_USER_DELETE), method: .put, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<501)
@@ -107,51 +112,61 @@ class SettingsPlaylistUser: FormViewController {
             .responseJSON { response in
                 if let apiResponse = response.result.value {
                     let jsonResponse = JSON(apiResponse)
-                    if ((response.response?.statusCode)! != 200) {
+                    if ((response.response?.statusCode)! == 400) {
                         let alert = DisplayAlert(title: ("Playlist Save"), message: jsonResponse["message"].stringValue)
                         alert.openAlertError()
                     }
                     else {
-                        //if (String(newCoverURL!).isEmpty) {
-                            let alert = DisplayAlert(title: "Save Playlist", message: "Information has been saved.")
+                        if (newCoverURL == nil) {
+                            let alert = DisplayAlert(title: ("Playlist settings"), message: "Your playlist has been updated")
                             alert.openAlertSuccess()
-                        //}
-                        //else {
-                            //self.uploadPicture(newCoverURL!)
-                        //}
+                        } else {
+                            self.uploadPicture(path: newCoverURL! as NSURL)
+                        }
                     }
                 }
         }
     }
     
-    /*func uploadPicture(path: NSURL) {
-        getImageFromPath(path, onComplete: {image in
-            let api = SounityAPI()
-            let headersUpload = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
-            let urlUploadImage:String = (api.getRoute(SounityAPI.ROUTES.PLAYLIST_USER_DELETE) + "\(self.idPlaylistSent)" + "/image")
-            
-            Alamofire.upload(.POST, urlUploadImage, headers: headersUpload, multipartFormData: { multipartFormData in
-                if let imageData = UIImageJPEGRepresentation(image!, 1) {
-                    multipartFormData.appendBodyPart(data: imageData, name: "image", fileName: "playlist-\(self.idPlaylistSent)", mimeType: "image/png")
-                }},
-                encodingMemoryThreshold: Manager.MultipartFormDataEncodingMemoryThreshold,
-                encodingCompletion: { encodingResult in
-                    switch encodingResult {
-                    case .Success(let upload, _, _):
-                        upload.responseJSON { response in
-                            debugPrint(response)
-                            let alert = DisplayAlert(title: "Save Playlist", message: "Information has been saved.")
-                            alert.openAlertSuccess()
-                        }
-                    case .Failure(let encodingError):
-                        print(encodingError)
-                        let alert = DisplayAlert(title: ("Upload Picture"), message: String(encodingError))
-                        alert.openAlertError()
-                    }
-            })
-        })
-    }*/
-    
+    func uploadPicture(path: NSURL) {
+        let fetchResult = PHAsset.fetchAssets(withALAssetURLs: [path.absoluteURL!], options: nil)
+        if let photo = fetchResult.firstObject {
+            PHImageManager.default().requestImage(for: photo, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: nil) {
+                image, info in
+                
+                let api = SounityAPI()
+                let headersUpload = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
+                let urlUploadImage:String = (api.getRoute(SounityAPI.ROUTES.PLAYLIST_USER_DELETE) + "/\(self.idPlaylistSent)/image")
+                
+                Alamofire.upload(multipartFormData: { multipartFormData in
+                    if let imageData = UIImageJPEGRepresentation(image!, 1) {
+                        multipartFormData.append(imageData, withName: "image", fileName: "image.png", mimeType: "image/png")
+                    }},
+                    to: urlUploadImage, headers: headersUpload,
+                    encodingCompletion: { encodingResult in
+                        switch encodingResult {
+                            case .success(let upload, _, _):
+                                upload.responseJSON { response in
+                                    if (response.result.isFailure) {
+                                        let alert = DisplayAlert(title: ("Upload Picture"), message: "Error while uploading picture")
+                                        alert.openAlertError()
+                                    } else {
+                                        let data = JSON(response.result.value!)
+                                        if (data["url"].exists()) {
+                                            self.user.setHisPicture(data["url"].stringValue)
+                                        }
+                                        let alert = DisplayAlert(title: "Playlist settings", message: "Information has been saved.")
+                                        alert.openAlertSuccess()
+                                    }
+                                }
+                            case .failure(let encodingError):
+                                let alert = DisplayAlert(title: ("Upload Picture"), message: String(describing: encodingError))
+                                alert.openAlertError()
+                            }
+                })
+            }
+        }
+    }
     func actionOnEvent (_ _title: String, _msg: String, mode: String) {
         let alert = DisplayAlert(title: _title, message: _msg)
         alert.openAlertConfirmationWithCallback(mode == "delete" ? self.deletePlaylist : self.saveSettingPlaylist)
@@ -176,7 +191,7 @@ class SettingsPlaylistUser: FormViewController {
                     else {
                         let namePlaylist = jsonResponse["name"].stringValue
                         let descriptionPlaylist = jsonResponse["description"].stringValue
-                        //let coverPlaylist = jsonResponse["picture"].stringValue
+                        let coverPlaylist = jsonResponse["picture"].stringValue
                         let publicPlaylist = jsonResponse["public"].boolValue
 
                         self.form
@@ -194,14 +209,15 @@ class SettingsPlaylistUser: FormViewController {
                             }
                             
                             +++ Section("Playlist cover")
-                            /*<<< ImageRow("picturePlaylist"){
-                                $0.title = "Cover"
+                            <<< ImageRow("picture"){
+                                $0.title = "Picture"
+                                $0.tag = "picture"
                                 $0.sourceTypes = .PhotoLibrary
-                                $0.clearAction = .No
+                                $0.clearAction = .no
                                 let picPath = NSURL(string: coverPlaylist)
-                                let data = NSData(contentsOfURL: picPath!)
-                                $0.value = UIImage(data:data!)
-                            }*/
+                                let data = NSData(contentsOf: picPath! as URL)
+                                $0.value = data != nil ? UIImage(data:data! as Data) : UIImage(named: "UnknownMusicCover")
+                            }
                             
                             +++ Section("Playlist info")
                             <<< SwitchRow("public_playlist") {
@@ -237,19 +253,9 @@ class SettingsPlaylistUser: FormViewController {
         }
     }
 }
-/*
-func getImageFromPath(path: NSURL, onComplete:((image: UIImage?) -> Void)) {
-    let assetsLibrary = ALAssetsLibrary()
-    let url = path
-    assetsLibrary.assetForURL(url, resultBlock: { (asset) -> Void in
-        onComplete(image: UIImage(CGImage: asset.defaultRepresentation().fullResolutionImage().takeUnretainedValue()))
-        }, failureBlock: { (error) -> Void in
-            onComplete(image: nil)
-    })
-}*/
 
 extension SettingsPlaylistUser {
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }

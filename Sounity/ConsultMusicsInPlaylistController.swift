@@ -673,6 +673,6 @@ extension ConsultMusicsInPlaylistController: UITableViewDataSource, DZNEmptyData
 
 extension ConsultMusicsInPlaylistController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }

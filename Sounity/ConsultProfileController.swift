@@ -120,7 +120,7 @@ extension ConsultProfileController {
         self.user.setIDprofile(IDUserConsulted!)
         
         self.imageView.layer.masksToBounds = true
-        _ = self.putShadowOnView(self.imageView, shadowColor: UIColor(white: 100, alpha: 100), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
+        _ = self.putShadowOnView(self.imageView, shadowColor: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
         
         if self.pictureUserConsulted == "" {
             self.imageView.image = UIImage(named: "UnknownUserCover")!
@@ -136,8 +136,8 @@ extension ConsultProfileController {
     
     func putShadowOnView(_ viewToWorkUpon:UIView, shadowColor:UIColor, radius:CGFloat, offset:CGSize, opacity:Float)-> UIView{
         var shadowFrame = CGRect.zero
-        shadowFrame.size.width = 500
-        shadowFrame.size.height = 500
+        shadowFrame.size.width = viewToWorkUpon.frame.width
+        shadowFrame.size.height = viewToWorkUpon.frame.height
         shadowFrame.origin.x = 0
         shadowFrame.origin.y = 0
         
@@ -160,7 +160,7 @@ extension ConsultProfileController {
 extension ConsultProfileController {
     func loadSamplePLaylist(_ IDProfile: Int)  {
         
-        let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(IDProfile)"
+        let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(IDProfile)/playlists"
         let headers = [ "Authorization": "Bearer \(userConnect.token)", "Content-Type": "application/x-www-form-urlencoded"]
         
         Alamofire.request(url, method: .get, headers: headers)
@@ -178,12 +178,12 @@ extension ConsultProfileController {
                         self.playlists.removeAll();
                         self.nbPlaylist = 0
                         
-                        for (_,_):(String, JSON) in jsonResponse["playlists"] {
-                            let _name = jsonResponse["playlists"][self.nbPlaylist!]["name"]
-                            let _create_date = jsonResponse["playlists"][self.nbPlaylist!]["create_date"]
-                            let _id = jsonResponse["playlists"][self.nbPlaylist!]["id"]
-                            let _description = jsonResponse["playlists"][self.nbPlaylist!]["description"]
-                            let _picture = jsonResponse["playlists"][self.nbPlaylist!]["picture"]
+                        for (_,_):(String, JSON) in jsonResponse {
+                            let _name = jsonResponse[self.nbPlaylist!]["name"]
+                            let _create_date = jsonResponse[self.nbPlaylist!]["create_date"]
+                            let _id = jsonResponse[self.nbPlaylist!]["id"]
+                            let _description = jsonResponse[self.nbPlaylist!]["description"]
+                            let _picture = jsonResponse[self.nbPlaylist!]["picture"]
                             let playlist = Playlist(name: _name.stringValue, create_date: _create_date.stringValue, id: _id.intValue, desc: _description.stringValue, _picture: _picture.stringValue)
                             
                             self.playlists.append(playlist)
@@ -369,6 +369,6 @@ extension ConsultProfileController: UITableViewDataSource {
 
 extension ConsultProfileController {
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
 }

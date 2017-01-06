@@ -64,6 +64,7 @@ class UserSearchController: UIViewController, UITableViewDelegate, UISearchBarDe
         if (segue.identifier == "consultProfilController") {
             let navController = segue.destination as! UINavigationController
             let detailController = navController.topViewController as! ConsultProfileController
+            navController.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
 
             detailController.IDUserConsulted = self.resultResearch[userIndex!].id
             detailController.nicknameUserConsulted = self.resultResearch[userIndex!].nickname
@@ -111,12 +112,12 @@ extension UserSearchController {
         if Reachability.isConnectedToNetwork() == true {
             self.startLoading()
             Alamofire.request(api.getRoute(SounityAPI.ROUTES.SEARCH_USER), method: .post, parameters : parameters, headers : headers)
-                .validate(statusCode: 200..<305)
+                .validate(statusCode: 200..<400)
                 .validate(contentType: ["application/json"])
                 .responseJSON { response in
                     if let apiResponse = response.result.value {
                         let jsonResponse = JSON(apiResponse)
-                        if ((response.response?.statusCode)! != 200) {
+                        if ((response.response?.statusCode)! == 400) {
                             let alert = DisplayAlert(title: "Search User", message: jsonResponse["message"].stringValue)
                             alert.openAlertError()
                         }

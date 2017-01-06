@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D0DE3601DFBF7A90042E116 /* AroundMe.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D0DE35F1DFBF7A90042E116 /* AroundMe.storyboard */; };
+		2D0DE3641DFBF86D0042E116 /* AroundMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0DE3631DFBF86D0042E116 /* AroundMeViewController.swift */; };
+		2D0DE3661DFBF9D80042E116 /* AroundMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0DE3651DFBF9D80042E116 /* AroundMe.swift */; };
+		2DB541A91DF96216004C2A07 /* Timeline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB541A81DF96216004C2A07 /* Timeline.storyboard */; };
+		2DB541AB1DF96385004C2A07 /* TimelineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB541AA1DF96385004C2A07 /* TimelineController.swift */; };
+		2DB541AD1DF96E55004C2A07 /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */; };
 		5409393E1DF7693A0011052A /* ActivitiesEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540939391DF7693A0011052A /* ActivitiesEventController.swift */; };
 		5409393F1DF7693A0011052A /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5409393A1DF7693A0011052A /* ChatController.swift */; };
 		540939401DF7693A0011052A /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5409393B1DF7693A0011052A /* EventController.swift */; };
@@ -32,6 +38,9 @@
 		541BFAF01DEF839D006334A0 /* MusicSearchCustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE21DEF839D006334A0 /* MusicSearchCustomTableCell.swift */; };
 		541BFAF11DEF839D006334A0 /* SounityTrackResearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE31DEF839D006334A0 /* SounityTrackResearch.swift */; };
 		541BFAF21DEF839D006334A0 /* UserSearchCustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */; };
+		5449E5051E1964110080C41C /* ManageAdminEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5449E5041E1964110080C41C /* ManageAdminEvent.swift */; };
+		5449E5071E1964690080C41C /* InfoUsersEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5449E5061E1964690080C41C /* InfoUsersEventCell.swift */; };
+		5449E5091E1995980080C41C /* ManageUserEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5449E5081E1995980080C41C /* ManageUserEvent.swift */; };
 		545BAEAC1DF4CC4400FC1282 /* AllPlaylistsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BAEA81DF4CC4400FC1282 /* AllPlaylistsTableViewController.swift */; };
 		545BAEAD1DF4CC4400FC1282 /* MediaPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BAEA91DF4CC4400FC1282 /* MediaPlayerViewController.swift */; };
 		545BAEAE1DF4CC4400FC1282 /* UserHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BAEAA1DF4CC4400FC1282 /* UserHomeViewController.swift */; };
@@ -138,6 +147,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D0DE35F1DFBF7A90042E116 /* AroundMe.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AroundMe.storyboard; sourceTree = "<group>"; };
+		2D0DE3631DFBF86D0042E116 /* AroundMeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AroundMeViewController.swift; sourceTree = "<group>"; };
+		2D0DE3651DFBF9D80042E116 /* AroundMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AroundMe.swift; sourceTree = "<group>"; };
+		2DB541A81DF96216004C2A07 /* Timeline.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Timeline.storyboard; sourceTree = "<group>"; };
+		2DB541AA1DF96385004C2A07 /* TimelineController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineController.swift; sourceTree = "<group>"; };
+		2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
 		540939391DF7693A0011052A /* ActivitiesEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesEventController.swift; sourceTree = "<group>"; };
 		5409393A1DF7693A0011052A /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		5409393B1DF7693A0011052A /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
@@ -163,6 +178,9 @@
 		541BFAE21DEF839D006334A0 /* MusicSearchCustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSearchCustomTableCell.swift; sourceTree = "<group>"; };
 		541BFAE31DEF839D006334A0 /* SounityTrackResearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SounityTrackResearch.swift; sourceTree = "<group>"; };
 		541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchCustomTableCell.swift; sourceTree = "<group>"; };
+		5449E5041E1964110080C41C /* ManageAdminEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAdminEvent.swift; sourceTree = "<group>"; };
+		5449E5061E1964690080C41C /* InfoUsersEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InfoUsersEventCell\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010\U0010.swift"; sourceTree = "<group>"; };
+		5449E5081E1995980080C41C /* ManageUserEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageUserEvent.swift; sourceTree = "<group>"; };
 		545BAEA81DF4CC4400FC1282 /* AllPlaylistsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPlaylistsTableViewController.swift; sourceTree = "<group>"; };
 		545BAEA91DF4CC4400FC1282 /* MediaPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPlayerViewController.swift; sourceTree = "<group>"; };
 		545BAEAA1DF4CC4400FC1282 /* UserHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHomeViewController.swift; sourceTree = "<group>"; };
@@ -294,6 +312,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D0393501DFC0ECB0030B81A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2D0DE3631DFBF86D0042E116 /* AroundMeViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		2D0393511DFC0EDC0030B81A /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				2D0DE35F1DFBF7A90042E116 /* AroundMe.storyboard */,
+			);
+			name = StoryBoard;
+			sourceTree = "<group>";
+		};
+		2D0393521DFC0EF40030B81A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				2D0DE3651DFBF9D80042E116 /* AroundMe.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		2D0DE35E1DFBF74F0042E116 /* AroundMe */ = {
+			isa = PBXGroup;
+			children = (
+				2D0393521DFC0EF40030B81A /* UI */,
+				2D0393511DFC0EDC0030B81A /* StoryBoard */,
+				2D0393501DFC0ECB0030B81A /* Controllers */,
+			);
+			name = AroundMe;
+			sourceTree = "<group>";
+		};
+		2DB541A71DF961E0004C2A07 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				54382BE11E06E6D30029231B /* Controllers */,
+				54382BE01E06E6CB0029231B /* UI */,
+				54382BDF1E06E6C20029231B /* StoryBoard */,
+			);
+			name = Timeline;
+			sourceTree = "<group>";
+		};
 		540939361DF768180011052A /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +412,7 @@
 				541BFAE11DEF839D006334A0 /* EventSearchCustomTableCell.swift */,
 				541BFAE21DEF839D006334A0 /* MusicSearchCustomTableCell.swift */,
 				541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */,
+				5449E5061E1964690080C41C /* InfoUsersEventCell.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -388,6 +451,8 @@
 				541BFAD81DEF839D006334A0 /* ConsultEventController.swift */,
 				541BFADB1DEF839D006334A0 /* CreateEventController.swift */,
 				541BFADC1DEF839D006334A0 /* EventSearchController.swift */,
+				5449E5041E1964110080C41C /* ManageAdminEvent.swift */,
+				5449E5081E1995980080C41C /* ManageUserEvent.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -409,6 +474,30 @@
 				541BFADE1DEF839D006334A0 /* MusicSearchController.swift */,
 			);
 			name = Musics;
+			sourceTree = "<group>";
+		};
+		54382BDF1E06E6C20029231B /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				2DB541A81DF96216004C2A07 /* Timeline.storyboard */,
+			);
+			name = StoryBoard;
+			sourceTree = "<group>";
+		};
+		54382BE01E06E6CB0029231B /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		54382BE11E06E6D30029231B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2DB541AA1DF96385004C2A07 /* TimelineController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		545BAEB01DF4CC5700FC1282 /* Storyboard */ = {
@@ -664,6 +753,8 @@
 		54AE84701DEF40F3003715EE /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				2D0DE35E1DFBF74F0042E116 /* AroundMe */,
+				2DB541A71DF961E0004C2A07 /* Timeline */,
 				54E2816C1DF1BEF70070317C /* EventPlayer */,
 				54E281791DF1C3B50070317C /* Menu */,
 				547D90441DF1E428008C636A /* Profile */,
@@ -971,9 +1062,11 @@
 				545BAEB21DF4CC6500FC1282 /* Profile.storyboard in Resources */,
 				54AE84751DEF415A003715EE /* Authentication.storyboard in Resources */,
 				54AE84421DEF3A66003715EE /* LaunchScreen.storyboard in Resources */,
+				2D0DE3601DFBF7A90042E116 /* AroundMe.storyboard in Resources */,
 				54AE843F1DEF3A66003715EE /* Assets.xcassets in Resources */,
 				540939441DF769410011052A /* Event.storyboard in Resources */,
 				549405AC1DF5DA83007F5D4A /* Default-568h@2x.png in Resources */,
+				2DB541A91DF96216004C2A07 /* Timeline.storyboard in Resources */,
 				54E281811DF1D3EB0070317C /* Search.storyboard in Resources */,
 				54DD13B91DF487B500E8C021 /* InteractivePlayerView.xib in Resources */,
 			);
@@ -1043,14 +1136,14 @@
 		};
 		549405AA1DF5D9FC007F5D4A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 180ab2d0ae3bb00bc51b501aebc6c76ba12a42f0 b03240907fd78ed5db48ed58159c88fa1c4a72d36238579d5a049b1d5615e2a8";
 		};
@@ -1159,6 +1252,7 @@
 				541BFAF21DEF839D006334A0 /* UserSearchCustomTableCell.swift in Sources */,
 				545F44111DF78358001C7D73 /* SocketStringReader.swift in Sources */,
 				547D90551DF1E44B008C636A /* SearchMusicLocalTableViewCell.swift in Sources */,
+				2DB541AB1DF96385004C2A07 /* TimelineController.swift in Sources */,
 				54AE847D1DEF430F003715EE /* RgPageViewController.swift in Sources */,
 				54DD13BC1DF487B500E8C021 /* InteractivePlayerView-dummy.m in Sources */,
 				54E281731DF1BF240070317C /* Event.swift in Sources */,
@@ -1182,6 +1276,7 @@
 				545F440B1DF78358001C7D73 /* SocketIOClientOption.swift in Sources */,
 				541BFAE61DEF839D006334A0 /* ConsultEventController.swift in Sources */,
 				545F44031DF78358001C7D73 /* SocketEnginePacketType.swift in Sources */,
+				5449E5091E1995980080C41C /* ManageUserEvent.swift in Sources */,
 				5409394A1DF7695C0011052A /* ChatMessageTableCell.swift in Sources */,
 				547D906A1DF1EE56008C636A /* RoutesAPIDeezer.swift in Sources */,
 				54FFF2DD1DF49FB700E6DA7B /* LocationRow.swift in Sources */,
@@ -1207,6 +1302,7 @@
 				54AE846B1DEF3E35003715EE /* Reachability.swift in Sources */,
 				54E281741DF1BF240070317C /* MessageChat.swift in Sources */,
 				547D905D1DF1EA2F008C636A /* SearchMusicLocalTableViewController.swift in Sources */,
+				2DB541AD1DF96E55004C2A07 /* TimelineTableViewCell.swift in Sources */,
 				547D904F1DF1E44B008C636A /* DescriptionPlaylistCell.swift in Sources */,
 				547D90541DF1E44B008C636A /* PlaylistToEventCell.swift in Sources */,
 				545F44101DF78358001C7D73 /* SocketParsable.swift in Sources */,
@@ -1229,7 +1325,9 @@
 				547D905E1DF1EA2F008C636A /* SettingsPlaylistUser.swift in Sources */,
 				5465D9C01DEF459B000BE4C8 /* DisplayAlert.swift in Sources */,
 				5409393F1DF7693A0011052A /* ChatController.swift in Sources */,
+				2D0DE3641DFBF86D0042E116 /* AroundMeViewController.swift in Sources */,
 				545F43FE1DF78358001C7D73 /* SocketAckManager.swift in Sources */,
+				5449E5071E1964690080C41C /* InfoUsersEventCell.swift in Sources */,
 				545BAEAE1DF4CC4400FC1282 /* UserHomeViewController.swift in Sources */,
 				545F440E1DF78358001C7D73 /* SocketLogger.swift in Sources */,
 				545F44091DF78358001C7D73 /* SocketIOClient.swift in Sources */,
@@ -1238,8 +1336,10 @@
 				54CF46B01DF1BB140096EFC3 /* Followers.swift in Sources */,
 				547D90501DF1E44B008C636A /* MusicsInPlaylistCell.swift in Sources */,
 				545F43FF1DF78358001C7D73 /* SocketAnyEvent.swift in Sources */,
+				2D0DE3661DFBF9D80042E116 /* AroundMe.swift in Sources */,
 				54FFF2DF1DF4A15F00E6DA7B /* ImageRow.swift in Sources */,
 				545F440D1DF78358001C7D73 /* SocketIOClientStatus.swift in Sources */,
+				5449E5051E1964110080C41C /* ManageAdminEvent.swift in Sources */,
 				547D90521DF1E44B008C636A /* NamePlaylistCell.swift in Sources */,
 				54AE847A1DEF430F003715EE /* LoginSignUpController.swift in Sources */,
 				545BAEAD1DF4CC4400FC1282 /* MediaPlayerViewController.swift in Sources */,
@@ -1399,7 +1499,7 @@
 				DEVELOPMENT_TEAM = CU3VFVSKVK;
 				INFOPLIST_FILE = Sounity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.EIP.Sounity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sounity.Sounity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1413,7 +1513,7 @@
 				DEVELOPMENT_TEAM = CU3VFVSKVK;
 				INFOPLIST_FILE = Sounity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.EIP.Sounity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sounity.Sounity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

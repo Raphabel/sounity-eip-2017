@@ -51,6 +51,9 @@ class ChatController: UIViewController, UITableViewDelegate, DZNEmptyDataSetDele
         
         self.listenNewMessageSocket()
         self.getAllMessages()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,8 +61,7 @@ class ChatController: UIViewController, UITableViewDelegate, DZNEmptyDataSetDele
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         tabItem.badgeValue = nil
         
-        tableview.reloadData()
-        self.tableview.scrollToBottom()
+        self.tableview.reloadData()
     }
 }
 
@@ -152,13 +154,12 @@ extension ChatController: UITableViewDataSource {
     {
         let cell:ChatMessageTableCell = tableView.dequeueReusableCell(withIdentifier: "ChatMessageCustomTableCell", for: indexPath) as! ChatMessageTableCell
         
-        
         if (user.username == self.chatMessages[indexPath.row].nickname) {
             cell.viewOwnUser.isHidden = false
             cell.viewOtherUser.isHidden = true
             cell.viewOwnUser.layer.cornerRadius = 6
             cell.nicknameOwn.text = "You"
-            cell.timeOwn.text = moment(self.chatMessages[indexPath.row].time)?.format("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            cell.timeOwn.text = moment(self.chatMessages[indexPath.row].time)?.format("EEE, HH:mm")
             cell.messageOwn.text = self.chatMessages[indexPath.row].message
             if (self.chatMessages[indexPath.row].picture != "" && Reachability.isConnectedToNetwork() == true) {
                 cell.pictureOwnUser.load.request(with: self.chatMessages[indexPath.row].picture)
@@ -169,7 +170,7 @@ extension ChatController: UITableViewDataSource {
             cell.viewOwnUser.isHidden = true
             cell.viewOtherUser.layer.cornerRadius = 6
             cell.nicknameOther.text = user.username == self.chatMessages[indexPath.row].nickname ? "You" : self.chatMessages[indexPath.row].nickname
-            cell.timeOther.text = moment(self.chatMessages[indexPath.row].time)?.format("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+            cell.timeOther.text = moment(self.chatMessages[indexPath.row].time)?.format("EEE, HH:mm")
             cell.messageOther.text = self.chatMessages[indexPath.row].message
             if (self.chatMessages[indexPath.row].picture != "" && Reachability.isConnectedToNetwork() == true) {
                 
@@ -187,5 +188,31 @@ extension ChatController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return self.chatMessages.count
+    }
+}
+
+// MARK: Setup of the keyboard
+extension ChatController {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height - 50
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height - 50
+            }
+        }
     }
 }

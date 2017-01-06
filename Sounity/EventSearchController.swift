@@ -135,7 +135,7 @@ extension EventSearchController {
         cells.append(cellFactory("ic_event"))
         cells.append(cellFactory("qr_code"))
         
-        let floatingFrame = CGRect(x: self.view.frame.width - 56 - 16, y: self.view.frame.height - 56 - 105, width: 56, height: 56)
+        let floatingFrame = CGRect(x: self.view.frame.width - 56 - 16, y: self.view.frame.height - 56 - 125, width: 56, height: 56)
         let bottomRightButton = createButton(floatingFrame, .up)
         
         self.view.addSubview(bottomRightButton)
