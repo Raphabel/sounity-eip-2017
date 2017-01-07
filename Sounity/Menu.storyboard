@@ -148,6 +148,9 @@
                             <constraint firstItem="WMh-zW-kWp" firstAttribute="top" secondItem="0IC-Hb-fIp" secondAttribute="bottom" constant="25" id="wyZ-Mv-87K"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="profileButton" destination="Mf5-Vm-YkR" id="fjn-Fe-xlw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EDM-LQ-Xoo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -14,6 +14,10 @@ class MenuViewController: UIViewController {
     // MARK: UIELements variables
     var dismissButton: UIButton!
     var titleLabel: UILabel!
+    @IBOutlet var profileButton: UIButton!
+    
+    //MARK: Infos user connected
+    var user = UserConnect();
     
     // MARK: Override functions
     
@@ -40,6 +44,16 @@ class MenuViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        let urlCover = URL(string: user.picture)
+        DispatchQueue.global().async {
+            let data = try? Data(contentsOf: urlCover!)
+            DispatchQueue.main.async {
+                self.profileButton.setImage(UIImage(data: data!), for: .normal)
+                self.profileButton.titleEdgeInsets.left = -((self.profileButton.imageView?.image?.size.width)!) - 2
+                MakeElementRounded().makeElementRounded(self.profileButton.imageView, newSize: self.profileButton.imageView?.frame.width)
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
