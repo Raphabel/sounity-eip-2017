@@ -42,11 +42,13 @@
                                         </barButtonItem>
                                         <rightBarButtonItems>
                                             <barButtonItem systemItem="add" id="gun-aQ-Qs1">
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <action selector="createNewEventWithSender:" destination="sdp-ry-O9C" id="vxy-Ir-4B5"/>
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem image="Localisation" style="done" id="U5C-hU-cdB">
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <action selector="geolocaliosationWithSender:" destination="sdp-ry-O9C" id="fm8-8v-h40"/>
                                                 </connections>

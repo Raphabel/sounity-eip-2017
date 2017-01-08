@@ -612,11 +612,17 @@ extension EventController {
 // MARK: Go to settings 
 extension EventController {
     @IBAction func goToSettingsEvent (_ sender: UIButton) {
-        print("coucou")
-        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+        let alert = DisplayAlert(title: "Event's settings", message: "Cannot access from this page")
+        alert.openAlertError()
+        /*let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
         let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ChangeSettingsEventView") as! ChangeSettingsEventController
         vc.idEventSent = self.idEventSent
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        let navController = UINavigationController.init(rootViewController: vc)
+        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: Selector(""))
+        navController.navigationItem.leftBarButtonItem = backButton
+        navController.navigationItem.hidesBackButton = true
+        self.present(navController, animated: true, completion: nil)*/
     }
 }
 

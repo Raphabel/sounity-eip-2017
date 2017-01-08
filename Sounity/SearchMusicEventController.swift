@@ -48,6 +48,13 @@ class SearchMusicEventController: UIViewController, UITableViewDelegate, UISearc
         self.musicSearchBox.delegate = self
         self.musicSearchBox.placeholder = "Sounity's musics"
     }
+    
+    /**
+     * Called when the user click on the view (outside the UITextField).
+     */
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 // MARK: Empty table view
