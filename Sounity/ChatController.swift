@@ -56,6 +56,23 @@ class ChatController: UIViewController, UITableViewDelegate, DZNEmptyDataSetDele
         NotificationCenter.default.addObserver(self, selector: #selector(ChatController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
+    /**
+     * Called when 'return' key pressed. return NO to ignore.
+     */
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+    /**
+     * Called when the user click on the view (outside the UITextField).
+     */
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
+    
     override func viewDidAppear(_ animated: Bool) {
         let tabArray = self.tabBarController?.tabBar.items as NSArray!
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
