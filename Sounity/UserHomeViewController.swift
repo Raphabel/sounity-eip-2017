@@ -103,7 +103,7 @@ extension UserHomeViewController {
     }
 }
 
-// MARK: Nivagations functions
+// MARK: Navagations functions
 extension UserHomeViewController {
     @IBAction func showMenuAction(_ sender: UIButton) {
         let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Menu", bundle: nil)

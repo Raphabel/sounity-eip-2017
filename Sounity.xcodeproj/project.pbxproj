@@ -10,6 +10,9 @@
 		2D0DE3601DFBF7A90042E116 /* AroundMe.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D0DE35F1DFBF7A90042E116 /* AroundMe.storyboard */; };
 		2D0DE3641DFBF86D0042E116 /* AroundMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0DE3631DFBF86D0042E116 /* AroundMeViewController.swift */; };
 		2D0DE3661DFBF9D80042E116 /* AroundMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0DE3651DFBF9D80042E116 /* AroundMe.swift */; };
+		2D194F8E1E204E23008A98B9 /* TrophiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D194F8D1E204E23008A98B9 /* TrophiesTableViewController.swift */; };
+		2D194F901E2197A6008A98B9 /* TrophiesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D194F8F1E2197A6008A98B9 /* TrophiesTableViewCell.swift */; };
+		2D194F921E224046008A98B9 /* Trophies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D194F911E224046008A98B9 /* Trophies.swift */; };
 		2DB541A91DF96216004C2A07 /* Timeline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB541A81DF96216004C2A07 /* Timeline.storyboard */; };
 		2DB541AB1DF96385004C2A07 /* TimelineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB541AA1DF96385004C2A07 /* TimelineController.swift */; };
 		2DB541AD1DF96E55004C2A07 /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */; };
@@ -150,6 +153,9 @@
 		2D0DE35F1DFBF7A90042E116 /* AroundMe.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AroundMe.storyboard; sourceTree = "<group>"; };
 		2D0DE3631DFBF86D0042E116 /* AroundMeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AroundMeViewController.swift; sourceTree = "<group>"; };
 		2D0DE3651DFBF9D80042E116 /* AroundMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AroundMe.swift; sourceTree = "<group>"; };
+		2D194F8D1E204E23008A98B9 /* TrophiesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrophiesTableViewController.swift; sourceTree = "<group>"; };
+		2D194F8F1E2197A6008A98B9 /* TrophiesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrophiesTableViewCell.swift; sourceTree = "<group>"; };
+		2D194F911E224046008A98B9 /* Trophies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trophies.swift; sourceTree = "<group>"; };
 		2DB541A81DF96216004C2A07 /* Timeline.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Timeline.storyboard; sourceTree = "<group>"; };
 		2DB541AA1DF96385004C2A07 /* TimelineController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineController.swift; sourceTree = "<group>"; };
 		2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
@@ -582,6 +588,7 @@
 				547D904B1DF1E44B008C636A /* PlaylistTableViewCell.swift */,
 				547D904C1DF1E44B008C636A /* PlaylistToEventCell.swift */,
 				547D904D1DF1E44B008C636A /* SearchMusicLocalTableViewCell.swift */,
+				2D194F8F1E2197A6008A98B9 /* TrophiesTableViewCell.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -600,6 +607,7 @@
 			isa = PBXGroup;
 			children = (
 				545BAEA81DF4CC4400FC1282 /* AllPlaylistsTableViewController.swift */,
+				2D194F8D1E204E23008A98B9 /* TrophiesTableViewController.swift */,
 				545BAEA91DF4CC4400FC1282 /* MediaPlayerViewController.swift */,
 				545BAEAA1DF4CC4400FC1282 /* UserHomeViewController.swift */,
 				545BAEAB1DF4CC4400FC1282 /* UserSettingsViewController.swift */,
@@ -800,6 +808,7 @@
 				54CF46AD1DF1BB140096EFC3 /* Music.swift */,
 				54CF46AE1DF1BB140096EFC3 /* Playlist.swift */,
 				54CF46AF1DF1BB140096EFC3 /* User.swift */,
+				2D194F911E224046008A98B9 /* Trophies.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1259,11 +1268,13 @@
 				541BFAEE1DEF839D006334A0 /* UserSearchController.swift in Sources */,
 				545F44061DF78358001C7D73 /* SocketEngineWebsocket.swift in Sources */,
 				541BFAED1DEF839D006334A0 /* SettingPlaylistUserSearchController.swift in Sources */,
+				2D194F921E224046008A98B9 /* Trophies.swift in Sources */,
 				541BFAE51DEF839D006334A0 /* ChangeSettingsEventController.swift in Sources */,
 				5409394B1DF7695C0011052A /* PlaylistMusicEventTableViewCell.swift in Sources */,
 				54AE846E1DEF3EBD003715EE /* UserConnect.swift in Sources */,
 				547D90531DF1E44B008C636A /* PlaylistTableViewCell.swift in Sources */,
 				541BFAF01DEF839D006334A0 /* MusicSearchCustomTableCell.swift in Sources */,
+				2D194F901E2197A6008A98B9 /* TrophiesTableViewCell.swift in Sources */,
 				54E281721DF1BF240070317C /* Activity.swift in Sources */,
 				540939401DF7693A0011052A /* EventController.swift in Sources */,
 				547D904E1DF1E44B008C636A /* AddMusicsInPlaylist.swift in Sources */,
@@ -1331,6 +1342,7 @@
 				545BAEAE1DF4CC4400FC1282 /* UserHomeViewController.swift in Sources */,
 				545F440E1DF78358001C7D73 /* SocketLogger.swift in Sources */,
 				545F44091DF78358001C7D73 /* SocketIOClient.swift in Sources */,
+				2D194F8E1E204E23008A98B9 /* TrophiesTableViewController.swift in Sources */,
 				545F43FD1DF78358001C7D73 /* SocketAckEmitter.swift in Sources */,
 				5409394C1DF7695C0011052A /* SearchMusicEventCustomCell.swift in Sources */,
 				54CF46B01DF1BB140096EFC3 /* Followers.swift in Sources */,
