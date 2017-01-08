@@ -25,6 +25,7 @@ class SounityAPI {
         case PLAYLIST_USER_DELETE = "/playlist/"
         case PROVIDERS_MUSIC = "/musicProviders"
         case TIMELINE = "/newsfeed"
+        case TROPHIES = "/trophies/"
     }
     
     enum SOCKET: String {
