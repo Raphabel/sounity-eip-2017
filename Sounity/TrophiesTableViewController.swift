@@ -103,12 +103,6 @@ extension TrophiesTableViewController {
                         for (_, subjson):(String, JSON) in jsonResponse {
                             self.trophies.append(Trophies(id: subjson["id"].intValue, name: subjson["name"].stringValue, desc: subjson["description"].stringValue, score: subjson["score"].intValue, level: subjson["level"].intValue))
                         }
-                        for (_, subjson):(String, JSON) in jsonResponse {
-                            self.trophies.append(Trophies(id: subjson["id"].intValue, name: subjson["name"].stringValue, desc: subjson["description"].stringValue, score: subjson["score"].intValue, level: subjson["level"].intValue))
-                        }
-                        for (_, subjson):(String, JSON) in jsonResponse {
-                            self.trophies.append(Trophies(id: subjson["id"].intValue, name: subjson["name"].stringValue, desc: subjson["description"].stringValue, score: subjson["score"].intValue, level: subjson["level"].intValue))
-                        }
                         
                         self.trophiesTableView.reloadData()
                     }
