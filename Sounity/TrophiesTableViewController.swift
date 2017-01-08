@@ -29,6 +29,7 @@ class TrophiesTableViewController: UITableViewController {
         trophiesTableView.dataSource = self
         trophiesTableView.delegate = self
         trophiesTableView.tableFooterView = UIView()
+        trophiesTableView.backgroundColor = UIColor(red: 120/255 ,green: 118/255 ,blue: 130/255 ,alpha: 1)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,56 +58,24 @@ class TrophiesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Trophies", for: indexPath) as! TrophiesTableViewCell
-        let trophies = self.trophies[indexPath.row]
+        let trophy = self.trophies[indexPath.row]
         
-        cell.Name.text = trophies.name
-        cell.descriptionTrophies.text = trophies.desc
-        cell.levelNumber.text = (String)(trophies.level)
-    
-        if (trophies.id == 1 && trophies.level >= 1) { cell.levelImage.image = UIImage(named: "JukeBox") }
-            else if (trophies.id == 1) { cell.levelImage.image = UIImage(named: "JukeBoxDark") }
-        if (trophies.id == 2 && trophies.level >= 1) { cell.levelImage.image = UIImage(named: "BestDJ") }
-            else if (trophies.id == 2) { cell.levelImage.image = UIImage(named: "BestDJDark") }
-        if (trophies.id == 3 && trophies.level >= 1) { cell.levelImage.image = UIImage(named: "SounityStar") }
-            else if (trophies.id == 3) { cell.levelImage.image = UIImage(named: "SounityStarDark") }
-        if (trophies.id == 4 && trophies.level >= 1) { cell.levelImage.image = UIImage(named: "KingOfTheNight") }
-            else if (trophies.id == 4) { cell.levelImage.image = UIImage(named: "KingOfTheNightDark") }
-        if (trophies.id == 5 && trophies.level >= 1) { cell.levelImage.image = UIImage(named: "SocialNetworkAddict") }
-            else if (trophies.id == 5) { cell.levelImage.image = UIImage(named: "SocialNetworkAddictDark") }
-        if (trophies.id == 6 && trophies.level >= 1) { cell.levelImage.image = UIImage(named: "PartyAnimal") }
-            else if (trophies.id == 6) { cell.levelImage.image = UIImage(named: "PartyAnimalDark") }
-        if (trophies.id == 7 && trophies.level >= 1) { cell.levelImage.image = UIImage(named: "Rockstar") }
-            else if (trophies.id == 7) { cell.levelImage.image = UIImage(named: "RockstarDark") }
-
-        switch trophies.level {
-        case 1:
-           cell.level1.isHidden = false
-            break
-        case 2:
-            cell.level1.isHidden = false
-            cell.level2.isHidden = false
-            break
-        case 3:
-            cell.level1.isHidden = false
-            cell.level2.isHidden = false
-            cell.level3.isHidden = false
-            break
-        case 4:
-            cell.level1.isHidden = false
-            cell.level2.isHidden = false
-            cell.level3.isHidden = false
-            cell.level4.isHidden = false
-            break
-        case 5:
-            cell.level1.isHidden = false
-            cell.level2.isHidden = false
-            cell.level3.isHidden = false
-            cell.level4.isHidden = false
-            cell.level5.isHidden = false
-        default: break
-        }
+        cell.trophy = trophy
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        cell.alpha = 0
+        let transform = CATransform3DTranslate(CATransform3DIdentity, -250, 20, 0)
+        cell.layer.transform = transform
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            cell.alpha = 1.0
+            cell.layer.transform = CATransform3DIdentity
+        })
+            
     }
 }
 
@@ -125,12 +94,18 @@ extension TrophiesTableViewController {
                 if let apiResponse = response.result.value {
                     let jsonResponse = JSON(apiResponse)
                     if ((response.response?.statusCode)! != 200) {
-                        let alert = DisplayAlert(title: "Load your playlist", message: jsonResponse["message"].stringValue)
+                        let alert = DisplayAlert(title: "Load trophies", message: jsonResponse["message"].stringValue)
                         alert.openAlertError()
                     }
                     else {
                         self.trophies.removeAll()
 
+                        for (_, subjson):(String, JSON) in jsonResponse {
+                            self.trophies.append(Trophies(id: subjson["id"].intValue, name: subjson["name"].stringValue, desc: subjson["description"].stringValue, score: subjson["score"].intValue, level: subjson["level"].intValue))
+                        }
+                        for (_, subjson):(String, JSON) in jsonResponse {
+                            self.trophies.append(Trophies(id: subjson["id"].intValue, name: subjson["name"].stringValue, desc: subjson["description"].stringValue, score: subjson["score"].intValue, level: subjson["level"].intValue))
+                        }
                         for (_, subjson):(String, JSON) in jsonResponse {
                             self.trophies.append(Trophies(id: subjson["id"].intValue, name: subjson["name"].stringValue, desc: subjson["description"].stringValue, score: subjson["score"].intValue, level: subjson["level"].intValue))
                         }
