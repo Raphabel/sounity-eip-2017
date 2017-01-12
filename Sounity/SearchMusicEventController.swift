@@ -44,6 +44,8 @@ class SearchMusicEventController: UIViewController, UITableViewDelegate, UISearc
         tableview.emptyDataSetSource = self
         tableview.emptyDataSetDelegate = self
         tableview.tableFooterView = UIView()
+        tableview.rowHeight = UITableViewAutomaticDimension
+        tableview.estimatedRowHeight = 70
         
         self.musicSearchBox.delegate = self
         self.musicSearchBox.placeholder = "Sounity's musics"
@@ -87,6 +89,9 @@ extension SearchMusicEventController {
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(SearchMusicEventController.searchResultFromString(_:)), userInfo: searchText, repeats: false)
     }
     
+    /// Search function for the music
+    ///
+    /// - Parameter timer: timer in order to avoid maing research at every character changed
     func searchResultFromString(_ timer: Timer) {
         self.textSearchBox = timer.userInfo! as! String
         
@@ -117,6 +122,9 @@ extension SearchMusicEventController {
 
 // MARK: Add song to the event playlist
 extension SearchMusicEventController {
+    /// Add music the event's playlist
+    ///
+    /// - Parameter indexPath: index of the music wihtin the resultResearch to add
     func addNewSongToPlaylistEvent(_ indexPath: IndexPath) {
         SocketIOManager.sharedInstance.addMusicToEventPlaylist(datas: ["id": self.resultResearch[indexPath.row].idTrack as AnyObject, "eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject, "apiId": self.resultResearch[indexPath.row].idAPI as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
@@ -165,29 +173,18 @@ extension SearchMusicEventController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:SearchMusicEventCustomTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchMusicEventCustomTableCell", for: indexPath) as! SearchMusicEventCustomTableCell
         
-        cell.trackTitle.text = self.resultResearch[indexPath.row].title
-        cell.trackArtist.text = self.resultResearch[indexPath.row].artist
-        
-        if (self.resultResearch[indexPath.row].cover == "") {
-            cell.trackPicture.image = UIImage(named: "UnknownMusicCover")!
-        }
-        else if (Reachability.isConnectedToNetwork() == true) {
-            cell.trackPicture.imageFromServerURL(urlString: self.resultResearch[indexPath.row].cover)
-            MakeElementRounded().makeElementRounded(cell.trackPicture, newSize: cell.trackPicture.frame.width)
-        }
+        cell.music = self.resultResearch[indexPath.row]
         
         return cell
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("idTrack selected to add in event : \(self.resultResearch[indexPath.row].idTrack)")
         let alert = DisplayAlert(title: "Add this track", message: self.resultResearch[indexPath.row].title)
         alert.openAlertConfirmationWithCallbackAndParameterIndexPath(self.addNewSongToPlaylistEvent, indexPath: indexPath)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.resultResearch.count
     }
 }

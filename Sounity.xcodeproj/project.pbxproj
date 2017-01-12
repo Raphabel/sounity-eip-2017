@@ -364,12 +364,16 @@
 			name = Timeline;
 			sourceTree = "<group>";
 		};
-		540939361DF768180011052A /* Storyboard */ = {
+		540939361DF768180011052A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				540939481DF7695C0011052A /* SearchMusicEventCustomCell.swift */,
+				540939471DF7695C0011052A /* PlaylistMusicEventTableViewCell.swift */,
+				540939461DF7695C0011052A /* ChatMessageTableCell.swift */,
+				540939451DF7695C0011052A /* ActivitiesEventTableViewCell.swift */,
 				540939431DF769410011052A /* Event.storyboard */,
 			);
-			name = Storyboard;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		540939371DF768270011052A /* Controllers */ = {
@@ -382,17 +386,6 @@
 				5409393D1DF7693A0011052A /* SearchMusicEventController.swift */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		540939381DF7687C0011052A /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				540939451DF7695C0011052A /* ActivitiesEventTableViewCell.swift */,
-				540939461DF7695C0011052A /* ChatMessageTableCell.swift */,
-				540939471DF7695C0011052A /* PlaylistMusicEventTableViewCell.swift */,
-				540939481DF7695C0011052A /* SearchMusicEventCustomCell.swift */,
-			);
-			name = UI;
 			sourceTree = "<group>";
 		};
 		5409394D1DF76B780011052A /* SocketIOManager */ = {
@@ -854,15 +847,14 @@
 		54E2816C1DF1BEF70070317C /* EventPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				540939381DF7687C0011052A /* UI */,
 				540939371DF768270011052A /* Controllers */,
-				540939361DF768180011052A /* Storyboard */,
-				54E2816D1DF1BEFE0070317C /* Classes */,
+				540939361DF768180011052A /* Views */,
+				54E2816D1DF1BEFE0070317C /* Models */,
 			);
 			name = EventPlayer;
 			sourceTree = "<group>";
 		};
-		54E2816D1DF1BEFE0070317C /* Classes */ = {
+		54E2816D1DF1BEFE0070317C /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				54E2816E1DF1BF240070317C /* Activity.swift */,
@@ -870,7 +862,7 @@
 				54E281701DF1BF240070317C /* MessageChat.swift */,
 				54E281711DF1BF240070317C /* MusicPlayEvent.swift */,
 			);
-			name = Classes;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		54E281761DF1C08A0070317C /* ExtensionsFunctions */ = {

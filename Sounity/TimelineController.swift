@@ -6,10 +6,10 @@
 //
 
 import UIKit
-import SwiftMoment
 import Alamofire
 import SwiftyJSON
 import GuillotineMenu
+import SwiftMoment
 
 class TimelineController: UIViewController {
     
@@ -25,6 +25,8 @@ class TimelineController: UIViewController {
     // MARK: New Feeds Variables
     var newsFromWeekNumber: Int = 0
     var newfeeds = [newFeed]()
+    var minDate = moment()
+    var loading = false
     
     // MARK: StoryBoard UIElements
     @IBOutlet var collectionView: UICollectionView!
@@ -124,6 +126,13 @@ extension TimelineController: UICollectionViewDelegate, UICollectionViewDataSour
         
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) && self.loading == false) {
+            self.minDate = self.minDate.subtract(1, TimeUnit.Weeks)
+            self.GetTimelineUser()
+        }
+    }
 }
 
 // MARK: Get Timeline of users
@@ -133,8 +142,9 @@ extension TimelineController {
         
         let url = api.getRoute(SounityAPI.ROUTES.TIMELINE)
         let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
-        let parameters: [String : AnyObject] = ["id": user.id as AnyObject]
+        let parameters: [String : AnyObject] = ["id": user.id as AnyObject, "minDate": minDate.date.iso8601 as AnyObject]
         
+        self.loading = true
         Alamofire.request(url, method: .get, parameters : parameters, headers : headers)
             .validate(statusCode: 200..<501)
             .validate(contentType: ["application/json"])
@@ -146,8 +156,6 @@ extension TimelineController {
                         alert.openAlertError()
                     }
                     else {
-                        self.newfeeds.removeAll()
-                        
                         for (_,subJson):(String, JSON) in jsonResponse {
                             let userJSON = subJson["user"]
                             let user = User(_description: "", _first_name: "", _last_name: "", _picture: userJSON["picture"].stringValue, _nickname: userJSON["nickname"].stringValue, _id: userJSON["id"].intValue, _id_country: 0, _id_language: 0)
@@ -169,6 +177,7 @@ extension TimelineController {
                             }
                         }
                         self.collectionView?.reloadData()
+                        self.loading = false
                     }
                 }
         }

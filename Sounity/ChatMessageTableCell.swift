@@ -7,9 +7,18 @@
 //
 
 import UIKit
+import SwiftMoment
 
 class ChatMessageTableCell: UITableViewCell {
     
+    var message: MessageChat! {
+        didSet {
+            self.updateUI()
+        }
+    }
+    
+    // MARK: Info user connected
+    var user = UserConnect()
     
     @IBOutlet var viewOtherUser: UIView!
     @IBOutlet var pictureOtherUser: UIImageView!
@@ -31,5 +40,32 @@ class ChatMessageTableCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func updateUI() {
+        if (user.username == message.nickname) {
+            viewOwnUser.isHidden = false
+            viewOtherUser.isHidden = true
+            viewOwnUser.layer.cornerRadius = 6
+            nicknameOwn.text = "You"
+            timeOwn.text = moment(message.time)?.format("EEE, HH:mm")
+            messageOwn.text = message.message
+            if (message.picture != "" && Reachability.isConnectedToNetwork() == true) {
+                pictureOwnUser.load.request(with: message.picture)
+                MakeElementRounded().makeElementRounded(pictureOwnUser, newSize: pictureOwnUser.frame.width)
+            }
+        } else {
+            viewOtherUser.isHidden = false
+            viewOwnUser.isHidden = true
+            viewOtherUser.layer.cornerRadius = 6
+            nicknameOther.text = user.username == message.nickname ? "You" : message.nickname
+            timeOther.text = moment(message.time)?.format("EEE, HH:mm")
+            messageOther.text = message.message
+            if (message.picture != "" && Reachability.isConnectedToNetwork() == true) {
+                pictureOtherUser.load.request(with: message.picture)
+                MakeElementRounded().makeElementRounded(pictureOtherUser, newSize: pictureOtherUser.frame.width)
+            }
+        }
+
     }
 }

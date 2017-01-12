@@ -10,6 +10,14 @@ import UIKit
 
 class ActivitiesEventTableViewCell: UITableViewCell {
     
+    var activity: Activity! {
+        didSet {
+            self.updateUI()
+        }
+    }
+    
+    // MARK: Infos user connected
+    var user = UserConnect()
     
     @IBOutlet var username: UILabel!
     @IBOutlet var content: UILabel!
@@ -24,4 +32,12 @@ class ActivitiesEventTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
+    func updateUI() {
+        username.text = activity.username == self.user.username ? "You" : activity.username
+        content.text = activity.content
+        extra.text = activity.extra
+        picture.image = UIImage(named: activity.pictureAsset)!
+    }
+
 }

@@ -47,7 +47,6 @@ class PlaylistEventController: UIViewController, UITableViewDelegate, DZNEmptyDa
         self.listenNewMusicAddedSocket()
         self.listenNewJoined()
         self.listenMusicLiked()
-        self.listenMusicLiked()
         self.listenBanSocket()
         self.listenBannedSocket()
         self.listenLeftSocket()
@@ -74,6 +73,9 @@ class PlaylistEventController: UIViewController, UITableViewDelegate, DZNEmptyDa
 
 // MARK: Tab Bar badge handler
 extension PlaylistEventController {
+    /// Generic function to add badge on the bottom bar in order to notify the user
+    ///
+    /// - Parameter position: Enum of the tab item where to add the badge
     func addNewBadgeOnTabBar(_ position: EventController.TABITEM) {
         if (self.tabBarController?.tabBar.selectedItem == self.tabBarController?.tabBar.items?[position.rawValue]) {
             return
@@ -97,6 +99,7 @@ extension PlaylistEventController {
         self.present(vc, animated: true, completion: nil)
     }
     
+    /// send a socket event:join in order to get all the information related to the event 
     func getPlaylistEvent () {
         SocketIOManager.sharedInstance.connectToEventWithToken(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
@@ -122,6 +125,11 @@ extension PlaylistEventController {
         })
     }
     
+    /// Remove a music from the event's playlist
+    ///
+    /// - Parameters:
+    ///   - idMusic: id of the music that should be removed
+    ///   - apiId: apiId of the music that should be removed
     func removeMusicInPlaylistById(_ idMusic: Int, apiId: Int) {
         if (self.playlist.count > 0 && self.playlist[0].id == idMusic && self.playlist[0].apiId == apiId) {
             self.playlist.remove(at: 0)
@@ -129,6 +137,12 @@ extension PlaylistEventController {
         self.tableview.reloadData()
     }
     
+    /// Function that sorts out the table in order to play the most releant music
+    ///
+    /// - Parameters:
+    ///   - _idMusic: id of the music where the datas changed
+    ///   - _apiId: api id of the music where the datas changed
+    ///   - _newPosition: the new position where the music changed should be
     func sortPlaylistEvent (_ _idMusic: Int, _apiId: Int, _newPosition: Int) {
         var musicToMove: MusicPlaylistEvent?
         var indexMusicToMove: Int?
@@ -148,6 +162,8 @@ extension PlaylistEventController {
 
 // MARK: Broadcasts received
 extension PlaylistEventController {
+    /// Listen on broadcast chat:newmesage
+    /// Add log on the bottom bar to notify the user
     func listenNewMessageSocket() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.NEW_MESSAGE.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -163,14 +179,8 @@ extension PlaylistEventController {
         }
     }
     
-    func goBackHome () {
-        SocketIOManager.sharedInstance.restartConnection()
-        
-        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
-        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
-        self.present(vc, animated: true, completion: nil)
-    }
-    
+    /// Listen on broadcast event:banned
+    /// Add log on the bottom bar to notify the user || redirect the banned user to the home page
     func listenBannedSocket() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.BANNED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -179,7 +189,7 @@ extension PlaylistEventController {
                 print("you have been banned -> \(data)")
                 
                 let alert = DisplayAlert(title: "Event", message: data["message"].stringValue)
-                alert.openAlertConfirmationWithCallbackNoOption(self.goBackHome)
+                alert.openAlertConfirmationWithCallbackNoOption(self.getBackHomePage)
 
             } else {
                 print("user has been banned -> \(data)")
@@ -196,6 +206,7 @@ extension PlaylistEventController {
         }
     }
     
+    /// Listen on broadcast event:ban
     func listenBanSocket() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.BAN.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -203,6 +214,8 @@ extension PlaylistEventController {
         }
     }
     
+    /// Listen on broadcast event:left
+    /// Add log on the bottom bar to notify the user
     func listenLeftSocket() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.LEFT.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -220,6 +233,9 @@ extension PlaylistEventController {
         }
     }
     
+    /// Listen on broadcast music:liked
+    /// Add log on the bottom bar to notify the user
+    /// Change data related to the music concerned
     func listenMusicLiked() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_LIKED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -252,6 +268,8 @@ extension PlaylistEventController {
         }
     }
     
+    /// Listen on broadcast event:joined
+    /// Add log on the activity bar to notify the user
     func listenNewJoined() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.NEW_JOINED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -264,6 +282,9 @@ extension PlaylistEventController {
         }
     }
     
+    /// Listen on broadcast music:added
+    /// Add log on the bottom bar to notify the user
+    /// Add the new song within the event's playlist
     func listenNewMusicAddedSocket() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_ADDED.rawValue) { (dataArray, Socket) -> Void in
             let subJson = JSON(dataArray[0])
@@ -295,6 +316,9 @@ extension PlaylistEventController {
 
 // MARK: Sockets sent
 extension PlaylistEventController {
+    /// Like the selected music on the event's playlist
+    ///
+    /// - Parameter sender: sender from UIGestureRecognizer
     func likeSongInPlaylistEvent(_ sender: UIGestureRecognizer) {
         let tapLocation = sender.location(in: self.tableview)
         let indexPath = self.tableview.indexPathForRow(at: tapLocation)
@@ -325,6 +349,9 @@ extension PlaylistEventController {
         })
     }
     
+    /// Dislike the selected music on the event's playlist
+    ///
+    /// - Parameter sender: sender from UIGestureRecognizer
     func dislikeSongInPlaylistEvent(_ sender: UIGestureRecognizer) {
         let tapLocation = sender.location(in: self.tableview)
         let indexPath = self.tableview.indexPathForRow(at: tapLocation)
@@ -370,36 +397,7 @@ extension PlaylistEventController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:PlaylistMusicEventTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PlaylistMusicEventTableViewCell", for: indexPath) as! PlaylistMusicEventTableViewCell
         
-        cell.trackArtist.text = self.playlist[indexPath.row].artist
-        cell.trackTitle.text = self.playlist[indexPath.row].title
-        cell.addedBy.text = self.playlist[indexPath.row].addedBy
-        cell.addedAt.text = moment(self.playlist[indexPath.row].addedAt)?.format("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-
-        cell.likePicture.isUserInteractionEnabled = true
-        cell.likePicture.image = UIImage(named: "musicNotLike")!
-        cell.likePicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PlaylistEventController.likeSongInPlaylistEvent)))
-        
-        cell.dislikePicture.isUserInteractionEnabled = true
-        cell.dislikePicture.image = UIImage(named: "musicNotDislike")!
-        cell.dislikePicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PlaylistEventController.dislikeSongInPlaylistEvent)))
-        if (self.playlist[indexPath.row].liked) {
-            cell.likePicture.image = UIImage(named: "musicLiked")!
-            cell.likePicture.isUserInteractionEnabled = false
-        }
-        if (self.playlist[indexPath.row].disliked) {
-            cell.dislikePicture.image = UIImage(named: "musicDisliked")!
-            cell.dislikePicture.isUserInteractionEnabled = false
-        }
-        
-        cell.numberDislikes.text = String(self.playlist[indexPath.row].dislike)
-        cell.numberLikes.text = String(self.playlist[indexPath.row].like)
-        
-        cell.trackPicture.isUserInteractionEnabled = true
-        if (self.playlist[indexPath.row].cover != ""  && Reachability.isConnectedToNetwork() == true) {
-            cell.trackPicture.imageFromServerURL(urlString: self.playlist[indexPath.row].cover)
-            MakeElementRounded().makeElementRounded(cell.trackPicture, newSize: cell.trackPicture.frame.width)
-        }
-        
+        cell.music = self.playlist[indexPath.row]
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         
         return cell
