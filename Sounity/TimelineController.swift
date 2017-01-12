@@ -6,20 +6,12 @@
 //
 
 import UIKit
-import GuillotineMenu
+import SwiftMoment
 import Alamofire
 import SwiftyJSON
-import PullToRefresh
-import SwiftMoment
-import SwiftDate
-import DZNEmptyDataSet
+import GuillotineMenu
 
-class TimelineController: UIViewController, DZNEmptyDataSetDelegate {
-    
-    // MARK: Getter of the current week
-    var currentWeek: Date {
-        return Calendar(identifier: .iso8601).date(from: Calendar(identifier: .iso8601).dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!
-    }
+class TimelineController: UIViewController {
     
     // MARK: Infos user connected
     var user = UserConnect()
@@ -27,24 +19,23 @@ class TimelineController: UIViewController, DZNEmptyDataSetDelegate {
     // MARK: API connection
     var api = SounityAPI()
     
-    // MARK: StoryBoard UIElements
-    @IBOutlet var tableview: UITableView!
+    // MARK: Guillotine menu variable
+    fileprivate lazy var presentationAnimator = GuillotineTransitionAnimation()
+    
+    // MARK: New Feeds Variables
     var newsFromWeekNumber: Int = 0
     var newfeeds = [newFeed]()
     
-    // MARK: Guillotine menu variable
-    fileprivate lazy var presentationAnimator = GuillotineTransitionAnimation()
+    // MARK: StoryBoard UIElements
+    @IBOutlet var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableview.delegate = self
-        self.tableview.dataSource = self
-        self.tableview.emptyDataSetSource = self
-        self.tableview.emptyDataSetDelegate = self
-        self.tableview.tableFooterView = UIView()
-        self.tableview.rowHeight = UITableViewAutomaticDimension
-        self.tableview.estimatedRowHeight = 80
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.alwaysBounceVertical = true
+        self.collectionView.backgroundColor = UIColor(white: 0.95, alpha: 1)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,51 +66,37 @@ class TimelineController: UIViewController, DZNEmptyDataSetDelegate {
     }
 }
 
-//MARK: Functions related to the table View
-extension TimelineController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellTimeline", for: indexPath) as? TimelineTableViewCell
+// MARK: Override CollectionView functions
+extension TimelineController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.newfeeds.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath as IndexPath) as! TimelineTableViewCell
         
-        cell!.date.text = self.newfeeds[indexPath.row].created_date
-        cell?.timelineUserInfo.text = self.newfeeds[indexPath.row].message
+        let feed = self.newfeeds[indexPath.row]
+        cell.feed = feed
         
-        if (self.newfeeds[indexPath.row].user.picture == "") {
-            cell?.picture.image = UIImage(named: "UnknownUserCover")!
-        }
-        else if (Reachability.isConnectedToNetwork() == true) {
-            cell?.picture.imageFromServerURL(urlString: self.newfeeds[indexPath.row].user.picture)
-            MakeElementRounded().makeElementRounded(cell?.picture, newSize: cell?.picture.frame.width)
-        }
-        return cell!
+        cell.actionButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TimelineController.consultFeed)))
+        
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newfeeds.count
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.newfeeds[indexPath.row].message.lowercased().range(of: "event") != nil {
-            let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
-            
-            let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ConsultEventView") as! ConsultEventController
-            vc.idEventSent = self.newfeeds[indexPath.row].eventInfo!.id
-            let navController = UINavigationController.init(rootViewController: vc)
-            self.present(navController, animated: true, completion: nil)
-        }
-            
-        else if self.newfeeds[indexPath.row].message.lowercased().range(of: "profile") != nil {
-            if (self.newfeeds[indexPath.row].user.id == user.id) {
-                let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-                let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileViewID") as! UserHomeViewController
-                self.present(vc, animated: true, completion: nil)
-            } else {
+    func consultFeed(_ sender: UITapGestureRecognizer) {
+        let touch = sender.location(in: self.collectionView)
+        if let indexPath = self.collectionView.indexPathForItem(at: touch) {
+            if (self.newfeeds[indexPath.row].eventInfo != nil) {
+                let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+                
+                let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ConsultEventView") as! ConsultEventController
+                vc.idEventSent = self.newfeeds[indexPath.row].eventInfo!.id
+                let navController = UINavigationController.init(rootViewController: vc)
+                self.present(navController, animated: true, completion: nil)
+            } else if (self.newfeeds[indexPath.row].followerInfo != nil || self.newfeeds[indexPath.row].user.id != self.user.id) {
                 let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
                 let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileViewID") as! ConsultProfileController
-
+                
                 vc.IDUserConsulted = self.newfeeds[indexPath.row].user.id
                 vc.nicknameUserConsulted = self.newfeeds[indexPath.row].user.nickname
                 vc.descriptionUserConsulted = self.newfeeds[indexPath.row].user.description
@@ -127,36 +104,22 @@ extension TimelineController: UITableViewDataSource, UITableViewDelegate {
                 
                 let navController = UINavigationController.init(rootViewController: vc)
                 self.present(navController, animated: true, completion: nil)
+            } else {
+                let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Profile", bundle: nil)
+                let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileViewID") as! UserHomeViewController
+                self.present(vc, animated: true, completion: nil)
             }
-        }
-            
-        else if self.newfeeds[indexPath.row].message.lowercased().range(of: "following") != nil {
-            let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
-            
-            let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileViewID") as! ConsultProfileController
-            vc.IDUserConsulted = self.newfeeds[indexPath.row].followerInfo?.id
-            vc.nicknameUserConsulted = self.newfeeds[indexPath.row].followerInfo?.nickname
-           // vc.descriptionUserConsulted = self.newfeeds[indexPath.row].followerInfo.description \\ demander à ludo
-            vc.pictureUserConsulted = self.newfeeds[indexPath.row].followerInfo?.picture
-            
-            let navController = UINavigationController.init(rootViewController: vc)
-            
-            self.present(navController, animated: true, completion: nil)
-
-        }
-            
-        else if self.newfeeds[indexPath.row].message.lowercased().range(of: "playlist") != nil {
-            // A faire
         }
     }
     
-}
-// MARK: Empty Table view
-extension TimelineController: DZNEmptyDataSetSource {
-    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "No history available for the moment."
-        let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
-        return NSAttributedString(string: str, attributes: attrs)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 400)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        self.collectionView.collectionViewLayout.invalidateLayout()
     }
 }
 
@@ -201,9 +164,7 @@ extension TimelineController {
                                 self.newfeeds.append(newFeed(_message: subJson["message"].stringValue, _picture: subJson["picture"].stringValue, _created_date: subJson["create_date"].stringValue, _user: user))
                             }
                         }
-                        
-                        self.tableview.endRefreshing(at: .top)
-                        self.tableview.reloadData()
+                        self.collectionView?.reloadData()
                     }
                 }
         }
@@ -245,48 +206,5 @@ extension TimelineController: UIViewControllerTransitioningDelegate {
 extension TimelineController {
     override var prefersStatusBarHidden : Bool {
         return false
-    }
-}
-
-//MARK: Date formater
-extension Date {
-    func toString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return dateFormatter.string(from: self)
-    }
-}
-
-// MARK: Class NewFeed
-class newFeed {
-    var message: String = ""
-    var picture: String = ""
-    var created_date: String = ""
-    
-    var eventInfo: Event?
-    var followerInfo: Followers?
-    var user: User
-    
-    init(_message: String, _picture: String, _created_date: String, _event: Event, _user: User) {
-        self.message = _message
-        self.picture = _picture
-        self.created_date = _created_date
-        self.eventInfo = _event
-        self.user = _user
-    }
-    
-    init(_message: String, _picture: String, _created_date: String, _follower: Followers, _user: User) {
-        self.message = _message
-        self.picture = _picture
-        self.created_date = _created_date
-        self.followerInfo = _follower
-        self.user = _user
-    }
-    
-    init(_message: String, _picture: String, _created_date: String, _user: User) {
-        self.message = _message
-        self.picture = _picture
-        self.created_date = _created_date
-        self.user = _user
     }
 }
