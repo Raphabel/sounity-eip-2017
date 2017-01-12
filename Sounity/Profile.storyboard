@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -574,14 +574,14 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="aju-pH-Vvn"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="21"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klq-MD-Ftd">
                                         <rect key="frame" x="8" y="193" width="355" height="16"/>
-                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UnknownUserCover" translatesAutoresizingMaskIntoConstraints="NO" id="q1R-SC-Nk0">
@@ -625,6 +625,7 @@
                     </view>
                     <connections>
                         <outlet property="descriptionUser" destination="klq-MD-Ftd" id="0w5-Ui-TCZ"/>
+                        <outlet property="headerView" destination="NBm-c0-X2Z" id="Ppd-tk-9hc"/>
                         <outlet property="imageView" destination="q1R-SC-Nk0" id="mhp-9y-9Ae"/>
                         <outlet property="nickname" destination="7zS-Tp-Ucb" id="b8d-gh-CC9"/>
                         <outlet property="tableView" destination="NBm-c0-X2Z" id="6n1-pD-w9D"/>

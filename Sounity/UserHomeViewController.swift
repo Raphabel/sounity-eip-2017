@@ -17,6 +17,7 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
     
     // MARK: StoryBoard UIElements
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var nickname: UILabel!
     @IBOutlet weak var tableView: UIView!
     @IBOutlet weak var followers: UILabel!
@@ -123,6 +124,10 @@ extension UserHomeViewController {
 // MARK: Initialisation functions 
 extension UserHomeViewController {
     func setUpHeaderProfil () {
+        self.headerView.backgroundColor = UIColor(patternImage: UIImage(named:"party")!)
+        
+        self.imageView.layer.borderWidth = 3.0
+        self.imageView.layer.borderColor = UIColor.white.cgColor
         self.imageView.layer.cornerRadius = imageView.frame.width/2
         self.imageView.layer.masksToBounds = true
         _ = self.putShadowOnView(imageView, shadowColor: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
