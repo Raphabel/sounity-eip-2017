@@ -121,6 +121,7 @@ extension AroundMeViewController : CLLocationManagerDelegate {
 
 //MARK: FUNCTION ANNEX
 extension AroundMeViewController {
+    /// Function that fetches to the event around the user's position
     func loadEventsAroundMe() {
         
         let api = SounityAPI()
@@ -155,6 +156,13 @@ extension AroundMeViewController {
         }
     }
     
+    /// Init the map to display
+    ///
+    /// - Parameters:
+    ///   - location: The location of the event
+    ///   - name: name of the event
+    ///   - locationName: location's name of the event
+    ///   - eventID: event's id
     func initCenterMapView(location: CLLocationCoordinate2D, name: String, locationName: String, eventID: Int) {
         
         let dropPin = CustomPointAnnotation(pinColor: ColorSounity.orangeSounity)
@@ -167,6 +175,11 @@ extension AroundMeViewController {
         self.mapEvent.addAnnotation(dropPin)
     }
     
+    /// Make a redirection to Google Maps app
+    ///
+    /// - Parameters:
+    ///   - mapView: The mapView to take into consideration
+    ///   - view: The view involved
     func redirectionToGoogleMaps(mapView: MKMapView, view: MKAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: false)
         
@@ -317,18 +330,6 @@ extension AroundMeViewController: UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         presentationAnimator.mode = .dismissal
         return presentationAnimator
-    }
-}
-
-//MARK: Exntension of MAPVIEW
-extension MKMapView {
-    func zoomToUserLocation() {
-        guard (userLocation.location?.coordinate) != nil else { return }
-        
-        let center = CLLocationCoordinate2D(latitude: (userLocation.location?.coordinate.latitude)!, longitude: (userLocation.location?.coordinate.longitude)!)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
-        
-        setRegion(region, animated: true)
     }
 }
 

@@ -83,6 +83,9 @@ extension TimelineController: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     
+    /// Func that allows to redirect to user to the relevant content
+    ///
+    /// - Parameter sender: sender related to the UICollectionViewCell
     func consultFeed(_ sender: UITapGestureRecognizer) {
         let touch = sender.location(in: self.collectionView)
         if let indexPath = self.collectionView.indexPathForItem(at: touch) {
@@ -125,6 +128,7 @@ extension TimelineController: UICollectionViewDelegate, UICollectionViewDataSour
 
 // MARK: Get Timeline of users
 extension TimelineController {
+    /// Allows to fetch the news feeds of the current user
     func GetTimelineUser() {
         
         let url = api.getRoute(SounityAPI.ROUTES.TIMELINE)

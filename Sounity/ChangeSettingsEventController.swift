@@ -76,7 +76,29 @@ class ChangeSettingsEventController: FormViewController {
 extension ChangeSettingsEventController {
     func actionOnEvent (_ _title: String, _msg: String, mode: String) {
         let alert = DisplayAlert(title: _title, message: _msg)
-        alert.openAlertConfirmationWithCallback(mode == "delete" ? self.deleteEvent : self.saveSettingsEvent)
+        alert.openAlertConfirmationWithCallback(mode == "delete" ? self.deleteEvent : mode == "stop" ? self.stopEvent : self.saveSettingsEvent)
+    }
+    
+    func stopEvent () {
+        let api = SounityAPI()
+        let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
+        Alamofire.request((api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT) + String(self.idEventSent) + "/stop"), method: .post, headers: headers)
+            .validate(statusCode: 200..<501)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response in
+                if let apiResponse = response.result.value {
+                    let jsonResponse = JSON(apiResponse)
+                    if ((response.response?.statusCode)! != 200) {
+                        let alert = DisplayAlert(title: "Stop Event", message: jsonResponse["message"].stringValue)
+                        alert.openAlertError()
+                    }
+                    else {
+                        self.dismiss(animated: true, completion: nil)
+                        let alert = DisplayAlert(title: "Stop Event", message: jsonResponse["message"].stringValue)
+                        alert.openAlertSuccess()
+                    }
+                }
+        }
     }
     
     func deleteEvent() {
@@ -304,6 +326,25 @@ extension ChangeSettingsEventController {
                                     cell.textLabel?.textColor = UIColor.white
                                     cell.backgroundColor = ColorSounity.orangeSounity
                             }
+                            
+                            +++ Section()
+                            <<< ButtonRow() { (row: ButtonRow) -> Void in
+                                row.hidden = Condition.function([])
+                                { form in
+                                    if (self.eventInfo.started) {
+                                        return false
+                                    } else {
+                                        return true
+                                    }
+                                }
+                                row.title = "Stop"
+                                }  .onCellSelection({ (cell, row) in
+                                    self.actionOnEvent("Stop your event", _msg: "Do you really want to stop your event ?", mode: "stop")
+                                }).cellUpdate { cell, row in
+                                    cell.textLabel?.textColor = UIColor.white
+                                    cell.backgroundColor = UIColor(red: CGFloat(0xF4)/255 ,green: CGFloat(0x43)/255 ,blue: CGFloat(0x36)/255 ,alpha: 1)
+                            }
+                            
                             +++ Section()
                             <<< ButtonRow() { (row: ButtonRow) -> Void in
                                 row.title = "Delete"
