@@ -37,8 +37,7 @@ class TrophiesTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func updateUI()
-    {
+    func updateUI() {
         Name.text = trophy.name
         levelNumber.text = String(trophy.level)
         descriptionTrophies.text = trophy.desc

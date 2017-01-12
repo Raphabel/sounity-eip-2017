@@ -124,6 +124,7 @@
 		54E2817D1DF1C3EF0070317C /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E2817C1DF1C3EF0070317C /* MenuViewController.swift */; };
 		54E2817F1DF1C4270070317C /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54E2817E1DF1C4270070317C /* Menu.storyboard */; };
 		54E281811DF1D3EB0070317C /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54E281801DF1D3EB0070317C /* Search.storyboard */; };
+		54E6B54A1E2774FD00FD12A2 /* newFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E6B5491E2774FD00FD12A2 /* newFeed.swift */; };
 		54FFF2DD1DF49FB700E6DA7B /* LocationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FFF2DC1DF49FB700E6DA7B /* LocationRow.swift */; };
 		54FFF2DF1DF4A15F00E6DA7B /* ImageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FFF2DE1DF4A15F00E6DA7B /* ImageRow.swift */; };
 		54FFF2E11DF4A8AA00E6DA7B /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FFF2E01DF4A8AA00E6DA7B /* ImagePickerController.swift */; };
@@ -276,6 +277,7 @@
 		54E2817C1DF1C3EF0070317C /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		54E2817E1DF1C4270070317C /* Menu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
 		54E281801DF1D3EB0070317C /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		54E6B5491E2774FD00FD12A2 /* newFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = newFeed.swift; sourceTree = "<group>"; };
 		54FFF2DC1DF49FB700E6DA7B /* LocationRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationRow.swift; sourceTree = "<group>"; };
 		54FFF2DE1DF4A15F00E6DA7B /* ImageRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRow.swift; sourceTree = "<group>"; };
 		54FFF2E01DF4A8AA00E6DA7B /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
@@ -355,9 +357,9 @@
 		2DB541A71DF961E0004C2A07 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
+				54E6B5481E2774D900FD12A2 /* Models */,
 				54382BE11E06E6D30029231B /* Controllers */,
-				54382BE01E06E6CB0029231B /* UI */,
-				54382BDF1E06E6C20029231B /* StoryBoard */,
+				54382BE01E06E6CB0029231B /* Views */,
 			);
 			name = Timeline;
 			sourceTree = "<group>";
@@ -482,20 +484,13 @@
 			name = Musics;
 			sourceTree = "<group>";
 		};
-		54382BDF1E06E6C20029231B /* StoryBoard */ = {
+		54382BE01E06E6CB0029231B /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				2DB541A81DF96216004C2A07 /* Timeline.storyboard */,
-			);
-			name = StoryBoard;
-			sourceTree = "<group>";
-		};
-		54382BE01E06E6CB0029231B /* UI */ = {
-			isa = PBXGroup;
-			children = (
 				2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */,
 			);
-			name = UI;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		54382BE11E06E6D30029231B /* Controllers */ = {
@@ -909,6 +904,14 @@
 				54E2817C1DF1C3EF0070317C /* MenuViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		54E6B5481E2774D900FD12A2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				54E6B5491E2774FD00FD12A2 /* newFeed.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		54FFF2DB1DF49F9F00E6DA7B /* Eureka */ = {
@@ -1353,6 +1356,7 @@
 				545F440D1DF78358001C7D73 /* SocketIOClientStatus.swift in Sources */,
 				5449E5051E1964110080C41C /* ManageAdminEvent.swift in Sources */,
 				547D90521DF1E44B008C636A /* NamePlaylistCell.swift in Sources */,
+				54E6B54A1E2774FD00FD12A2 /* newFeed.swift in Sources */,
 				54AE847A1DEF430F003715EE /* LoginSignUpController.swift in Sources */,
 				545BAEAD1DF4CC4400FC1282 /* MediaPlayerViewController.swift in Sources */,
 				54E2816B1DF1BD8C0070317C /* TemplateView.swift in Sources */,
