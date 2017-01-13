@@ -399,6 +399,9 @@ extension PlaylistEventController: UITableViewDataSource {
         cell.music = self.playlist[indexPath.row]
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         
+        cell.likePicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PlaylistEventController.likeSongInPlaylistEvent)))
+        cell.dislikePicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PlaylistEventController.dislikeSongInPlaylistEvent)))
+        
         return cell
         
     }

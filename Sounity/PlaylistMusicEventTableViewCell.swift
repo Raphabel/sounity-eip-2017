@@ -46,11 +46,10 @@ class PlaylistMusicEventTableViewCell: UITableViewCell {
         
         likePicture.isUserInteractionEnabled = true
         likePicture.image = UIImage(named: "musicNotLike")!
-        likePicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PlaylistEventController.likeSongInPlaylistEvent)))
         
         dislikePicture.isUserInteractionEnabled = true
         dislikePicture.image = UIImage(named: "musicNotDislike")!
-        dislikePicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PlaylistEventController.dislikeSongInPlaylistEvent)))
+        
         if (music.liked) {
             likePicture.image = UIImage(named: "musicLiked")!
             likePicture.isUserInteractionEnabled = false
