@@ -118,6 +118,19 @@ extension UserSettingsViewController {
             self.present(alert.getPopAlert() , animated : true, completion : nil)
             return
         }
+        
+        if firstname == nil {
+            let alert = DisplayAlert(title: "Invalid parameters", message: "Enter a name")
+            self.present(alert.getPopAlert() , animated : true, completion : nil)
+            return
+        }
+        
+        if description == nil {
+            let alert = DisplayAlert(title: "Invalid parameters", message: "Add a description please")
+            self.present(alert.getPopAlert() , animated : true, completion : nil)
+            return
+        }
+
         if date == nil {
             let alert = DisplayAlert(title: "Invalid parameters", message: "Enter a date")
             self.present(alert.getPopAlert() , animated : true, completion : nil)
