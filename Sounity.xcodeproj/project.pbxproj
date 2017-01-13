@@ -94,6 +94,8 @@
 		547D90671DF1EB46008C636A /* MusicProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547D90661DF1EB46008C636A /* MusicProvider.swift */; };
 		547D906A1DF1EE56008C636A /* RoutesAPIDeezer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547D90681DF1EE56008C636A /* RoutesAPIDeezer.swift */; };
 		547D906B1DF1EE56008C636A /* RoutesAPISoundcloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547D90691DF1EE56008C636A /* RoutesAPISoundcloud.swift */; };
+		5481196B1E28C949009E8BDF /* InteractivePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5481196A1E28C949009E8BDF /* InteractivePlayerView.swift */; };
+		5481196D1E28C9F6009E8BDF /* InteractivePlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5481196C1E28C9F6009E8BDF /* InteractivePlayerView.xib */; };
 		549405AC1DF5DA83007F5D4A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 549405AB1DF5DA83007F5D4A /* Default-568h@2x.png */; };
 		54AE84381DEF3A66003715EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AE84371DEF3A66003715EE /* AppDelegate.swift */; };
 		54AE843F1DEF3A66003715EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54AE843E1DEF3A66003715EE /* Assets.xcassets */; };
@@ -110,9 +112,6 @@
 		54CF46B11DF1BB140096EFC3 /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CF46AD1DF1BB140096EFC3 /* Music.swift */; };
 		54CF46B21DF1BB140096EFC3 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CF46AE1DF1BB140096EFC3 /* Playlist.swift */; };
 		54CF46B31DF1BB140096EFC3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CF46AF1DF1BB140096EFC3 /* User.swift */; };
-		54DD13B81DF487B500E8C021 /* InteractivePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DD13AD1DF487B500E8C021 /* InteractivePlayerView.swift */; };
-		54DD13B91DF487B500E8C021 /* InteractivePlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54DD13AE1DF487B500E8C021 /* InteractivePlayerView.xib */; };
-		54DD13BC1DF487B500E8C021 /* InteractivePlayerView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 54DD13B31DF487B500E8C021 /* InteractivePlayerView-dummy.m */; };
 		54E281691DF1BD8C0070317C /* EmptyResearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E281661DF1BD8C0070317C /* EmptyResearchView.swift */; };
 		54E2816A1DF1BD8C0070317C /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E281671DF1BD8C0070317C /* LoadingView.swift */; };
 		54E2816B1DF1BD8C0070317C /* TemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E281681DF1BD8C0070317C /* TemplateView.swift */; };
@@ -239,6 +238,8 @@
 		547D90661DF1EB46008C636A /* MusicProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicProvider.swift; sourceTree = "<group>"; };
 		547D90681DF1EE56008C636A /* RoutesAPIDeezer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutesAPIDeezer.swift; sourceTree = "<group>"; };
 		547D90691DF1EE56008C636A /* RoutesAPISoundcloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutesAPISoundcloud.swift; sourceTree = "<group>"; };
+		5481196A1E28C949009E8BDF /* InteractivePlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractivePlayerView.swift; sourceTree = "<group>"; };
+		5481196C1E28C9F6009E8BDF /* InteractivePlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InteractivePlayerView.xib; sourceTree = "<group>"; };
 		549405AB1DF5DA83007F5D4A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		54AE84341DEF3A66003715EE /* Sounity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sounity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54AE84371DEF3A66003715EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -258,14 +259,6 @@
 		54CF46AD1DF1BB140096EFC3 /* Music.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
 		54CF46AE1DF1BB140096EFC3 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		54CF46AF1DF1BB140096EFC3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		54DD13AD1DF487B500E8C021 /* InteractivePlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InteractivePlayerView.swift; path = ipv_source/InteractivePlayerView.swift; sourceTree = "<group>"; };
-		54DD13AE1DF487B500E8C021 /* InteractivePlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InteractivePlayerView.xib; path = ipv_source/InteractivePlayerView.xib; sourceTree = "<group>"; };
-		54DD13B01DF487B500E8C021 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		54DD13B11DF487B500E8C021 /* InteractivePlayerView.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = InteractivePlayerView.modulemap; sourceTree = "<group>"; };
-		54DD13B21DF487B500E8C021 /* InteractivePlayerView.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = InteractivePlayerView.xcconfig; sourceTree = "<group>"; };
-		54DD13B31DF487B500E8C021 /* InteractivePlayerView-dummy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "InteractivePlayerView-dummy.m"; sourceTree = "<group>"; };
-		54DD13B41DF487B500E8C021 /* InteractivePlayerView-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "InteractivePlayerView-prefix.pch"; sourceTree = "<group>"; };
-		54DD13B51DF487B500E8C021 /* InteractivePlayerView-umbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "InteractivePlayerView-umbrella.h"; sourceTree = "<group>"; };
 		54E281661DF1BD8C0070317C /* EmptyResearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyResearchView.swift; sourceTree = "<group>"; };
 		54E281671DF1BD8C0070317C /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		54E281681DF1BD8C0070317C /* TemplateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplateView.swift; sourceTree = "<group>"; };
@@ -584,9 +577,9 @@
 		547D90561DF1E808008C636A /* ExternalLibraires */ = {
 			isa = PBXGroup;
 			children = (
+				548119691E28C92E009E8BDF /* InteractivePlayerView */,
 				54919E751DF6BB6500A0786B /* SocketIO */,
 				54FFF2DB1DF49F9F00E6DA7B /* Eureka */,
-				54DD13B71DF487B500E8C021 /* InteractivePlayerView */,
 			);
 			name = ExternalLibraires;
 			sourceTree = "<group>";
@@ -627,6 +620,15 @@
 				547D90661DF1EB46008C636A /* MusicProvider.swift */,
 			);
 			name = MusicProvider;
+			sourceTree = "<group>";
+		};
+		548119691E28C92E009E8BDF /* InteractivePlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				5481196C1E28C9F6009E8BDF /* InteractivePlayerView.xib */,
+				5481196A1E28C949009E8BDF /* InteractivePlayerView.swift */,
+			);
+			name = InteractivePlayerView;
 			sourceTree = "<group>";
 		};
 		54919E751DF6BB6500A0786B /* SocketIO */ = {
@@ -799,39 +801,6 @@
 				2D194F911E224046008A98B9 /* Trophies.swift */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		54DD13AF1DF487B500E8C021 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				54DD13AE1DF487B500E8C021 /* InteractivePlayerView.xib */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		54DD13B61DF487B500E8C021 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				54DD13B01DF487B500E8C021 /* Info.plist */,
-				54DD13B11DF487B500E8C021 /* InteractivePlayerView.modulemap */,
-				54DD13B21DF487B500E8C021 /* InteractivePlayerView.xcconfig */,
-				54DD13B31DF487B500E8C021 /* InteractivePlayerView-dummy.m */,
-				54DD13B41DF487B500E8C021 /* InteractivePlayerView-prefix.pch */,
-				54DD13B51DF487B500E8C021 /* InteractivePlayerView-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/InteractivePlayerView";
-			sourceTree = "<group>";
-		};
-		54DD13B71DF487B500E8C021 /* InteractivePlayerView */ = {
-			isa = PBXGroup;
-			children = (
-				54DD13AD1DF487B500E8C021 /* InteractivePlayerView.swift */,
-				54DD13AF1DF487B500E8C021 /* Resources */,
-				54DD13B61DF487B500E8C021 /* Support Files */,
-			);
-			name = InteractivePlayerView;
-			path = ../Pods/InteractivePlayerView;
 			sourceTree = "<group>";
 		};
 		54E281651DF1BD590070317C /* PlaceholderViews */ = {
@@ -1064,6 +1033,7 @@
 			files = (
 				54E2817F1DF1C4270070317C /* Menu.storyboard in Resources */,
 				545BAEB21DF4CC6500FC1282 /* Profile.storyboard in Resources */,
+				5481196D1E28C9F6009E8BDF /* InteractivePlayerView.xib in Resources */,
 				54AE84751DEF415A003715EE /* Authentication.storyboard in Resources */,
 				54AE84421DEF3A66003715EE /* LaunchScreen.storyboard in Resources */,
 				2D0DE3601DFBF7A90042E116 /* AroundMe.storyboard in Resources */,
@@ -1072,7 +1042,6 @@
 				549405AC1DF5DA83007F5D4A /* Default-568h@2x.png in Resources */,
 				2DB541A91DF96216004C2A07 /* Timeline.storyboard in Resources */,
 				54E281811DF1D3EB0070317C /* Search.storyboard in Resources */,
-				54DD13B91DF487B500E8C021 /* InteractivePlayerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1251,6 +1220,7 @@
 				545F440F1DF78358001C7D73 /* SocketPacket.swift in Sources */,
 				545F440C1DF78358001C7D73 /* SocketIOClientSpec.swift in Sources */,
 				541BFAE91DEF839D006334A0 /* CreateEventController.swift in Sources */,
+				5481196B1E28C949009E8BDF /* InteractivePlayerView.swift in Sources */,
 				541BFAEB1DEF839D006334A0 /* HomeController.swift in Sources */,
 				5465D9B71DEF441B000BE4C8 /* HexagonalTextField.swift in Sources */,
 				541BFAF21DEF839D006334A0 /* UserSearchCustomTableCell.swift in Sources */,
@@ -1258,7 +1228,6 @@
 				547D90551DF1E44B008C636A /* SearchMusicLocalTableViewCell.swift in Sources */,
 				2DB541AB1DF96385004C2A07 /* TimelineController.swift in Sources */,
 				54AE847D1DEF430F003715EE /* RgPageViewController.swift in Sources */,
-				54DD13BC1DF487B500E8C021 /* InteractivePlayerView-dummy.m in Sources */,
 				54E281731DF1BF240070317C /* Event.swift in Sources */,
 				541BFAEE1DEF839D006334A0 /* UserSearchController.swift in Sources */,
 				545F44061DF78358001C7D73 /* SocketEngineWebsocket.swift in Sources */,
@@ -1287,7 +1256,6 @@
 				547D906A1DF1EE56008C636A /* RoutesAPIDeezer.swift in Sources */,
 				54FFF2DD1DF49FB700E6DA7B /* LocationRow.swift in Sources */,
 				5465D9B81DEF441B000BE4C8 /* HexagonalTextFieldWithIcon.swift in Sources */,
-				54DD13B81DF487B500E8C021 /* InteractivePlayerView.swift in Sources */,
 				540939411DF7693A0011052A /* PlaylistEventController.swift in Sources */,
 				545BAEAF1DF4CC4400FC1282 /* UserSettingsViewController.swift in Sources */,
 				54E281691DF1BD8C0070317C /* EmptyResearchView.swift in Sources */,

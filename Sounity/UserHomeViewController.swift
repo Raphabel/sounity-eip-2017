@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import InteractivePlayerView
 import GuillotineMenu
 import AVFoundation
 import Alamofire

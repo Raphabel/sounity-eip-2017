@@ -89,9 +89,8 @@ extension ActivitiesEventController {
         }
         
         if let badgeValue = self.tabBarController?.tabBar.items?[3].badgeValue {
-            if let nextValue: Int = ((Int(badgeValue))! + 1) {
-                self.tabBarController?.tabBar.items?[3].badgeValue = String(nextValue)
-            }
+            let nextValue: Int = (Int(badgeValue)! + 1)
+            self.tabBarController?.tabBar.items?[3].badgeValue = String(nextValue)
         } else {
             self.tabBarController?.tabBar.items?[3].badgeValue = "1"
         }
@@ -114,9 +113,8 @@ extension ActivitiesEventController {
         }
         
         if let badgeValue = self.tabBarController?.tabBar.items?[3].badgeValue {
-            if let nextValue: Int = ((Int(badgeValue))! + 1) {
-                self.tabBarController?.tabBar.items?[3].badgeValue = String(nextValue)
-            }
+            let nextValue = ((Int(badgeValue))! + 1)
+            self.tabBarController?.tabBar.items?[3].badgeValue = String(nextValue)
         } else {
             self.tabBarController?.tabBar.items?[3].badgeValue = "1"
         }

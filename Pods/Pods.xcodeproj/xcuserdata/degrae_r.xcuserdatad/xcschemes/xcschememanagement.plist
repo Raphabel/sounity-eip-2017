@@ -39,11 +39,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>InteractivePlayerView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>KMPlaceholderTextView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -117,22 +112,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>012EA46C7089F8296BB29AC5C78181E8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>048A63AEB2DCABBC399021D86BDC53B6</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>09AAE4B03E5AC78A8E054E9870BC10C9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>14CC79B652BB9AA808559CADEB435422</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -142,22 +122,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2A78C20FD385CCD2A8B6D74818D02E29</key>
+		<key>3223E3101416FCFD1AA5A67CE328E625</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3B39100F3ED0AAFB7AE07EDC76281432</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>43AA3F5C7A9C6FB719C52760B2B579D0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>44F73E976582FADBF221F35FC55E7795</key>
+		<key>4D76D80855A19DB528CFBF57FD1BF98F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -177,7 +147,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>74B918273FB817D008EDAE572007C102</key>
+		<key>663BF87537111900CFBE58E768B6608B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -197,12 +167,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A76140B89248908126EB9B86A72B6081</key>
+		<key>B8952084DD141AF314DC0DC60F4519B6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B2E87CFFC06BC364652D19DA58C53D23</key>
+		<key>CEE9DD7ACA323CC0A4E7F60F55E75466</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -217,7 +187,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>D5AF3EF7010F82F24A9921D1544C2BC8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DD37CA0B667966F6F598FA0BC4D4A8B9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>EE774F234E810C0DD8263855D7A1A166</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F3EC15E26A7098FC2C01003138CD5916</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FACE0120877BE5E12571CCBA77CBA40D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

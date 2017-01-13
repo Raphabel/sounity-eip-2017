@@ -82,9 +82,8 @@ extension PlaylistEventController {
         }
         
         if let badgeValue = self.tabBarController?.tabBar.items?[position.rawValue].badgeValue {
-            if let nextValue: Int = ((Int(badgeValue))! + 1) {
-                self.tabBarController?.tabBar.items?[position.rawValue].badgeValue = String(nextValue)
-            }
+            let nextValue: Int = (Int(badgeValue)! + 1)
+            self.tabBarController?.tabBar.items?[position.rawValue].badgeValue = String(nextValue)
         } else {
             self.tabBarController?.tabBar.items?[position.rawValue].badgeValue = "1"
         }

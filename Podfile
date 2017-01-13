@@ -29,7 +29,7 @@ target 'Sounity' do
   
   pod 'PageMenu', :git => 'https://github.com/orazz/PageMenu.git'
   pod 'DZNEmptyDataSet', :git => 'https://github.com/dzenbot/DZNEmptyDataSet.git'
-  pod 'InteractivePlayerView', :git => 'https://github.com/AhmettKeskin/InteractivePlayerView.git'
+  #pod 'InteractivePlayerView', :git => 'https://github.com/AhmettKeskin/InteractivePlayerView.git'
   pod 'LiquidFloatingActionButton', :git => 'https://github.com/carloscorreia94/LiquidFloatingActionButton.git', :branch => 'swift3'
 
   target 'SounityTests' do

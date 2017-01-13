@@ -29,7 +29,7 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Sounity Feeds" id="Yht-r8-mkM">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" id="P64-OW-jVW">
+                                        <barButtonItem key="leftBarButtonItem" id="P64-OW-jVW">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="WSf-vl-S3d">
                                                 <rect key="frame" x="16" y="30" width="15" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -65,7 +65,7 @@
                                                         <constraint firstAttribute="width" constant="50" id="SuB-ud-0ri"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-01-12, Thu 09:41" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZN-lw-nOX">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-01-12, Thu 09:41" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZN-lw-nOX">
                                                     <rect key="frame" x="63" y="37" width="304" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="Hjv-6H-Q7p"/>
@@ -74,7 +74,7 @@
                                                     <color key="textColor" red="0.91362601518630981" green="0.91378277540206909" blue="0.91361618041992188" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Raphabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8E-DB-xU7">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Raphabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8E-DB-xU7">
                                                     <rect key="frame" x="63" y="14" width="304" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="IhX-Pk-pSz"/>
@@ -83,7 +83,7 @@
                                                     <color key="textColor" red="0.14352659686971239" green="0.14494765228426398" blue="0.14494765228426398" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eEs-bC-5AK">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eEs-bC-5AK">
                                                     <rect key="frame" x="8" y="65" width="359" height="30"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -104,6 +104,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="8jD-si-EGH"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                                     <state key="normal" title="Button"/>
                                                 </button>
                                             </subviews>

@@ -14,7 +14,6 @@ import SwiftyJSON
 import PullToRefresh
 import SCLAlertView
 import DZNEmptyDataSet
-import InteractivePlayerView
 
 class ConsultMusicsInPlaylistController: UIViewController, UITableViewDelegate, DZNEmptyDataSetDelegate, InteractivePlayerViewDelegate {
 
