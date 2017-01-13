@@ -87,21 +87,7 @@ extension ManageAdminEvent: UICollectionViewDataSource {
             tmp = self.resultResearch
         }
         
-        cell.userName.text = tmp[indexPath.item].nickname
-        cell.pictureUser.load.request(with: tmp[indexPath.item].picture, onCompletion: { image, error, operation in
-            if (cell.pictureUser.image?.size == nil) {
-                cell.pictureUser.image = UIImage(named: "emptyPicture")
-            }
-            MakeElementRounded().makeElementRounded(cell.pictureUser, newSize: cell.pictureUser.frame.width)
-        })
-        
-        if (tmp[indexPath.item].owner) {
-            cell.backgroundColor = ColorSounity.orangeSounity
-        } else if (tmp[indexPath.item].admin) {
-            cell.backgroundColor = ColorSounity.navigationBarColor
-        } else {
-            cell.backgroundColor = UIColor.lightGray
-        }
+        cell.user = tmp[indexPath.row]
         
         return cell
     }
@@ -204,6 +190,9 @@ extension ManageAdminEvent {
         }
     }
     
+    /// Options that are showed when user clicks on a user
+    ///
+    /// - Parameter userInfo: <#userInfo description#>
     func showOptionsUser(userInfo: UserBasicInfo) {
         let optionMenu = UIAlertController(title: nil, message: userInfo.nickname, preferredStyle: .actionSheet)
         
@@ -242,6 +231,10 @@ extension ManageAdminEvent {
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ManageAdminEvent.searchResultFromString(_:)), userInfo: searchText, repeats: false)
     }
+    
+    /// Search function for the user according to their name
+    ///
+    /// - Parameter timer: timer in order to avoid maing research at every character changed
     func searchResultFromString(_ timer: Timer) {
         self.textSearchBox = timer.userInfo! as! String
         
