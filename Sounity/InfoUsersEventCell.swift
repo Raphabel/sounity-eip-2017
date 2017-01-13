@@ -9,6 +9,16 @@
 import UIKit
 class InfoUsersEventCell: UICollectionViewCell {
     
+    var user: UserBasicInfo! {
+        didSet {
+            self.updateUI()
+        }
+    }
+    
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var pictureUser: UIImageView!
+    
+    func updateUI() {
+        
+    }
 }

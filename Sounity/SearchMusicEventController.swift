@@ -171,7 +171,7 @@ extension SearchMusicEventController {
 // MARK: Table view function
 extension SearchMusicEventController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:SearchMusicEventCustomTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchMusicEventCustomTableCell", for: indexPath) as! SearchMusicEventCustomTableCell
+        let cell:SearchMusicCustomTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchMusicEventCustomTableCell", for: indexPath) as! SearchMusicCustomTableCell
         
         cell.music = self.resultResearch[indexPath.row]
         

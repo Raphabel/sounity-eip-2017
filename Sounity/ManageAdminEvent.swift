@@ -133,6 +133,9 @@ extension ManageAdminEvent {
 
 //MARK: Action on users
 extension ManageAdminEvent {
+    /// Remove admin attribute to a user
+    ///
+    /// - Parameter user: user selected [UserBasicInfo]
     func removeAdminFromEvent(_ user: UserBasicInfo) {
         let idUserToRemove = user.id
         
@@ -165,6 +168,10 @@ extension ManageAdminEvent {
         }
     }
     
+    /// Add admin attribute to a user
+    ///
+    /// - Parameter user: user selected [UserBasicInfo]
+
     func addAdminToEvent(_ user: UserBasicInfo) {
         let idUserToRemove = user.id
         
@@ -288,29 +295,11 @@ extension ManageAdminEvent {
     }
 }
 
-//MARK: AdminInfoClass 
-extension ManageAdminEvent {
-    class UserBasicInfo {
-        var nickname: String
-        var picture: String
-
-        var id: Int
-
-        var owner: Bool
-        var admin: Bool
-        
-        init(_nickname: String, _id: Int, _picture: String, _owner: Bool, _admin: Bool) {
-            self.nickname = _nickname
-            self.id = _id
-            self.picture = _picture
-            self.owner = _owner
-            self.admin = _admin
-        }
-    }
-}
-
 //MARK: Initialisation functions
 extension ManageAdminEvent {
+    /// Get info of a specific event in order to get the owner and the admins of an event
+    ///
+    /// - Parameter idEvent: id of the event
     func loadFromIdEvent(_ idEvent: Int) {
         let api = SounityAPI()
         let parameters = [ "id": idEvent ]

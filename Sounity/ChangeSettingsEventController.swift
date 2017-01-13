@@ -79,6 +79,7 @@ extension ChangeSettingsEventController {
         alert.openAlertConfirmationWithCallback(mode == "delete" ? self.deleteEvent : mode == "stop" ? self.stopEvent : self.saveSettingsEvent)
     }
     
+    /// Function that allows to stop an event
     func stopEvent () {
         let api = SounityAPI()
         let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
@@ -101,6 +102,7 @@ extension ChangeSettingsEventController {
         }
     }
     
+    /// Function that allows to delete an event
     func deleteEvent() {
         let api = SounityAPI()
         let headers = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
@@ -127,6 +129,7 @@ extension ChangeSettingsEventController {
         
     }
     
+    /// Function that allows to save event's settings
     func saveSettingsEvent() {
         var newCoverURL: URL?
         let api = SounityAPI()
@@ -192,6 +195,9 @@ extension ChangeSettingsEventController {
         
     }
     
+    /// Upload a picture for the event description
+    ///
+    /// - Parameter path: path that refers to the picture to send
     func uploadPicture(path: NSURL) {
         let fetchResult = PHAsset.fetchAssets(withALAssetURLs: [path.absoluteURL!], options: nil)
         if let photo = fetchResult.firstObject {
@@ -235,6 +241,7 @@ extension ChangeSettingsEventController {
 
 //MARK: Create form Eureka
 extension ChangeSettingsEventController {
+    /// Load information of the event and set up the eureka form to change some event's values
     func loadEventInfo() {
         let api = SounityAPI()
         let parameters: Parameters = [ "id": idEventSent ]

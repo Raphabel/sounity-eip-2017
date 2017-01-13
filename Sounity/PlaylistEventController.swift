@@ -50,6 +50,7 @@ class PlaylistEventController: UIViewController, UITableViewDelegate, DZNEmptyDa
         self.listenBanSocket()
         self.listenBannedSocket()
         self.listenLeftSocket()
+        self.listenStopSocket()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -210,6 +211,17 @@ extension PlaylistEventController {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.BAN.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
             print("User has been banned -> \(data)")
+        }
+    }
+    
+    /// Listen on broadcast event:stop
+    func listenStopSocket() {
+        SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.STOP.rawValue) { (dataArray, Socket) -> Void in
+            let data = JSON(dataArray[0])
+            print("The event has stopped -> \(data)")
+            
+            let alert = DisplayAlert(title: "Event", message: data["message"].stringValue)
+            alert.openAlertConfirmationWithCallbackNoOption(self.getBackHomePage)
         }
     }
     

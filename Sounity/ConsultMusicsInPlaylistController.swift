@@ -135,6 +135,7 @@ extension ConsultMusicsInPlaylistController {
 
 //MARK: Initialisation functions
 extension ConsultMusicsInPlaylistController {
+    /// Allows to initialise the entire player available
     func intiIPV() {
         self.InteractivePView!.delegate = self
         self.InteractivePView.progress = 120.0
@@ -162,6 +163,7 @@ extension ConsultMusicsInPlaylistController {
         self.previousButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ConsultMusicsInPlaylistController.playPreviousSong)))
     }
     
+    /// Get all the playlist of the current user in order to eventually add one music to one of his playlists
     func getUserOwnPlaylists() {
         let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)"
         let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
@@ -187,6 +189,10 @@ extension ConsultMusicsInPlaylistController {
         }
     }
     
+    
+    /// Fetxhed all the musics of a specific playlist
+    ///
+    /// - Parameter id_playlist: id of the playlist
     func getAllMusicsPlaylists(_ id_playlist: Int)  {
         let url = api.getRoute(SounityAPI.ROUTES.PLAYLIST_USER) + "/\(id_playlist)"
         let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
@@ -329,6 +335,9 @@ extension ConsultMusicsInPlaylistController {
         }
     }
     
+    /// Setup the media player according to the music played
+    ///
+    /// - Parameter position: position of th emusic within the playlist
     func setMusicPlaylistDesign(_ position: Int) {
         for music in musics {
             music.played = false
@@ -349,6 +358,12 @@ extension ConsultMusicsInPlaylistController {
         self.tableView.reloadData()
     }
     
+    /// Request to play music from Music Provider API when the user joins the event
+    ///
+    /// - Parameters:
+    ///   - idMusic: id of the music to play
+    ///   - apiId: id api of the music [Deezer | Soundcloud]
+    ///   - time: time where the music is supposed to play first
     func gatherDataMusicAndPlay(_ idMusic: String, apiId: Int, time: Int64) {
         Alamofire.request(MusicProvider.sharedInstance.getUrlTrackByMusicProvider(idMusic, _apiId: apiId), method: .get)
             .validate(statusCode: 200..<501)
@@ -391,10 +406,20 @@ extension ConsultMusicsInPlaylistController {
         }
     }
     
+    /// Actions as Shuffled or unshuffled playlist
+    ///
+    /// - Parameters:
+    ///   - sender: sender related to the button
+    ///   - isSelected: is the shuffled button is on or not
     func actionOneButtonTapped(sender: UIButton, isSelected: Bool) {
         self.shuffle = !self.shuffle
     }
     
+    /// Actions as play or pause
+    ///
+    /// - Parameters:
+    ///   - sender: sender related to the button
+    ///   - isSelected: is the playlist supposed to play or not
     func actionTwoButtonTapped(sender: UIButton, isSelected: Bool) {
         if (self.player != nil && self.player?.rate > 0) {
             self.InteractivePView.stop()
@@ -422,6 +447,7 @@ extension ConsultMusicsInPlaylistController {
 
 //MARK: Actions to do within the playlist
 extension ConsultMusicsInPlaylistController {
+    /// Function that allows to like or dislikes a playlist
     func likePlaylist() {
         let api = SounityAPI()
         let url = (api.getRoute(SounityAPI.ROUTES.PLAYLIST_USER) + "/" + String(self.id_playlist!) + "/" + "like")
@@ -454,39 +480,6 @@ extension ConsultMusicsInPlaylistController {
                         
                         let alert = DisplayAlert(title: "Like Playlist", message: jsonResponse["message"].stringValue)
                         alert.openAlertSuccess()
-                    }
-                }
-        }
-    }
-    
-    func deleteMusicToPlaylist(_ indexPath: IndexPath) {
-        let idMusicToDelete = self.musics[indexPath.row].id
-        
-        let api = SounityAPI()
-        let url = (api.getRoute(SounityAPI.ROUTES.PLAYLIST_USER) + "/" + String(self.id_playlist!) + "/" + "music")
-        let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
-        
-        Alamofire.request(url, method: .delete, parameters : ["id": idMusicToDelete], headers: headers)
-            .validate(statusCode: 200..<500)
-            .validate(contentType: ["application/json"])
-            .responseJSON { response in
-                if let apiResponse = response.result.value {
-                    let jsonResponse = JSON(apiResponse)
-                    if ((response.response?.statusCode)! == 400) {
-                        let alert = DisplayAlert(title: "Delete Music", message: jsonResponse["message"].stringValue)
-                        alert.openAlertError()
-                    }
-                    else {
-                        let alert = DisplayAlert(title: "Delete Music", message: ("The music : '" + self.musics[indexPath.row].title + " ' has been added."))
-                        alert.openAlertSuccess()
-                        
-                        for (index, music) in self.musics.enumerated() {
-                            if (music.id == idMusicToDelete) {
-                                self.musics.remove(at: index)
-                            }
-                        }
-                        self.tableView.reloadData()
-                        self.nbMusicsPlaylist.text = (String(self.musics.count) + " SONGS")
                     }
                 }
         }
@@ -570,44 +563,27 @@ extension ConsultMusicsInPlaylistController: UITableViewDataSource, DZNEmptyData
         if (tableView == self.tableView) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "mytableCell2", for: indexPath) as? MusicsInPlaylistCell
             
-            cell!.titleMusic.text = self.musics[indexPath.row].title
-            cell!.artist.text = self.musics[indexPath.row].artist
-            cell!.playMusicBtn.isHidden = false
-            cell!.playedMusicBtn.isHidden = true
-            if (self.musics[indexPath.row].played) {
-                cell!.playMusicBtn.isHidden = true
-                cell!.playedMusicBtn.isHidden = false
-            }
-            
-            if (self.musics[indexPath.row].cover != ""  && Reachability.isConnectedToNetwork() == true) {
-                cell!.cover.imageFromServerURL(urlString: self.musics[indexPath.row].cover)
-                MakeElementRounded().makeElementRounded(cell?.cover, newSize: cell?.cover.frame.width)
-            }
-            let totalDuration = Int(self.musics[indexPath.row].duration)
-            let min = totalDuration / 60
-            let sec = totalDuration % 60
-            cell!.duration.text = NSString(format: "%i:%02i",min,sec ) as String
-            
+            cell!.music = self.musics[indexPath.row]
             cell!.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(ConsultMusicsInPlaylistController.showOptionsSong)))
+            
             return cell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellPlaylistName", for: indexPath)
             cell.isUserInteractionEnabled = true
             cell.textLabel?.text = self.ownPlaylist[indexPath.row].name
-            //cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(MediaPlayerViewController.addMusicToUserPlaylist)))
+            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(MediaPlayerViewController.addMusicToUserPlaylist)))
             return cell
         }
     }
     
+    /// Callback when long press gesture is recorded on a music
+    ///
+    /// - Parameter longPressGestureRecognizer: longPressGestureRecognizer description
     func showOptionsSong(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
             let touchPoint = longPressGestureRecognizer.location(in: self.tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                 let optionMenu = UIAlertController(title: nil, message: self.musics[indexPath.row].title, preferredStyle: .actionSheet)
-                let deleteMusic = UIAlertAction(title: "Delete", style: .destructive, handler: {
-                    (alert: UIAlertAction!) -> Void in
-                    self.deleteMusicToPlaylist(indexPath)
-                })
                 
                 let addMusicToPlaylist = UIAlertAction(title: "Add to another Playlist", style: .default, handler: {
                     (alert: UIAlertAction!) -> Void in
@@ -619,9 +595,6 @@ extension ConsultMusicsInPlaylistController: UITableViewDataSource, DZNEmptyData
                     (alert: UIAlertAction!) -> Void in })
                 
                 optionMenu.addAction(addMusicToPlaylist)
-                if (owner_playlist) {
-                    optionMenu.addAction(deleteMusic)
-                }
                 optionMenu.addAction(cancel)
                 
                 self.present(optionMenu, animated: true, completion: nil)
@@ -663,9 +636,6 @@ extension ConsultMusicsInPlaylistController: UITableViewDataSource, DZNEmptyData
     }
     
     func verticalOffset(forEmptyDataSet scrollView: UIScrollView) -> CGFloat {
-        if (!self.owner_playlist) {
-            return -10
-        }
         return -25;
     }
 }

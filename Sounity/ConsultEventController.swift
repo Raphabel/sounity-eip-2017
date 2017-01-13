@@ -87,6 +87,7 @@ class ConsultEventController: UIViewController, StatefulViewController {
 
 //MARK: Navigation functions
 extension ConsultEventController {
+    /// Allows the owner to start the event
     func startEventByOwner () {
         let api = SounityAPI()
         let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
@@ -138,6 +139,9 @@ extension ConsultEventController {
 
 //MARK: Initialisation functions
 extension ConsultEventController {
+    /// Load all the  event's information
+    ///
+    /// - Parameter idEvent: id of the event concerned
     func loadFromIdEvent(_ idEvent: Int) {
         let api = SounityAPI()
         let parameters = [ "id": idEvent ]
@@ -208,6 +212,11 @@ extension ConsultEventController {
         }
     }
     
+    /// Init the map display in order to add a pin on the event's location
+    ///
+    /// - Parameters:
+    ///   - location: coordonates
+    ///   - place: title of the location
     func initCenterMapView(_ location: CLLocationCoordinate2D, place: String) {
         let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005))
         self.mapEvent.setRegion(region, animated: true)

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SearchMusicEventCustomTableCell: UITableViewCell {
+class SearchMusicCustomTableCell: UITableViewCell {
     
     var music: SounityTrackResearch! {
         didSet {

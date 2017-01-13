@@ -56,7 +56,7 @@ class UserSearchController: UIViewController, UITableViewDelegate, UISearchBarDe
         setupInitialViewState()
     }
     
-    // Function that will be called when a user decides to consult a profile
+    /// Function that will be called when a user decides to consult a profile
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let userIndex = tableview.indexPathForSelectedRow?.row
@@ -100,6 +100,10 @@ extension UserSearchController {
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(UserSearchController.searchResultFromString(_:)), userInfo: searchText, repeats: false)
     }
+    
+    /// Search function for the user according to their name
+    ///
+    /// - Parameter timer: timer in order to avoid maing research at every character changed
     func searchResultFromString(_ timer: Timer) {
         self.textSearchBox = timer.userInfo! as! String
         
@@ -144,6 +148,7 @@ extension UserSearchController {
 
 //MARK: Get followers of the user
 extension UserSearchController {
+    /// Gets all the followers of the current user in order to display this information according to the research
     func getMyFollowers() {
         let api = SounityAPI()
         
@@ -216,30 +221,15 @@ extension UserSearchController: UITableViewDataSource {
     {
         
         let cell:UserSearchCustomTableCell = tableView.dequeueReusableCell(withIdentifier: "UserSearchCustomTableCell", for: indexPath as IndexPath) as! UserSearchCustomTableCell
+    
+        cell.user = self.resultResearch[indexPath.row]
         
-        cell.startFollowing.isSelected = false
         for data in resultFollowers {
             if (data.nickname == resultResearch[indexPath.row].nickname) {
                 cell.startFollowing.isSelected = true
             }
         }
         
-        cell.userName.text = "\(self.resultResearch[indexPath.row].first_name.uppercaseFirst) \(self.resultResearch[indexPath.row].last_name.uppercaseFirst)"
-        cell.userUsername.text = self.resultResearch[indexPath.row].nickname.uppercaseFirst
-        
-        if (self.resultResearch[indexPath.row].picture == "") {
-            cell.userPicture.image = UIImage(named: "UnknownUserCover")!
-        }
-        else if (Reachability.isConnectedToNetwork() == true) {
-            cell.userPicture.load.request(with: self.resultResearch[indexPath.row].picture, onCompletion: { image, error, operation in
-                if (cell.userPicture.image?.size == nil) {
-                    cell.userPicture.image = UIImage(named: "emptyPicture")
-                }
-                MakeElementRounded().makeElementRounded(cell.userPicture, newSize: cell.userPicture.frame.width)
-            })
-            
-            
-        }
         return cell
     }
     

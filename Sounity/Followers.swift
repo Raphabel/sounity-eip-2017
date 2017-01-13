@@ -18,6 +18,16 @@ class Followers  {
     var picture:String?
     var follow: Bool?
     
+    /// Init class with datas
+    ///
+    /// - Parameters:
+    ///   - _id: id of the follower
+    ///   - _lastName: lastname of the follower
+    ///   - _nickName: nickname of the follower
+    ///   - _followedAt: created date
+    ///   - _firstName: firstname of the follower
+    ///   - _picture: picture of the follower
+    ///   - _follow: is the user following of the follower
     init(_id: Int, _lastName: String, _nickName: String, _followedAt: String, _firstName: String, _picture: String, _follow: Bool) {
         
         self.id = _id

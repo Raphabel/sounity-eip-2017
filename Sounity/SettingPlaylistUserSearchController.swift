@@ -51,11 +51,13 @@ class SettingPlaylistUserSearchController: FormViewController {
 
 //MARK: Actions on playlist changes functions
 extension SettingPlaylistUserSearchController {
+    /// Confirmation alert view
     func actionOnEvent (_ _title: String, _msg: String, mode: String) {
         let alert = DisplayAlert(title: _title, message: _msg)
         alert.openAlertConfirmationWithCallback(mode == "delete" ? self.deletePlaylist : self.saveSettingPlaylist)
     }
     
+    /// Make resquest to delete a playlist of specific user
     func deletePlaylist() {
         let api = SounityAPI()
         let headers = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
@@ -82,6 +84,7 @@ extension SettingPlaylistUserSearchController {
         
     }
     
+    /// Make resquest to save a playlist's settings of specific user
     func saveSettingPlaylist() {
         var newName: String? = ""
         var newDescription: String? = ""
@@ -130,6 +133,8 @@ extension SettingPlaylistUserSearchController {
 
 //MARK: Buiding up the Eureka form
 extension SettingPlaylistUserSearchController {
+    /// Make resquest to fetch all the playlist's info
+    /// Build the Eureka form
     func loadPlaylistInfo() {
         let api = SounityAPI()
         let url = api.getRoute(SounityAPI.ROUTES.PLAYLIST_USER) + "/\(self.idPlaylistSent)"

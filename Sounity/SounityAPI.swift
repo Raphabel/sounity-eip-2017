@@ -41,6 +41,7 @@ class SounityAPI {
         case NEW_JOINED = "event:joined"
         case BANNED = "event:banned"
         case LEFT = "event:left"
+        case STOP = "event:stop"
         case BAN = "event:ban"
     }
     

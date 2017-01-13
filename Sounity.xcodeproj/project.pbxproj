@@ -25,7 +25,7 @@
 		540939491DF7695C0011052A /* ActivitiesEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540939451DF7695C0011052A /* ActivitiesEventTableViewCell.swift */; };
 		5409394A1DF7695C0011052A /* ChatMessageTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540939461DF7695C0011052A /* ChatMessageTableCell.swift */; };
 		5409394B1DF7695C0011052A /* PlaylistMusicEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540939471DF7695C0011052A /* PlaylistMusicEventTableViewCell.swift */; };
-		5409394C1DF7695C0011052A /* SearchMusicEventCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540939481DF7695C0011052A /* SearchMusicEventCustomCell.swift */; };
+		5409394C1DF7695C0011052A /* SearchMusicCustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540939481DF7695C0011052A /* SearchMusicCustomTableCell.swift */; };
 		5409394F1DF76B890011052A /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5409394E1DF76B890011052A /* SocketIOManager.swift */; };
 		541BFAE51DEF839D006334A0 /* ChangeSettingsEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAD71DEF839D006334A0 /* ChangeSettingsEventController.swift */; };
 		541BFAE61DEF839D006334A0 /* ConsultEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAD81DEF839D006334A0 /* ConsultEventController.swift */; };
@@ -38,7 +38,6 @@
 		541BFAED1DEF839D006334A0 /* SettingPlaylistUserSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFADF1DEF839D006334A0 /* SettingPlaylistUserSearchController.swift */; };
 		541BFAEE1DEF839D006334A0 /* UserSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE01DEF839D006334A0 /* UserSearchController.swift */; };
 		541BFAEF1DEF839D006334A0 /* EventSearchCustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE11DEF839D006334A0 /* EventSearchCustomTableCell.swift */; };
-		541BFAF01DEF839D006334A0 /* MusicSearchCustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE21DEF839D006334A0 /* MusicSearchCustomTableCell.swift */; };
 		541BFAF11DEF839D006334A0 /* SounityTrackResearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE31DEF839D006334A0 /* SounityTrackResearch.swift */; };
 		541BFAF21DEF839D006334A0 /* UserSearchCustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */; };
 		5449E5051E1964110080C41C /* ManageAdminEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5449E5041E1964110080C41C /* ManageAdminEvent.swift */; };
@@ -73,6 +72,7 @@
 		545F44121DF78358001C7D73 /* SocketTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F43FA1DF78358001C7D73 /* SocketTypes.swift */; };
 		545F44131DF78358001C7D73 /* SSLSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F43FB1DF78358001C7D73 /* SSLSecurity.swift */; };
 		545F44141DF78358001C7D73 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545F43FC1DF78358001C7D73 /* WebSocket.swift */; };
+		546423E11E290D32008AD5E0 /* UserBasicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546423E01E290D32008AD5E0 /* UserBasicInfo.swift */; };
 		5465D9B61DEF441B000BE4C8 /* HexagonalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465D9B21DEF441B000BE4C8 /* HexagonalButton.swift */; };
 		5465D9B71DEF441B000BE4C8 /* HexagonalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465D9B31DEF441B000BE4C8 /* HexagonalTextField.swift */; };
 		5465D9B81DEF441B000BE4C8 /* HexagonalTextFieldWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465D9B41DEF441B000BE4C8 /* HexagonalTextFieldWithIcon.swift */; };
@@ -168,7 +168,7 @@
 		540939451DF7695C0011052A /* ActivitiesEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesEventTableViewCell.swift; sourceTree = "<group>"; };
 		540939461DF7695C0011052A /* ChatMessageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessageTableCell.swift; sourceTree = "<group>"; };
 		540939471DF7695C0011052A /* PlaylistMusicEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistMusicEventTableViewCell.swift; sourceTree = "<group>"; };
-		540939481DF7695C0011052A /* SearchMusicEventCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMusicEventCustomCell.swift; sourceTree = "<group>"; };
+		540939481DF7695C0011052A /* SearchMusicCustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMusicCustomTableCell.swift; sourceTree = "<group>"; };
 		5409394E1DF76B890011052A /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		541BFAD71DEF839D006334A0 /* ChangeSettingsEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeSettingsEventController.swift; sourceTree = "<group>"; };
 		541BFAD81DEF839D006334A0 /* ConsultEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsultEventController.swift; sourceTree = "<group>"; };
@@ -181,7 +181,6 @@
 		541BFADF1DEF839D006334A0 /* SettingPlaylistUserSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingPlaylistUserSearchController.swift; sourceTree = "<group>"; };
 		541BFAE01DEF839D006334A0 /* UserSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchController.swift; sourceTree = "<group>"; };
 		541BFAE11DEF839D006334A0 /* EventSearchCustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSearchCustomTableCell.swift; sourceTree = "<group>"; };
-		541BFAE21DEF839D006334A0 /* MusicSearchCustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSearchCustomTableCell.swift; sourceTree = "<group>"; };
 		541BFAE31DEF839D006334A0 /* SounityTrackResearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SounityTrackResearch.swift; sourceTree = "<group>"; };
 		541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchCustomTableCell.swift; sourceTree = "<group>"; };
 		5449E5041E1964110080C41C /* ManageAdminEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAdminEvent.swift; sourceTree = "<group>"; };
@@ -217,6 +216,7 @@
 		545F43FB1DF78358001C7D73 /* SSLSecurity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSLSecurity.swift; sourceTree = "<group>"; };
 		545F43FC1DF78358001C7D73 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		5460AB2E1DF4E8DA00179CE7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		546423E01E290D32008AD5E0 /* UserBasicInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBasicInfo.swift; sourceTree = "<group>"; };
 		5465D9B21DEF441B000BE4C8 /* HexagonalButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexagonalButton.swift; sourceTree = "<group>"; };
 		5465D9B31DEF441B000BE4C8 /* HexagonalTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexagonalTextField.swift; sourceTree = "<group>"; };
 		5465D9B41DEF441B000BE4C8 /* HexagonalTextFieldWithIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexagonalTextFieldWithIcon.swift; sourceTree = "<group>"; };
@@ -360,7 +360,6 @@
 		540939361DF768180011052A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				540939481DF7695C0011052A /* SearchMusicEventCustomCell.swift */,
 				540939471DF7695C0011052A /* PlaylistMusicEventTableViewCell.swift */,
 				540939461DF7695C0011052A /* ChatMessageTableCell.swift */,
 				540939451DF7695C0011052A /* ActivitiesEventTableViewCell.swift */,
@@ -392,37 +391,26 @@
 		541BFACF1DEF8294006334A0 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				541BFAD11DEF82BB006334A0 /* Classes */,
+				541BFAD11DEF82BB006334A0 /* Models */,
 				541BFAD21DEF82C1006334A0 /* Controllers */,
-				541BFAD31DEF82C7006334A0 /* Storyboard */,
-				541BFAD01DEF82A1006334A0 /* UI */,
+				541BFAD31DEF82C7006334A0 /* Views */,
 			);
 			name = Search;
 			sourceTree = "<group>";
 		};
-		541BFAD01DEF82A1006334A0 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				541BFAE11DEF839D006334A0 /* EventSearchCustomTableCell.swift */,
-				541BFAE21DEF839D006334A0 /* MusicSearchCustomTableCell.swift */,
-				541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */,
-				5449E5061E1964690080C41C /* InfoUsersEventCell.swift */,
-			);
-			name = UI;
-			sourceTree = "<group>";
-		};
-		541BFAD11DEF82BB006334A0 /* Classes */ = {
+		541BFAD11DEF82BB006334A0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				541BFAE31DEF839D006334A0 /* SounityTrackResearch.swift */,
 			);
-			name = Classes;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		541BFAD21DEF82C1006334A0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				541BFADD1DEF839D006334A0 /* HomeController.swift */,
+				546423DF1E28E423008AD5E0 /* Models */,
 				541BFAD41DEF82CE006334A0 /* Events */,
 				541BFAD61DEF82DE006334A0 /* Musics */,
 				541BFAD51DEF82D2006334A0 /* Users */,
@@ -430,12 +418,16 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
-		541BFAD31DEF82C7006334A0 /* Storyboard */ = {
+		541BFAD31DEF82C7006334A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				540939481DF7695C0011052A /* SearchMusicCustomTableCell.swift */,
+				5449E5061E1964690080C41C /* InfoUsersEventCell.swift */,
+				541BFAE41DEF839D006334A0 /* UserSearchCustomTableCell.swift */,
+				541BFAE11DEF839D006334A0 /* EventSearchCustomTableCell.swift */,
 				54E281801DF1D3EB0070317C /* Search.storyboard */,
 			);
-			name = Storyboard;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		541BFAD41DEF82CE006334A0 /* Events */ = {
@@ -503,12 +495,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5465D9B01DEF43F8000BE4C8 /* UI */ = {
+		546423DF1E28E423008AD5E0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5465D9B11DEF43FB000BE4C8 /* HexagonalUIElements */,
+				54CF46AC1DF1BB140096EFC3 /* Followers.swift */,
+				54CF46AF1DF1BB140096EFC3 /* User.swift */,
+				546423E01E290D32008AD5E0 /* UserBasicInfo.swift */,
 			);
-			name = UI;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		5465D9B11DEF43FB000BE4C8 /* HexagonalUIElements */ = {
@@ -765,19 +759,19 @@
 		54AE84711DEF40F9003715EE /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				5465D9B01DEF43F8000BE4C8 /* UI */,
 				54AE84731DEF4116003715EE /* Controllers */,
-				54AE84721DEF410A003715EE /* StoryBoard */,
+				54AE84721DEF410A003715EE /* Views */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
 		};
-		54AE84721DEF410A003715EE /* StoryBoard */ = {
+		54AE84721DEF410A003715EE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5465D9B11DEF43FB000BE4C8 /* HexagonalUIElements */,
 				54AE84741DEF415A003715EE /* Authentication.storyboard */,
 			);
-			name = StoryBoard;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		54AE84731DEF4116003715EE /* Controllers */ = {
@@ -794,10 +788,8 @@
 		54CF46AB1DF1BAF20096EFC3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				54CF46AC1DF1BB140096EFC3 /* Followers.swift */,
 				54CF46AD1DF1BB140096EFC3 /* Music.swift */,
 				54CF46AE1DF1BB140096EFC3 /* Playlist.swift */,
-				54CF46AF1DF1BB140096EFC3 /* User.swift */,
 				2D194F911E224046008A98B9 /* Trophies.swift */,
 			);
 			name = Classes;
@@ -846,17 +838,17 @@
 			isa = PBXGroup;
 			children = (
 				54E2817B1DF1C3D80070317C /* Controllers */,
-				54E2817A1DF1C3BC0070317C /* StoryBoard */,
+				54E2817A1DF1C3BC0070317C /* Views */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
 		};
-		54E2817A1DF1C3BC0070317C /* StoryBoard */ = {
+		54E2817A1DF1C3BC0070317C /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				54E2817E1DF1C4270070317C /* Menu.storyboard */,
 			);
-			name = StoryBoard;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		54E2817B1DF1C3D80070317C /* Controllers */ = {
@@ -1221,6 +1213,7 @@
 				545F440C1DF78358001C7D73 /* SocketIOClientSpec.swift in Sources */,
 				541BFAE91DEF839D006334A0 /* CreateEventController.swift in Sources */,
 				5481196B1E28C949009E8BDF /* InteractivePlayerView.swift in Sources */,
+				546423E11E290D32008AD5E0 /* UserBasicInfo.swift in Sources */,
 				541BFAEB1DEF839D006334A0 /* HomeController.swift in Sources */,
 				5465D9B71DEF441B000BE4C8 /* HexagonalTextField.swift in Sources */,
 				541BFAF21DEF839D006334A0 /* UserSearchCustomTableCell.swift in Sources */,
@@ -1237,7 +1230,6 @@
 				5409394B1DF7695C0011052A /* PlaylistMusicEventTableViewCell.swift in Sources */,
 				54AE846E1DEF3EBD003715EE /* UserConnect.swift in Sources */,
 				547D90531DF1E44B008C636A /* PlaylistTableViewCell.swift in Sources */,
-				541BFAF01DEF839D006334A0 /* MusicSearchCustomTableCell.swift in Sources */,
 				2D194F901E2197A6008A98B9 /* TrophiesTableViewCell.swift in Sources */,
 				54E281721DF1BF240070317C /* Activity.swift in Sources */,
 				540939401DF7693A0011052A /* EventController.swift in Sources */,
@@ -1307,7 +1299,7 @@
 				545F44091DF78358001C7D73 /* SocketIOClient.swift in Sources */,
 				2D194F8E1E204E23008A98B9 /* TrophiesTableViewController.swift in Sources */,
 				545F43FD1DF78358001C7D73 /* SocketAckEmitter.swift in Sources */,
-				5409394C1DF7695C0011052A /* SearchMusicEventCustomCell.swift in Sources */,
+				5409394C1DF7695C0011052A /* SearchMusicCustomTableCell.swift in Sources */,
 				54CF46B01DF1BB140096EFC3 /* Followers.swift in Sources */,
 				547D90501DF1E44B008C636A /* MusicsInPlaylistCell.swift in Sources */,
 				545F43FF1DF78358001C7D73 /* SocketAnyEvent.swift in Sources */,
