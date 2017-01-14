@@ -106,10 +106,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iPx-Ok-CtP">
-                                                    <rect key="frame" x="286" y="29" width="51" height="31"/>
+                                                    <rect key="frame" x="286" y="29" width="51" height="29"/>
                                                 </switch>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AdminEvent" translatesAutoresizingMaskIntoConstraints="NO" id="YRG-V1-Ex2" userLabel="rightOnEvent">
-                                                    <rect key="frame" x="248" y="29" width="30" height="31"/>
+                                                    <rect key="frame" x="248" y="29" width="30" height="29"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>

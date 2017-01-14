@@ -401,7 +401,10 @@
 		541BFAD11DEF82BB006334A0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				54CF46AC1DF1BB140096EFC3 /* Followers.swift */,
 				541BFAE31DEF839D006334A0 /* SounityTrackResearch.swift */,
+				546423E01E290D32008AD5E0 /* UserBasicInfo.swift */,
+				54CF46AF1DF1BB140096EFC3 /* User.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -410,7 +413,6 @@
 			isa = PBXGroup;
 			children = (
 				541BFADD1DEF839D006334A0 /* HomeController.swift */,
-				546423DF1E28E423008AD5E0 /* Models */,
 				541BFAD41DEF82CE006334A0 /* Events */,
 				541BFAD61DEF82DE006334A0 /* Musics */,
 				541BFAD51DEF82D2006334A0 /* Users */,
@@ -493,16 +495,6 @@
 				5460AB2E1DF4E8DA00179CE7 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		546423DF1E28E423008AD5E0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				54CF46AC1DF1BB140096EFC3 /* Followers.swift */,
-				54CF46AF1DF1BB140096EFC3 /* User.swift */,
-				546423E01E290D32008AD5E0 /* UserBasicInfo.swift */,
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 		5465D9B11DEF43FB000BE4C8 /* HexagonalUIElements */ = {

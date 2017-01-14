@@ -73,8 +73,9 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
     }
 }
 
-// MARK: Get Info users
+// MARK: Initialisation functions
 extension UserHomeViewController {
+    /// Get info of the current user
     func UserGetInfo() {
         let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)"
         Alamofire.request(url, method: .get)
@@ -100,6 +101,20 @@ extension UserHomeViewController {
                 }
         }
     }
+    
+    /// Setup profil header with user info
+    func setUpHeaderProfil () {
+        self.imageView.layer.cornerRadius = imageView.frame.width/2
+        self.imageView.layer.masksToBounds = true
+        _ = self.putShadowOnView(imageView, shadowColor: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
+        
+        if user.picture == "" {
+            self.imageView.image = UIImage(named: "UnknownUserCover")!
+        }
+        else if (Reachability.isConnectedToNetwork() == true) {
+            self.imageView.imageFromServerURL(urlString: self.user.picture)
+        }
+    }
 }
 
 // MARK: Navagations functions
@@ -116,22 +131,6 @@ extension UserHomeViewController {
         presentationAnimator.presentButton = sender
         presentationAnimator.animationDuration = 0.3
         self.present(menuVC, animated: true, completion: nil)
-    }
-}
-
-// MARK: Initialisation functions 
-extension UserHomeViewController {
-    func setUpHeaderProfil () {
-        self.imageView.layer.cornerRadius = imageView.frame.width/2
-        self.imageView.layer.masksToBounds = true
-        _ = self.putShadowOnView(imageView, shadowColor: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
-        
-        if user.picture == "" {
-            self.imageView.image = UIImage(named: "UnknownUserCover")!
-        }
-        else if (Reachability.isConnectedToNetwork() == true) {
-            self.imageView.imageFromServerURL(urlString: self.user.picture)
-        }
     }
 }
 

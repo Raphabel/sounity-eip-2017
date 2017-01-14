@@ -184,6 +184,7 @@ extension ChangeSettingsEventController {
                     }
                     else {
                         if (newCoverURL == nil) {
+                            self.dismiss(animated: true, completion: nil)
                             let alert = DisplayAlert(title: ("Event settings"), message: "Your event has been updated")
                             alert.openAlertSuccess()
                         } else {
@@ -221,10 +222,7 @@ extension ChangeSettingsEventController {
                                         let alert = DisplayAlert(title: ("Upload Picture"), message: "Error while uploading picture")
                                         alert.openAlertError()
                                     } else {
-                                        let data = JSON(response.result.value!)
-                                        if (data["url"].exists()) {
-                                            self.user.setHisPicture(data["url"].stringValue)
-                                        }
+                                        self.dismiss(animated: true, completion: nil)
                                         let alert = DisplayAlert(title: "Playlist settings", message: "Information has been saved.")
                                         alert.openAlertSuccess()
                                     }
@@ -364,6 +362,13 @@ extension ChangeSettingsEventController {
                     }
                 }
         }
+    }
+}
+
+// MARK: Dismiss navigation
+extension ChangeSettingsEventController {
+    @IBAction func dismissView() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

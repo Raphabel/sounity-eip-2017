@@ -108,6 +108,14 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
     
+    // Segue that show the setting's event page
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showSettingsEvent") {
+            let vc = segue.destination as! ChangeSettingsEventController
+            vc.idEventSent = self.idEventSent
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         if (self.player?.rate == 1) {
             if (owner) {
@@ -286,7 +294,7 @@ extension EventController {
         if (owner == false) {
             self.playPauseView.isHidden = true
             self.player?.isMuted = true
-            self.settingsButton.isHidden = true
+            self.settingsButton.isEnabled = true
             self.addPlaylistButton.isEnabled = false
         }
     }
@@ -629,15 +637,6 @@ extension EventController {
                     }
                 }
         }
-    }
-}
-
-// MARK: Go to settings 
-extension EventController {
-    @IBAction func goToSettingsEvent (_ sender: UIButton) {
-        let vc:ConsultEventController = ConsultEventController()
-        vc.idEventSent = self.idEventSent
-        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
