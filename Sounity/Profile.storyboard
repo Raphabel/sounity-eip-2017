@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -552,7 +552,7 @@
                                                     <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
                                                     <state key="normal" image="medal"/>
                                                     <connections>
-                                                        <segue destination="gGU-WD-tnw" kind="show" identifier="CheckMyTrophies" id="7y4-KT-k6W"/>
+                                                        <segue destination="gGU-WD-tnw" kind="showDetail" identifier="CheckMyTrophies" id="kHB-oV-b7U"/>
                                                     </connections>
                                                 </button>
                                             </barButtonItem>
@@ -593,7 +593,6 @@
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.87058823529999996" green="0.41176470590000003" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="q1R-SC-Nk0" firstAttribute="centerX" secondItem="NBm-c0-X2Z" secondAttribute="centerX" constant="-2" id="2CC-hJ-7WP"/>
@@ -624,6 +623,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="PView" destination="NBm-c0-X2Z" id="XeC-Oa-ecx"/>
                         <outlet property="descriptionUser" destination="klq-MD-Ftd" id="0w5-Ui-TCZ"/>
                         <outlet property="headerView" destination="NBm-c0-X2Z" id="Ppd-tk-9hc"/>
                         <outlet property="imageView" destination="q1R-SC-Nk0" id="mhp-9y-9Ae"/>
@@ -663,7 +663,7 @@
         <!--Trophies View Controller-->
         <scene sceneID="QvP-zO-mvi">
             <objects>
-                <tableViewController id="HYj-Qf-8lS" userLabel="Trophies View Controller" customClass="TrophiesTableViewController" customModule="Sounity" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProfileTrophiesID" id="HYj-Qf-8lS" userLabel="Trophies View Controller" customClass="TrophiesTableViewController" customModule="Sounity" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" id="kcL-NJ-BrH" userLabel="Trophies">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -16,7 +16,6 @@
 		2DB541A91DF96216004C2A07 /* Timeline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB541A81DF96216004C2A07 /* Timeline.storyboard */; };
 		2DB541AB1DF96385004C2A07 /* TimelineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB541AA1DF96385004C2A07 /* TimelineController.swift */; };
 		2DB541AD1DF96E55004C2A07 /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */; };
-		2DFB8DDA1E27B7C600860E33 /* ConsultTrophiesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFB8DD91E27B7C600860E33 /* ConsultTrophiesController.swift */; };
 		5409393E1DF7693A0011052A /* ActivitiesEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540939391DF7693A0011052A /* ActivitiesEventController.swift */; };
 		5409393F1DF7693A0011052A /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5409393A1DF7693A0011052A /* ChatController.swift */; };
 		540939401DF7693A0011052A /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5409393B1DF7693A0011052A /* EventController.swift */; };
@@ -160,7 +159,6 @@
 		2DB541A81DF96216004C2A07 /* Timeline.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Timeline.storyboard; sourceTree = "<group>"; };
 		2DB541AA1DF96385004C2A07 /* TimelineController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineController.swift; sourceTree = "<group>"; };
 		2DB541AC1DF96E55004C2A07 /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
-		2DFB8DD91E27B7C600860E33 /* ConsultTrophiesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsultTrophiesController.swift; sourceTree = "<group>"; };
 		540939391DF7693A0011052A /* ActivitiesEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesEventController.swift; sourceTree = "<group>"; };
 		5409393A1DF7693A0011052A /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		5409393B1DF7693A0011052A /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
@@ -452,7 +450,6 @@
 			children = (
 				541BFAD91DEF839D006334A0 /* ConsultMusicsInPlaylistController.swift */,
 				541BFADA1DEF839D006334A0 /* ConsultProfileController.swift */,
-				2DFB8DD91E27B7C600860E33 /* ConsultTrophiesController.swift */,
 				541BFADF1DEF839D006334A0 /* SettingPlaylistUserSearchController.swift */,
 				541BFAE01DEF839D006334A0 /* UserSearchController.swift */,
 			);
@@ -1279,7 +1276,6 @@
 				5465D9B91DEF441B000BE4C8 /* HexagonalTextViewPassword.swift in Sources */,
 				54AE84381DEF3A66003715EE /* AppDelegate.swift in Sources */,
 				5409393E1DF7693A0011052A /* ActivitiesEventController.swift in Sources */,
-				2DFB8DDA1E27B7C600860E33 /* ConsultTrophiesController.swift in Sources */,
 				545F44131DF78358001C7D73 /* SSLSecurity.swift in Sources */,
 				545F44071DF78358001C7D73 /* SocketEventHandler.swift in Sources */,
 				54CF46B21DF1BB140096EFC3 /* Playlist.swift in Sources */,

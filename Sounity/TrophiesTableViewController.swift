@@ -23,6 +23,9 @@ class TrophiesTableViewController: UITableViewController {
     // MARK: API Connection
     var api = SounityAPI()
     
+    // MARK: ID user
+    var userId: NSInteger = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         
@@ -83,7 +86,7 @@ class TrophiesTableViewController: UITableViewController {
 extension TrophiesTableViewController {
     func loadTrophies() {
         
-        let url = api.getRoute(SounityAPI.ROUTES.TROPHIES) + "/\(user.id)"
+        let url = api.getRoute(SounityAPI.ROUTES.TROPHIES) + "/\(userId)"
         
         let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
 
@@ -94,6 +97,7 @@ extension TrophiesTableViewController {
                 if let apiResponse = response.result.value {
                     let jsonResponse = JSON(apiResponse)
                     if ((response.response?.statusCode)! != 200) {
+                        self.dismiss(animated: true, completion: nil)
                         let alert = DisplayAlert(title: "Load trophies", message: jsonResponse["message"].stringValue)
                         alert.openAlertError()
                     }

@@ -78,7 +78,6 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         // In order to make user aware the user has left the event
-        print("Restart socket connection")
         SocketIOManager.sharedInstance.restartConnection()
     }
     

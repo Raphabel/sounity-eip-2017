@@ -24,7 +24,6 @@ class ConsultProfileController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var nmFollowers: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var PView: UIView!
-    @IBOutlet weak var settingButton: UIButton!
     @IBOutlet weak var descriptionUser: UILabel!
     @IBOutlet weak var followCornerButton: UIButton!
     @IBOutlet weak var unfollowCornerButton: UIButton!
@@ -109,12 +108,6 @@ class ConsultProfileController: UIViewController, UITableViewDelegate {
 extension ConsultProfileController {
     /// Function to setup the page headear with the informatio of the user
     func setUpHeaderProfil () {
-        if (self.userConnect.id == self.IDUserConsulted) {
-            self.settingButton.isHidden = false
-        } else {
-            self.settingButton.isHidden = true
-        }
-        
         self.nickname.text = nicknameUserConsulted
         self.descriptionUser.text = descriptionUserConsulted
         self.user.setNickname(nicknameUserConsulted!)
@@ -218,21 +211,13 @@ extension ConsultProfileController {
 
 //MARK: Navigation within the profile
 extension ConsultProfileController {
-    @IBAction func goToSettingUser(_ sender: AnyObject) {
-        let mainStoryboard = UIStoryboard(name: "Profile", bundle: Bundle.main)
-        let myVC = mainStoryboard.instantiateViewController(withIdentifier: "UserSettingViewID") as UIViewController
-        let navController = UINavigationController.init(rootViewController: myVC)
-        self.navigationController?.present(navController, animated: true, completion: nil)
-    }
-    
     @IBAction func seeTrophies(_ sender: Any) {
-        let mainStoryboard = UIStoryboard(name: "Search", bundle: Bundle.main)
-        let myVC = mainStoryboard.instantiateViewController(withIdentifier: "trophiesCheckByUsers") as! ConsultTrophiesController
-        myVC.IDUserConsulted = self.user.id
-        let navController = UINavigationController.init(rootViewController: myVC)
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Profile", bundle: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileTrophiesID") as! TrophiesTableViewController
+        vc.userId = self.user.id
+        let navController = UINavigationController.init(rootViewController: vc)
+        self.present(navController, animated: true, completion: nil)
     }
-
     
     @IBAction func backButton(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)

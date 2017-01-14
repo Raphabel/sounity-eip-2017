@@ -21,6 +21,7 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
     @IBOutlet weak var tableView: UIView!
     @IBOutlet weak var followers: UILabel!
     @IBOutlet weak var descriptionUser: UILabel!
+    @IBOutlet var PView: UIView!
     
     // MARK: Infos user connected
     var user = UserConnect()
@@ -49,6 +50,16 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
         }
         else if (Reachability.isConnectedToNetwork() == true) {
             self.imageView.imageFromServerURL(urlString: self.user.picture)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if  segue.identifier == "CheckMyTrophies" {
+            let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Profile", bundle: nil)
+            let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileTrophiesID") as! TrophiesTableViewController
+            vc.userId = self.user.id
+            let navController = UINavigationController.init(rootViewController: vc)
+            self.present(navController, animated: true, completion: nil)
         }
     }
     
@@ -105,15 +116,22 @@ extension UserHomeViewController {
     
     /// Setup profil header with user info
     func setUpHeaderProfil () {
-        self.imageView.layer.cornerRadius = imageView.frame.width/2
-        self.imageView.layer.masksToBounds = true
-        _ = self.putShadowOnView(imageView, shadowColor: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
+        self.PView.backgroundColor = UIColor(patternImage: UIImage(named:"party")!)
         
-        if user.picture == "" {
+        self.imageView.layer.borderWidth = 3.0
+        self.imageView.layer.borderColor = UIColor.white.cgColor
+        self.imageView.layer.masksToBounds = true
+        _ = self.putShadowOnView(self.imageView, shadowColor: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
+        
+        if self.user.picture == "" {
             self.imageView.image = UIImage(named: "UnknownUserCover")!
-        }
-        else if (Reachability.isConnectedToNetwork() == true) {
-            self.imageView.imageFromServerURL(urlString: self.user.picture)
+        } else if (Reachability.isConnectedToNetwork() == true) {
+            self.imageView.load.request(with: self.user.picture, onCompletion: { image, error, operation in
+                if (self.imageView.image?.size == nil) {
+                    self.imageView.image = UIImage(named: "emptyPicture")
+                }
+                MakeElementRounded().makeElementRounded(self.imageView, newSize: self.imageView.frame.width)
+            })
         }
     }
 }
