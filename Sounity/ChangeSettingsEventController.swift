@@ -35,6 +35,15 @@ class ChangeSettingsEventController: FormViewController {
             cell.accessoryView?.frame = CGRect(0, 0, 34, 34)
         }
         
+        let btn = UIButton(type: .custom)
+        btn.setTitle("Back", for: .normal)
+        btn.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
+        btn.addTarget(self, action: #selector(ChangeSettingsEventController.dismissSettings), for: .touchUpInside)
+        let item = UIBarButtonItem(customView: btn)
+        
+        self.navigationItem.title = "Event's settings"
+        self.navigationItem.setLeftBarButton(item, animated: true)
+        
         self.loadEventInfo()
     }
     
@@ -369,6 +378,12 @@ extension ChangeSettingsEventController {
 extension ChangeSettingsEventController {
     @IBAction func dismissView() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func dismissSettings() {
+        if (self.navigationController?.popToRootViewController(animated: true) == nil) {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
 

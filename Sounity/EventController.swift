@@ -293,7 +293,7 @@ extension EventController {
         if (owner == false) {
             self.playPauseView.isHidden = true
             self.player?.isMuted = true
-            self.settingsButton.isEnabled = true
+            self.settingsButton.isEnabled = false
             self.addPlaylistButton.isEnabled = false
         }
     }
@@ -680,6 +680,19 @@ extension EventController {
 extension EventController {
     override var prefersStatusBarHidden : Bool {
         return false
+    }
+}
+
+// MARK: Access to settingsButton
+extension EventController {    
+    @IBAction func accessSettings(_ sender: AnyObject) {
+        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ChangeSettingsEventView") as! ChangeSettingsEventController
+        let navController = UINavigationController.init(rootViewController: vc)
+
+        vc.idEventSent = self.idEventSent
+        
+        self.present(navController, animated: true, completion: nil)
     }
 }
 
