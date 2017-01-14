@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '43AA3F5C7A9C6FB719C52760B2B579D0'
+               BlueprintIdentifier = 'F3EC15E26A7098FC2C01003138CD5916'
                BlueprintName = 'PureLayout'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'PureLayout.framework'>

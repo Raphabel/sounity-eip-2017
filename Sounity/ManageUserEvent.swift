@@ -95,21 +95,7 @@ extension ManageUserEvent: UICollectionViewDataSource {
             tmp = self.resultResearch
         }
         
-        cell.userName.text = tmp[indexPath.item].nickname
-        cell.pictureUser.load.request(with: tmp[indexPath.item].picture, onCompletion: { image, error, operation in
-            if (cell.pictureUser.image?.size == nil) {
-                cell.pictureUser.image = UIImage(named: "emptyPicture")
-            }
-            MakeElementRounded().makeElementRounded(cell.pictureUser, newSize: cell.pictureUser.frame.width)
-        })
-        
-        if (tmp[indexPath.item].banned) {
-            cell.backgroundColor = UIColor(red: CGFloat(0xF4)/255 ,green: CGFloat(0x43)/255 ,blue: CGFloat(0x36)/255 ,alpha: 1)
-        } else if (!tmp[indexPath.item].banned && tmp[indexPath.item].participating) {
-            cell.backgroundColor = ColorSounity.navigationBarColor
-        } else {
-            cell.backgroundColor = UIColor.lightGray
-        }
+        cell.user = tmp[indexPath.row]
         
         return cell
     }
@@ -324,27 +310,6 @@ extension ManageUserEvent {
             
             let alert = DisplayAlert(title: "No connection", message: "Please check your internet connection")
             alert.openAlertError()
-        }
-    }
-}
-
-//MARK: AdminInfoClass
-extension ManageUserEvent {
-    class UserBasicInfo {
-        var nickname: String
-        var picture: String
-        
-        var id: Int
-        
-        var banned: Bool
-        var participating: Bool
-        
-        init(_nickname: String, _id: Int, _picture: String, _banned: Bool, _participating: Bool) {
-            self.nickname = _nickname
-            self.id = _id
-            self.picture = _picture
-            self.banned = _banned
-            self.participating = _participating
         }
     }
 }

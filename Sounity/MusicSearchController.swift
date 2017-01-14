@@ -69,6 +69,7 @@ class MusicSearchController: UIViewController, UITableViewDelegate, UISearchBarD
 
 //MARK: Feature to add music found to one of the user's playlist
 extension MusicSearchController {
+    /// Function that displays the playlist to whom the music should be added
     func displayPopupAddToPlaylist() {
         let appearance = SCLAlertView.SCLAppearance(
             showCircularIcon: true,
@@ -118,6 +119,7 @@ extension MusicSearchController {
         _ = alert.showCustom(self.musicSelectedToAdd!.title, subTitle: "", color: ColorSounity.navigationBarColor, icon: UIImage(named: "iconSounityWhite")!, closeButtonTitle: "Cancel")
     }
 
+    /// Fetch all the user's playlists in order to add some musics to any of them
     func getUserOwnPlaylists() {
         let api = SounityAPI()
         let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)/playlists"
@@ -142,6 +144,9 @@ extension MusicSearchController {
         }
     }
     
+    /// Function that makes request to the API in order to add a music to a playlist
+    ///
+    /// - Parameter sender: Sender that allows to get the index of the concerned music
     func addMusicToUserPlaylist(_ sender: UITapGestureRecognizer) {
         let touch = sender.location(in: tableviewPopup)
         if let indexPath = tableviewPopup.indexPathForRow(at: touch) {
@@ -185,6 +190,9 @@ extension MusicSearchController {
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(MusicSearchController.searchResultFromString(_:)), userInfo: searchText, repeats: false)
     }
     
+    /// Search function for the music
+    ///
+    /// - Parameter timer: timer in order to avoid maing research at every character changed
     func searchResultFromString(_ timer: Timer) {
         self.textSearchBox = timer.userInfo! as! String
         
@@ -271,18 +279,9 @@ extension MusicSearchController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         if (tableView == self.tableview) {
-            let cell:MusicSearchCustomTableCell = tableView.dequeueReusableCell(withIdentifier: "MusicSearchCustomTableCell", for: indexPath) as! MusicSearchCustomTableCell
+            let cell:SearchMusicCustomTableCell = tableView.dequeueReusableCell(withIdentifier: "MusicSearchCustomTableCell", for: indexPath) as! SearchMusicCustomTableCell
             
-            cell.trackTitle.text = self.resultResearch[indexPath.row].title
-            cell.trackArtist.text = self.resultResearch[indexPath.row].artist
-            
-            if (self.resultResearch[indexPath.row].cover == "") {
-                cell.trackPicture.image = UIImage(named: "UnknownMusicCover")!
-            }
-            else if (Reachability.isConnectedToNetwork() == true) {
-                cell.trackPicture.imageFromServerURL(urlString: self.resultResearch[indexPath.row].cover)
-                MakeElementRounded().makeElementRounded(cell.trackPicture, newSize: cell.trackPicture.frame.width)
-            }
+            cell.music = self.resultResearch[indexPath.row]
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellPlaylistName", for: indexPath)

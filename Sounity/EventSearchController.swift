@@ -141,6 +141,7 @@ extension EventSearchController {
         self.view.addSubview(bottomRightButton)
     }
     
+    /// Get all the event around the user GPS Location
     func getAllEventsAround () {
         let api = SounityAPI()
         let parameters = [
@@ -193,6 +194,10 @@ extension EventSearchController {
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(EventSearchController.searchResultFromString(_:)), userInfo: searchText, repeats: false)
     }
+    
+    /// Search function for the event accoring to their name
+    ///
+    /// - Parameter timer: timer in order to avoid maing research at every character changed
     func searchResultFromString(_ timer: Timer) {
         self.textSearchBox = timer.userInfo! as! String
         
@@ -281,6 +286,9 @@ extension EventSearchController: QRCodeReaderViewControllerDelegate {
         }
     }
     
+    /// Get info event after scanning QRCode and make redirection
+    ///
+    /// - Parameter idEventScanned: id fetched after the scan
     func getEventInfoById(_ idEventScanned: Int) {
         let api = SounityAPI()
         let parameters = [ "id": idEventScanned ]
@@ -313,6 +321,12 @@ extension EventSearchController: QRCodeReaderViewControllerDelegate {
         }
     }
     
+    /// Make redirection to an event
+    ///
+    /// - Parameters:
+    ///   - idEvent: id of the concerned event
+    ///   - nameEvent: Name of the event to put on the navigation bar
+    ///   - owner: is the current user owner of the event ?
     func goToEventById(_ idEvent: Int, nameEvent: String, owner: Bool) {
         let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Event", bundle: nil)
         let vc = eventStoryBoard.instantiateViewController(withIdentifier: "EventViewID") as! EventController
@@ -323,6 +337,12 @@ extension EventSearchController: QRCodeReaderViewControllerDelegate {
         self.present(vc, animated: true, completion: nil)
     }
     
+    /// Start the event before to redirect if the user is the owner of the event
+    ///
+    /// - Parameters:
+    ///   - idEvent: id of the concerned event
+    ///   - nameEvent: Name of the event to put on the navigation bar
+    ///   - owner: is the current user owner of the event ?
     func startEventByOwner (_ idEvent: Int, nameEvent: String, owner: Bool) {
         let api = SounityAPI()
         let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
@@ -425,31 +445,8 @@ extension EventSearchController: UITableViewDataSource {
     {
         let cell:EventSearchCustomTableCell = tableView.dequeueReusableCell(withIdentifier: "EventSearchCustomTableCell", for: indexPath) as! EventSearchCustomTableCell
         
-        cell.eventName.text = "\(self.resultResearch[indexPath.row].name.uppercaseFirst)"
-        cell.eventLocationName.text = "\(self.resultResearch[indexPath.row].location_name.uppercaseFirst)"
-        if (self.resultResearch[indexPath.row].started == true) {
-            cell.eventStarted.isOn = true;
-        }
+        cell.event = self.resultResearch[indexPath.row]
         
-        if (self.resultResearch[indexPath.row].isOwner) {
-            cell.rightsOnEvent.image = UIImage(named: "OwnerEvent")!
-        } else if (self.resultResearch[indexPath.row].isOwner) {
-            cell.rightsOnEvent.image = UIImage(named: "AdminEvent")!
-        } else {
-            cell.rightsOnEvent.isHidden = true
-        }
-        
-        if (self.resultResearch[indexPath.row].picture == "") {
-            cell.eventPicture.image = UIImage(named: "UnknownEventCover")!
-        }
-        else if (Reachability.isConnectedToNetwork() == true) {
-            cell.eventPicture.load.request(with: self.resultResearch[indexPath.row].picture, onCompletion: { image, error, operation in
-                if (cell.eventPicture.image?.size == nil) {
-                    cell.eventPicture.image = UIImage(named: "emptyPicture")
-                }
-                MakeElementRounded().makeElementRounded(cell.eventPicture, newSize: cell.eventPicture.frame.width)
-            })
-        }
         return cell
     }
     

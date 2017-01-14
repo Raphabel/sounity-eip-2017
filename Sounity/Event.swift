@@ -36,6 +36,23 @@ class Event {
     var expired_date: String = ""
     var location_name: String = ""
     
+    /// Init class with event info
+    ///
+    /// - Parameters:
+    ///   - _id: Id of the event
+    ///   - _userMax: the number of users max
+    ///   - _lat: latitude coordinate event
+    ///   - _long: longitude coordinate event
+    ///   - _started: is the event started ?
+    ///   - _public: is the event public ?
+    ///   - _name: name of the event
+    ///   - _desc: description of the event
+    ///   - _picture: picture of the event
+    ///   - _created: the event creation date
+    ///   - _expired: the event expired date
+    ///   - _locationName: location name of the event
+    ///   - _isOwner: is the user owner of the event ?
+    ///   - _isAdmin: is the user admin of the event ?
     init(_id: Int, _userMax: Int, _lat: Double, _long: Double, _started: Bool, _public: Bool, _name: String, _desc: String, _picture: String, _created: String, _expired: String, _locationName: String, _isOwner: Bool, _isAdmin: Bool) {
         self.id = _id
         self.user_max = _userMax

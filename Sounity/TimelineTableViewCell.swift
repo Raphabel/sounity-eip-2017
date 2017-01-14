@@ -17,6 +17,7 @@ class TimelineTableViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK: Info user connected
     var user = UserConnect()
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -43,7 +44,7 @@ class TimelineTableViewCell: UICollectionViewCell {
         self.statusImageView.imageFromServerURL(urlString: feed.eventInfo != nil ? (feed.eventInfo?.picture)! : feed.followerInfo != nil ? (feed.followerInfo?.picture)! : feed.user.picture)
         self.statusImageView.layer.masksToBounds = true
         
-        self.actionButton.setTitle(feed.eventInfo != nil ? "Consult Event" : feed.followerInfo != nil ? "Consult \(feed.followerInfo?.nickname)'s profile" : feed.user.id != self.user.id ? "Consult \(feed.user.nickname)'s profile" : "Consult your profile", for: UIControlState.normal)
+        self.actionButton.setTitle(feed.eventInfo != nil ? "Consult Event" : feed.followerInfo != nil ? "Consult \(feed.followerInfo!.nickname!)'s profile" : feed.user.id != self.user.id ? "Consult \(feed.user.nickname)'s profile" : "Consult your profile", for: UIControlState.normal)
         
         backgroundColor = UIColor.white
     }

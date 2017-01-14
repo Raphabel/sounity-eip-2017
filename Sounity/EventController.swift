@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import InteractivePlayerView
 import GuillotineMenu
 import AVFoundation
 import Alamofire
@@ -109,6 +108,14 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
     
+    // Segue that show the setting's event page
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showSettingsEvent") {
+            let vc = segue.destination as! ChangeSettingsEventController
+            vc.idEventSent = self.idEventSent
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         if (self.player?.rate == 1) {
             if (owner) {
@@ -201,6 +208,7 @@ extension EventController: UITableViewDelegate, UITableViewDataSource {
         return ownPlaylist.count
     }
     
+    /// Get all the playlist of the current user in order to eventually add one or few of them to the event
     func getUserOwnPlaylists() {
         let api = SounityAPI()
         let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)/playlists"
@@ -225,6 +233,9 @@ extension EventController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    /// Function call when the user wants to add a playlist to the current event
+    ///
+    /// - Parameter sender: reference of the cell where the user clicked on on the playlists table view
     func addPlaylistToUserEvent(_ sender: UITapGestureRecognizer) {
         let touch = sender.location(in: tableviewPopup)
         if let indexPath = tableviewPopup.indexPathForRow(at: touch) {
@@ -257,6 +268,7 @@ extension EventController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: Media player functions
 extension EventController {
+    /// Allows to initialise the entire player available for the event's owner
     func initPlayer() {
         self.InteractivePView!.delegate = self
         self.InteractivePView.progress = 120
@@ -282,7 +294,7 @@ extension EventController {
         if (owner == false) {
             self.playPauseView.isHidden = true
             self.player?.isMuted = true
-            self.settingsButton.isHidden = true
+            self.settingsButton.isEnabled = true
             self.addPlaylistButton.isEnabled = false
         }
     }
@@ -299,6 +311,9 @@ extension EventController {
         self.sendNextMusicToUsersEvent()
     }
     
+    /// Call when a song has stopped playing
+    ///
+    /// - Parameter myNotification: notification element set during page loading
     func finishedPlaying(_ myNotification:Notification) {
         self.InteractivePView.stop()
         self.playButton.isHidden = false
@@ -313,6 +328,7 @@ extension EventController {
         }
     }
     
+    /// Allows to reload the event by making a event:joined
     func reloadEvent() {
         if (self.player != nil) {
             self.InteractivePView.stop()
@@ -331,6 +347,7 @@ extension EventController {
 
 // MARK: Listen functions
 extension EventController {
+    /// Listen the broadcast music:played
     func listenMusicPlayed() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_PLAYED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -349,6 +366,7 @@ extension EventController {
         }
     }
     
+    /// Listen the broadcast music:paused
     func listenMusicPaused() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_PAUSED.rawValue) { (dataArray, Socket) -> Void in
             //NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -369,6 +387,7 @@ extension EventController {
         }
     }
     
+    /// Listen the broadcast music:changed
     func listenMusicChanged() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_CHANGED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -388,6 +407,7 @@ extension EventController {
 
 // MARK: Sockets functions
 extension EventController {
+    /// send socket music:play
     func sendPlayMusicToUsersEvent() {
         SocketIOManager.sharedInstance.playMusicInEvent(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
@@ -419,6 +439,7 @@ extension EventController {
         })
     }
     
+    /// send socket music:pause
     func sendPauseMusicToUsersEvent() {
         SocketIOManager.sharedInstance.pauseMusicInEvent(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject, "time": Int((self.playerItem?.currentTime().seconds)! * 1000) as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
@@ -445,6 +466,7 @@ extension EventController {
         })
     }
     
+    /// send socket event:next
     func sendNextMusicToUsersEvent() {
         SocketIOManager.sharedInstance.nextMusicInEvent(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
@@ -469,6 +491,12 @@ extension EventController {
 
 // MARK: Set Up & Play music
 extension EventController {
+    /// Request to play music from Music Provider API when the user joins the event
+    ///
+    /// - Parameters:
+    ///   - infoMusic: info related to the music that should be played first
+    ///   - statusMusic: music's status in order to now i the music should be played or not [PLAY | PAUSE | EMPTY]
+    ///   - timeMusic: time where the music is supposed to play first
     func setMediaPlayerFromEventJoin(_ infoMusic: JSON, timeMusic: Int64, statusMusic: String) {
         if (statusMusic == "EMPTY") {
             return
@@ -541,9 +569,12 @@ extension EventController {
         }
     }
     
-    /*
-     ** Request to play music from Music Provider API
-     */
+    /// Request to play music from Music Provider API when the user joins the event
+    ///
+    /// - Parameters:
+    ///   - idMusic: id of the music to play
+    ///   - apiId: id api of the music [Deezer | Soundcloud]
+    ///   - time: time where the music is supposed to play first
     func gatherDataMusicAndPlay(_ idMusic: String, apiId: Int, time: Int64) {
         Alamofire.request(MusicProvider.sharedInstance.getUrlTrackByMusicProvider(idMusic, _apiId: apiId), method: .get)
             .validate(statusCode: 200..<501)
@@ -606,23 +637,6 @@ extension EventController {
                     }
                 }
         }
-    }
-}
-
-// MARK: Go to settings 
-extension EventController {
-    @IBAction func goToSettingsEvent (_ sender: UIButton) {
-        let alert = DisplayAlert(title: "Event's settings", message: "Cannot access from this page")
-        alert.openAlertError()
-        /*let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
-        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ChangeSettingsEventView") as! ChangeSettingsEventController
-        vc.idEventSent = self.idEventSent
-        
-        let navController = UINavigationController.init(rootViewController: vc)
-        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: Selector(""))
-        navController.navigationItem.leftBarButtonItem = backButton
-        navController.navigationItem.hidesBackButton = true
-        self.present(navController, animated: true, completion: nil)*/
     }
 }
 

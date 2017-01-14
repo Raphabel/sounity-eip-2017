@@ -1,12 +1,12 @@
 /* The MIT License
-
-    Copyright 2015 Ahmet Keskin
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT   LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
+ 
+ Copyright 2015 Ahmet Keskin
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT   LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 import UIKit
 
@@ -121,9 +121,9 @@ class InteractivePlayerView : UIView {
             
         }
     }
-
+    
     private var circleLayer: CAShapeLayer! = CAShapeLayer()
-
+    
     /* Setting action buttons constraint width - height with buttonSizes */
     @IBInspectable var buttonSizes : CGFloat = 20.0 {
         
@@ -137,7 +137,7 @@ class InteractivePlayerView : UIView {
         }
     }
     
-    /* 
+    /*
      *
      * Set Images in storyBoard with IBInspectable variables
      *
@@ -233,23 +233,23 @@ class InteractivePlayerView : UIView {
     }
     
     override init(frame: CGRect) {
-       
+        
         self.duration = 0
         
         super.init(frame: frame)
         self.createUI()
         self.addPanGesture()
-
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
-      
+        
         self.duration = 0
         
         super.init(coder: aDecoder)
         self.createUI()
         self.addPanGesture()
-       
+        
     }
     
     @IBAction private func actionOneButtonTapped(sender: UIButton) {
@@ -268,13 +268,13 @@ class InteractivePlayerView : UIView {
     }
     
     @IBAction private func actionTwoButtonTapped(sender: UIButton) {
-
+        
         if sender.isSelected {
             sender.isSelected = false
         } else {
             sender.isSelected = true
         }
-
+        
         self.isActionTwoSelected = sender.isSelected
         
         if let delegate = self.delegate{
@@ -305,7 +305,7 @@ class InteractivePlayerView : UIView {
     }
     
     func animationDidStart(anim: CAAnimation) {
-
+        
         circleLayer.strokeColor = self.progressFullColor.cgColor
         self.isAnimating = true
         self.duration = 0
@@ -342,7 +342,7 @@ class InteractivePlayerView : UIView {
         
         // Assumes UIView is top level and only object in CustomView.xib file
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
-
+        
         return view
     }
     
@@ -356,7 +356,7 @@ class InteractivePlayerView : UIView {
     }
     
     private func addCirle(arcRadius: CGFloat, capRadius: CGFloat, color: UIColor, strokeStart : CGFloat, strokeEnd : CGFloat) {
-
+        
         let centerPoint = CGPoint(x: self.bounds.midX ,y: self.bounds.midY)
         let startAngle = CGFloat(M_PI_2)
         let endAngle = CGFloat(M_PI * 2 + M_PI_2)
@@ -435,14 +435,14 @@ class InteractivePlayerView : UIView {
     
     private func startTimer(){
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(InteractivePlayerView.updateTime), userInfo: nil, repeats: true)
-
+        
         if let theDelegate = self.delegate {
             theDelegate.interactivePlayerViewDidStartPlaying(playerInteractive: self)
         }
     }
     
     private func stopTimer(){
-       
+        
         if(timer != nil) {
             timer.invalidate()
             timer = nil
@@ -478,7 +478,7 @@ class InteractivePlayerView : UIView {
     
     /* Stop timer and animation */
     func stop(){
-       self.stopTimer()
+        self.stopTimer()
     }
     
     func restartWithProgress(duration : Double){

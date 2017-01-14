@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import MapKit
 
 // MARK: UpperCaseFirst function
 extension String {
@@ -19,6 +20,19 @@ extension String {
     }
     var uppercaseFirst: String {
         return first.uppercased() + String(characters.dropFirst())
+    }
+}
+
+//MARK: Exntension of MAPVIEW
+extension MKMapView {
+    /// Function that make a zoom in to the user's location
+    func zoomToUserLocation() {
+        guard (userLocation.location?.coordinate) != nil else { return }
+        
+        let center = CLLocationCoordinate2D(latitude: (userLocation.location?.coordinate.latitude)!, longitude: (userLocation.location?.coordinate.longitude)!)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+        
+        setRegion(region, animated: true)
     }
 }
 

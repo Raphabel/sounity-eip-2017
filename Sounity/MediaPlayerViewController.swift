@@ -11,7 +11,6 @@ import GuillotineMenu
 import AVFoundation
 import Alamofire
 import SwiftyJSON
-import InteractivePlayerView
 import PullToRefresh
 import SCLAlertView
 import DZNEmptyDataSet

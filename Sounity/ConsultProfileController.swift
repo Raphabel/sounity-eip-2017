@@ -107,6 +107,7 @@ class ConsultProfileController: UIViewController, UITableViewDelegate {
 
 //MARK: Initilisation functions
 extension ConsultProfileController {
+    /// Function to setup the page headear with the informatio of the user
     func setUpHeaderProfil () {
         if (self.userConnect.id == self.IDUserConsulted) {
             self.settingButton.isHidden = false
@@ -134,7 +135,16 @@ extension ConsultProfileController {
         }
     }
     
-    func putShadowOnView(_ viewToWorkUpon:UIView, shadowColor:UIColor, radius:CGFloat, offset:CGSize, opacity:Float)-> UIView{
+    /// Puts a show on a view
+    ///
+    /// - Parameters:
+    ///   - viewToWorkUpon: view involved
+    ///   - shadowColor: color of the shadow
+    ///   - radius: radius to apply
+    ///   - offset: offset to apply
+    ///   - opacity: opacity to apply
+    /// - Returns: return UIView built
+    func putShadowOnView(_ viewToWorkUpon:UIView, shadowColor:UIColor, radius:CGFloat, offset:CGSize, opacity:Float)-> UIView {
         var shadowFrame = CGRect.zero
         shadowFrame.size.width = viewToWorkUpon.frame.width
         shadowFrame.size.height = viewToWorkUpon.frame.height
@@ -158,6 +168,9 @@ extension ConsultProfileController {
 
 //MARK: Get playlist consulted user's profile
 extension ConsultProfileController {
+    /// Load playlist of the user consulted
+    ///
+    /// - Parameter IDProfile: user's ID
     func loadSamplePLaylist(_ IDProfile: Int)  {
         
         let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(IDProfile)/playlists"
@@ -216,6 +229,7 @@ extension ConsultProfileController {
 
 //MARK: Followers handling
 extension ConsultProfileController {
+    /// Get the followers of the consulted user
     func getFollowers() {
         self.followCornerButton.layer.cornerRadius = 20
         self.followCornerButton.clipsToBounds = true
@@ -243,11 +257,11 @@ extension ConsultProfileController {
                             self.followCornerButton.setTitle("UNFOLLOW", for: .normal)
                         }
                     }
-                    self.howManyFollowers(self.resultFollowersConsulted)
+                    self.nmFollowers.text = String(self.resultFollowersConsulted.count)
                 }
         }
         
-        // FOLLOWERS OF THE USER Connected .
+        /// Get all the followers to the current user in order to know if the consulted user is already followed or not
         Alamofire.request((api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(userConnect.id)" + "/" + "followers"), method: .get)
             .validate(statusCode: 200..<501)
             .validate(contentType: ["application/json"])
@@ -273,19 +287,11 @@ extension ConsultProfileController {
         }
     }
     
-    func howManyFollowers(_ Follower: [Followers]) {
-        var ret = 0
-        for _ in Follower {
-            ret += 1
-        }
-        nmFollowers.text = Int(ret).description
-    }
-    
+    /// Action to follow | unfollow the consulted user
+    ///
+    /// - Parameter sender: sender related to the button that allows to get the button's tag [0 (request follow) || 1 (request unfollow)]
     @IBAction func followButtonAction(_ sender: AnyObject) {
         if sender.tag == 1 {
-            
-            followCornerButton.tag = 0
-            self.followCornerButton.setTitle("FOLLOW", for: UIControlState())
             
             let api = SounityAPI()
             let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)" + "/follower"
@@ -302,6 +308,9 @@ extension ConsultProfileController {
                             alert.openAlertError()
                         }
                         else {
+                            self.followCornerButton.tag = 0
+                            self.followCornerButton.setTitle("FOLLOW", for: UIControlState())
+                            
                             let alert = DisplayAlert(title: "Unfollow", message: jsonResponse["message"].stringValue)
                             alert.openAlertSuccess()
                         }
@@ -309,9 +318,6 @@ extension ConsultProfileController {
             }
             
         } else {
-            
-            followCornerButton.tag = 1
-            self.followCornerButton.setTitle("UNFOLLOW", for: UIControlState())
             
             let api = SounityAPI()
             let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)" + "/follower"
@@ -328,6 +334,9 @@ extension ConsultProfileController {
                             alert.openAlertError()
                         }
                         else {
+                            self.followCornerButton.tag = 1
+                            self.followCornerButton.setTitle("UNFOLLOW", for: UIControlState())
+
                             let alert = DisplayAlert(title: "Follow", message: jsonResponse["message"].stringValue)
                             alert.openAlertSuccess()
                         }
@@ -350,18 +359,8 @@ extension ConsultProfileController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistTableViewCell", for: indexPath) as! PlaylistTableViewCell
-        let playlist = playlists[indexPath.row]
         
-        cell.nameLabel.text = playlist.name
-        cell.descriptionPlaylist.text = playlist.desc
-        cell.date.text = moment(playlist.create_date)?.format("YYYY-MM-dd HH:mm")
-        
-        cell.picturePlaylist.load.request(with: playlist.picture, onCompletion: { image, error, operation in
-            if (cell.picturePlaylist.image?.size == nil) {
-                cell.picturePlaylist.image = UIImage(named: "unknownCoverMusic")
-            }
-            MakeElementRounded().makeElementRounded(cell.picturePlaylist, newSize: cell.picturePlaylist.frame.width)
-        })
+        cell.playlist = self.playlists[indexPath.row]
         
         return cell
     }

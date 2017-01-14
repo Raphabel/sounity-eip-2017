@@ -76,9 +76,33 @@ class ChangeSettingsEventController: FormViewController {
 extension ChangeSettingsEventController {
     func actionOnEvent (_ _title: String, _msg: String, mode: String) {
         let alert = DisplayAlert(title: _title, message: _msg)
-        alert.openAlertConfirmationWithCallback(mode == "delete" ? self.deleteEvent : self.saveSettingsEvent)
+        alert.openAlertConfirmationWithCallback(mode == "delete" ? self.deleteEvent : mode == "stop" ? self.stopEvent : self.saveSettingsEvent)
     }
     
+    /// Function that allows to stop an event
+    func stopEvent () {
+        let api = SounityAPI()
+        let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
+        Alamofire.request((api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT) + String(self.idEventSent) + "/stop"), method: .post, headers: headers)
+            .validate(statusCode: 200..<501)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response in
+                if let apiResponse = response.result.value {
+                    let jsonResponse = JSON(apiResponse)
+                    if ((response.response?.statusCode)! != 200) {
+                        let alert = DisplayAlert(title: "Stop Event", message: jsonResponse["message"].stringValue)
+                        alert.openAlertError()
+                    }
+                    else {
+                        self.dismiss(animated: true, completion: nil)
+                        let alert = DisplayAlert(title: "Stop Event", message: jsonResponse["message"].stringValue)
+                        alert.openAlertSuccess()
+                    }
+                }
+        }
+    }
+    
+    /// Function that allows to delete an event
     func deleteEvent() {
         let api = SounityAPI()
         let headers = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
@@ -105,6 +129,7 @@ extension ChangeSettingsEventController {
         
     }
     
+    /// Function that allows to save event's settings
     func saveSettingsEvent() {
         var newCoverURL: URL?
         let api = SounityAPI()
@@ -159,6 +184,7 @@ extension ChangeSettingsEventController {
                     }
                     else {
                         if (newCoverURL == nil) {
+                            self.dismiss(animated: true, completion: nil)
                             let alert = DisplayAlert(title: ("Event settings"), message: "Your event has been updated")
                             alert.openAlertSuccess()
                         } else {
@@ -170,6 +196,9 @@ extension ChangeSettingsEventController {
         
     }
     
+    /// Upload a picture for the event description
+    ///
+    /// - Parameter path: path that refers to the picture to send
     func uploadPicture(path: NSURL) {
         let fetchResult = PHAsset.fetchAssets(withALAssetURLs: [path.absoluteURL!], options: nil)
         if let photo = fetchResult.firstObject {
@@ -193,10 +222,7 @@ extension ChangeSettingsEventController {
                                         let alert = DisplayAlert(title: ("Upload Picture"), message: "Error while uploading picture")
                                         alert.openAlertError()
                                     } else {
-                                        let data = JSON(response.result.value!)
-                                        if (data["url"].exists()) {
-                                            self.user.setHisPicture(data["url"].stringValue)
-                                        }
+                                        self.dismiss(animated: true, completion: nil)
                                         let alert = DisplayAlert(title: "Playlist settings", message: "Information has been saved.")
                                         alert.openAlertSuccess()
                                     }
@@ -213,6 +239,7 @@ extension ChangeSettingsEventController {
 
 //MARK: Create form Eureka
 extension ChangeSettingsEventController {
+    /// Load information of the event and set up the eureka form to change some event's values
     func loadEventInfo() {
         let api = SounityAPI()
         let parameters: Parameters = [ "id": idEventSent ]
@@ -304,6 +331,25 @@ extension ChangeSettingsEventController {
                                     cell.textLabel?.textColor = UIColor.white
                                     cell.backgroundColor = ColorSounity.orangeSounity
                             }
+                            
+                            +++ Section()
+                            <<< ButtonRow() { (row: ButtonRow) -> Void in
+                                row.hidden = Condition.function([])
+                                { form in
+                                    if (self.eventInfo.started) {
+                                        return false
+                                    } else {
+                                        return true
+                                    }
+                                }
+                                row.title = "Stop"
+                                }  .onCellSelection({ (cell, row) in
+                                    self.actionOnEvent("Stop your event", _msg: "Do you really want to stop your event ?", mode: "stop")
+                                }).cellUpdate { cell, row in
+                                    cell.textLabel?.textColor = UIColor.white
+                                    cell.backgroundColor = UIColor(red: CGFloat(0xF4)/255 ,green: CGFloat(0x43)/255 ,blue: CGFloat(0x36)/255 ,alpha: 1)
+                            }
+                            
                             +++ Section()
                             <<< ButtonRow() { (row: ButtonRow) -> Void in
                                 row.title = "Delete"
@@ -316,6 +362,13 @@ extension ChangeSettingsEventController {
                     }
                 }
         }
+    }
+}
+
+// MARK: Dismiss navigation
+extension ChangeSettingsEventController {
+    @IBAction func dismissView() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
