@@ -151,10 +151,6 @@ class SettingsPlaylistUser: FormViewController {
                                         let alert = DisplayAlert(title: ("Upload Picture"), message: "Error while uploading picture")
                                         alert.openAlertError()
                                     } else {
-                                        let data = JSON(response.result.value!)
-                                        if (data["url"].exists()) {
-                                            self.user.setHisPicture(data["url"].stringValue)
-                                        }
                                         let alert = DisplayAlert(title: "Playlist settings", message: "Information has been saved.")
                                         alert.openAlertSuccess()
                                     }

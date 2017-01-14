@@ -158,12 +158,10 @@ extension UserSettingsViewController {
                             self.present(alert.getPopAlert() , animated : true, completion : nil)
                         }
                         else {
-                            
-                            self.user.setHisUsername(jsonResponse["nickname"].stringValue)
-                            self.user.setHisFirstName(jsonResponse["first_name"].stringValue)
-                            self.user.setHisLastName(jsonResponse["last_name"].stringValue)
-                            self.user.setHisBirthday(jsonResponse["birth_date"].stringValue)
-                            self.user.setHisDescription(jsonResponse["description"].stringValue)
+                            self.user.setHisUsername((allFormData["nickname"] as? String)!)
+                            self.user.setHisFirstName((allFormData["firstname"] as? String)!)
+                            self.user.setHisLastName((allFormData["lastname"] as? String)!)
+                            self.user.setHisDescription((allFormData["description"] as? String)!)
                             
                             if (newCoverURL == nil) {
                                 self.dismiss(animated: true, completion: nil)
@@ -176,7 +174,6 @@ extension UserSettingsViewController {
                     }
                 }
         }
-        dismiss(animated: true, completion: nil)
     }
     
     func uploadPicture(path: NSURL) {
@@ -206,6 +203,7 @@ extension UserSettingsViewController {
                                         if (data["url"].exists()) {
                                             self.user.setHisPicture(data["url"].stringValue)
                                         }
+                                        self.dismiss(animated: true, completion: nil)
                                         let alert = DisplayAlert(title: "Profil settings", message: "Information has been saved.")
                                         alert.openAlertSuccess()
                                     }

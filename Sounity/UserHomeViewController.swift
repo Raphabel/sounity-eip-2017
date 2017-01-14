@@ -36,21 +36,11 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.UserGetInfo()
         self.setUpHeaderProfil()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         UserGetInfo()
-        
-        if user.picture == "" {
-            self.imageView.image = UIImage(named: "UnknownUserCover")!
-        }
-        else if (Reachability.isConnectedToNetwork() == true) {
-            self.imageView.imageFromServerURL(urlString: self.user.picture)
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -102,13 +92,15 @@ extension UserHomeViewController {
                         alert.openAlertError()
                     }
                     else {
-                        self.user.setHisFirstName(jsonResponse["first_name"].stringValue)
-                        self.user.setHisLastName(jsonResponse["last_name"].stringValue)
-                        self.user.setHisBirthday(jsonResponse["birth_date"].stringValue)
-                        self.user.setHisDescription(jsonResponse["description"].stringValue)
+                        self.nickname.text = jsonResponse["nickname"].stringValue
+                        self.descriptionUser.text = jsonResponse["description"].stringValue
                         
-                        self.nickname.text = self.user.username
-                        self.descriptionUser.text = self.user.descriptionUser
+                        if self.user.picture == "" {
+                            self.imageView.image = UIImage(named: "UnknownUserCover")!
+                        }
+                        else if (Reachability.isConnectedToNetwork() == true) {
+                            self.imageView.imageFromServerURL(urlString: self.user.picture)
+                        }
                     }
                 }
         }

@@ -41,7 +41,7 @@ class ChangeSettingsEventController: FormViewController {
         btn.addTarget(self, action: #selector(ChangeSettingsEventController.dismissSettings), for: .touchUpInside)
         let item = UIBarButtonItem(customView: btn)
         
-        self.navigationItem.title = "Event's settings"
+        self.navigationItem.title = "settings"
         self.navigationItem.setLeftBarButton(item, animated: true)
         
         self.loadEventInfo()
@@ -193,7 +193,7 @@ extension ChangeSettingsEventController {
                     }
                     else {
                         if (newCoverURL == nil) {
-                            self.dismiss(animated: true, completion: nil)
+                            self.dismissSettings()
                             let alert = DisplayAlert(title: ("Event settings"), message: "Your event has been updated")
                             alert.openAlertSuccess()
                         } else {
@@ -231,7 +231,7 @@ extension ChangeSettingsEventController {
                                         let alert = DisplayAlert(title: ("Upload Picture"), message: "Error while uploading picture")
                                         alert.openAlertError()
                                     } else {
-                                        self.dismiss(animated: true, completion: nil)
+                                        self.dismissSettings()
                                         let alert = DisplayAlert(title: "Playlist settings", message: "Information has been saved.")
                                         alert.openAlertSuccess()
                                     }
