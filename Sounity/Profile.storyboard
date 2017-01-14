@@ -570,17 +570,17 @@
                                 <rect key="frame" x="0.0" y="60" width="375" height="220"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zS-Tp-Ucb">
-                                        <rect key="frame" x="8" y="168" width="355" height="16"/>
+                                        <rect key="frame" x="8" y="168" width="355" height="20"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="aju-pH-Vvn"/>
+                                            <constraint firstAttribute="height" constant="20" id="aju-pH-Vvn"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="21"/>
+                                        <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="18"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klq-MD-Ftd">
                                         <rect key="frame" x="8" y="193" width="355" height="16"/>
-                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
+                                        <fontDescription key="fontDescription" name="TimesNewRomanPS-ItalicMT" family="Times New Roman" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -600,7 +600,7 @@
                                     <constraint firstAttribute="trailing" secondItem="7zS-Tp-Ucb" secondAttribute="trailing" constant="12" id="5C0-Ro-JOW"/>
                                     <constraint firstItem="q1R-SC-Nk0" firstAttribute="centerY" secondItem="NBm-c0-X2Z" secondAttribute="centerY" constant="-12.5" id="83k-tg-9LW"/>
                                     <constraint firstItem="7zS-Tp-Ucb" firstAttribute="leading" secondItem="NBm-c0-X2Z" secondAttribute="leadingMargin" id="Bmz-T4-lND"/>
-                                    <constraint firstItem="klq-MD-Ftd" firstAttribute="top" secondItem="7zS-Tp-Ucb" secondAttribute="bottom" constant="9" id="CcE-5n-uPz"/>
+                                    <constraint firstItem="klq-MD-Ftd" firstAttribute="top" secondItem="7zS-Tp-Ucb" secondAttribute="bottom" constant="5" id="CcE-5n-uPz"/>
                                     <constraint firstItem="7zS-Tp-Ucb" firstAttribute="trailing" secondItem="klq-MD-Ftd" secondAttribute="trailing" id="XBR-F6-Drb"/>
                                     <constraint firstItem="7zS-Tp-Ucb" firstAttribute="leading" secondItem="klq-MD-Ftd" secondAttribute="leading" id="dbx-FZ-8KO"/>
                                     <constraint firstAttribute="bottom" secondItem="klq-MD-Ftd" secondAttribute="bottom" constant="11" id="iE4-u5-Bk8"/>
@@ -650,6 +650,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="User Settings" id="Cld-5q-0yD">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="ZwO-Cu-JUo">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="cancelButton:" destination="9TE-we-MSv" id="Wl9-ak-N27"/>
                             </connections>

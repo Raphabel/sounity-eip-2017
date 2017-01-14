@@ -290,11 +290,10 @@ extension UserSettingsViewController {
             }
             
             +++ Section()
-            
-            <<< NameRow(){ row in
-                row.title = "Description"
-                row.tag = "description"
-                row.value = user.descriptionUser
+            <<< TextAreaRow("description") {
+                $0.placeholder = "Description"
+                $0.value = self.user.descriptionUser
+                $0.textAreaHeight = .dynamic(initialTextViewHeight: 50)
             }
             +++ Section()
             
