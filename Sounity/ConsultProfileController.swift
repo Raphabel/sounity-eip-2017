@@ -120,6 +120,10 @@ extension ConsultProfileController {
         self.user.setNickname(nicknameUserConsulted!)
         self.user.setIDprofile(IDUserConsulted!)
         
+        self.PView.backgroundColor = UIColor(patternImage: UIImage(named:"party")!)
+        
+        self.imageView.layer.borderWidth = 3.0
+        self.imageView.layer.borderColor = UIColor.white.cgColor
         self.imageView.layer.masksToBounds = true
         _ = self.putShadowOnView(self.imageView, shadowColor: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), radius: 10, offset: CGSize(width: 0, height: 0), opacity: 1)
         
@@ -220,6 +224,15 @@ extension ConsultProfileController {
         let navController = UINavigationController.init(rootViewController: myVC)
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
+    
+    @IBAction func seeTrophies(_ sender: Any) {
+        let mainStoryboard = UIStoryboard(name: "Search", bundle: Bundle.main)
+        let myVC = mainStoryboard.instantiateViewController(withIdentifier: "trophiesCheckByUsers") as! ConsultTrophiesController
+        myVC.IDUserConsulted = self.user.id
+        let navController = UINavigationController.init(rootViewController: myVC)
+        self.navigationController?.present(navController, animated: true, completion: nil)
+    }
+
     
     @IBAction func backButton(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)

@@ -16,6 +16,7 @@ class UserHomeViewController: UIViewController, UITextFieldDelegate, UIImagePick
     
     // MARK: StoryBoard UIElements
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var nickname: UILabel!
     @IBOutlet weak var tableView: UIView!
     @IBOutlet weak var followers: UILabel!
