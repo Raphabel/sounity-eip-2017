@@ -25,6 +25,7 @@ class SounityAPI {
         case PLAYLIST_USER_DELETE = "/playlist/"
         case PROVIDERS_MUSIC = "/musicProviders"
         case TIMELINE = "/newsfeed"
+        case TROPHIES = "/trophies/"
     }
     
     enum SOCKET: String {
@@ -40,6 +41,7 @@ class SounityAPI {
         case NEW_JOINED = "event:joined"
         case BANNED = "event:banned"
         case LEFT = "event:left"
+        case STOP = "event:stopped"
         case BAN = "event:ban"
     }
     

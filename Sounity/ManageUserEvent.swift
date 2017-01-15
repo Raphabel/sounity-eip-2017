@@ -95,21 +95,7 @@ extension ManageUserEvent: UICollectionViewDataSource {
             tmp = self.resultResearch
         }
         
-        cell.userName.text = tmp[indexPath.item].nickname
-        cell.pictureUser.load.request(with: tmp[indexPath.item].picture, onCompletion: { image, error, operation in
-            if (cell.pictureUser.image?.size == nil) {
-                cell.pictureUser.image = UIImage(named: "emptyPicture")
-            }
-            MakeElementRounded().makeElementRounded(cell.pictureUser, newSize: cell.pictureUser.frame.width)
-        })
-        
-        if (tmp[indexPath.item].banned) {
-            cell.backgroundColor = UIColor(red: CGFloat(0xF4)/255 ,green: CGFloat(0x43)/255 ,blue: CGFloat(0x36)/255 ,alpha: 1)
-        } else if (!tmp[indexPath.item].banned && tmp[indexPath.item].participating) {
-            cell.backgroundColor = ColorSounity.navigationBarColor
-        } else {
-            cell.backgroundColor = UIColor.lightGray
-        }
+        cell.user = tmp[indexPath.row]
         
         return cell
     }
@@ -137,6 +123,9 @@ extension ManageUserEvent {
 
 //MARK: Action on users
 extension ManageUserEvent {
+    ///  Unbanned user from event
+    ///
+    /// - Parameter user: user selected [UserBasicInfo]
     func unbannedUserFromEvent(_ user: UserBasicInfo) {
         let idUserToRemove = user.id
         
@@ -178,6 +167,9 @@ extension ManageUserEvent {
         }
     }
     
+    ///  Ban user from event
+    ///
+    /// - Parameter user: user selected [UserBasicInfo]
     func banUserToEvent(_ user: UserBasicInfo) {
         SocketIOManager.sharedInstance.banUserFromEvent(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject, "userId": user.id as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
@@ -211,6 +203,34 @@ extension ManageUserEvent {
         })
     }
     
+    ///  Invite user to an event
+    ///
+    /// - Parameter user: user selected [UserBasicInfo]
+    func inviteUser(_ user: UserBasicInfo) {
+        let idUserToInvite = user.id
+        
+        let api = SounityAPI()
+        let url = (api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT) + String(self.idEventSent) + "/" + "users/invite")
+        let headers = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
+        
+        Alamofire.request(url, method: .post, parameters : ["id_user": idUserToInvite], headers: headers)
+            .validate(statusCode: 200..<500)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response in
+                if let apiResponse = response.result.value {
+                    let jsonResponse = JSON(apiResponse)
+                    if ((response.response?.statusCode)! != 200) {
+                        let alert = DisplayAlert(title: "Invite User", message: jsonResponse["message"].stringValue)
+                        alert.openAlertError()
+                    }
+                    else {
+                        let alert = DisplayAlert(title: "Invite User", message: jsonResponse["message"].stringValue)
+                        alert.openAlertSuccess()
+                    }
+                }
+        }
+    }
+    
     func showOptionsUser(userInfo: UserBasicInfo) {
         var message = userInfo.nickname
         
@@ -237,8 +257,7 @@ extension ManageUserEvent {
         
         let inviteUser = UIAlertAction(title: "Invite user", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            let alert = DisplayAlert(title: "Invite user", message: ("This function hasn't been coded yet..."))
-            alert.openAlertError()
+            self.inviteUser(userInfo)
         })
         
         /*let kickUser = UIAlertAction(title: "Kick user", style: .default, handler: {
@@ -275,6 +294,10 @@ extension ManageUserEvent {
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ManageAdminEvent.searchResultFromString(_:)), userInfo: searchText, repeats: false)
     }
+    
+    /// Search function for the user accorcing to their name
+    ///
+    /// - Parameter timer: timer in order to avoid maing research at every character changed
     func searchResultFromString(_ timer: Timer) {
         self.textSearchBox = timer.userInfo! as! String
         
@@ -328,29 +351,11 @@ extension ManageUserEvent {
     }
 }
 
-//MARK: AdminInfoClass
-extension ManageUserEvent {
-    class UserBasicInfo {
-        var nickname: String
-        var picture: String
-        
-        var id: Int
-        
-        var banned: Bool
-        var participating: Bool
-        
-        init(_nickname: String, _id: Int, _picture: String, _banned: Bool, _participating: Bool) {
-            self.nickname = _nickname
-            self.id = _id
-            self.picture = _picture
-            self.banned = _banned
-            self.participating = _participating
-        }
-    }
-}
-
 //MARK: Initialisation functions
 extension ManageUserEvent {
+    /// Load event's information
+    ///
+    /// - Parameter idEvent: id of the concerned event
     func loadUsersFromIdEvent(_ idEvent: Int) {
         let api = SounityAPI()
         let parameters = [ "id": idEvent ]

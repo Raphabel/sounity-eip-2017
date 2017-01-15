@@ -15,6 +15,7 @@ import Photos
 
 class SettingsPlaylistUser: FormViewController {
     
+    var coverPlaylist: String!
     var eventInfo: Event!
     var user = UserConnect();
     var idPlaylistSent: NSInteger = -1
@@ -100,24 +101,25 @@ class SettingsPlaylistUser: FormViewController {
         }
         
         let parameters: Parameters = [
-            "id": self.idPlaylistSent,
             "name": newName!,
             "description": newDescription!,
             "public": newPublicInfo!,
+            "picture": self.coverPlaylist
         ]
-        
-        Alamofire.request(api.getRoute(SounityAPI.ROUTES.PLAYLIST_USER_DELETE), method: .put, parameters: parameters, headers: headers)
+
+        Alamofire.request("\(api.getRoute(SounityAPI.ROUTES.PLAYLIST_USER_DELETE))/\(self.idPlaylistSent)", method: .put, parameters: parameters, headers: headers)
             .validate(statusCode: 200..<501)
             .validate(contentType: ["application/json"])
             .responseJSON { response in
                 if let apiResponse = response.result.value {
                     let jsonResponse = JSON(apiResponse)
-                    if ((response.response?.statusCode)! == 400) {
+                    if ((response.response?.statusCode)! != 200) {
                         let alert = DisplayAlert(title: ("Playlist Save"), message: jsonResponse["message"].stringValue)
                         alert.openAlertError()
                     }
                     else {
                         if (newCoverURL == nil) {
+                            _ = self.navigationController?.popViewController(animated: true)
                             let alert = DisplayAlert(title: ("Playlist settings"), message: "Your playlist has been updated")
                             alert.openAlertSuccess()
                         } else {
@@ -151,10 +153,7 @@ class SettingsPlaylistUser: FormViewController {
                                         let alert = DisplayAlert(title: ("Upload Picture"), message: "Error while uploading picture")
                                         alert.openAlertError()
                                     } else {
-                                        let data = JSON(response.result.value!)
-                                        if (data["url"].exists()) {
-                                            self.user.setHisPicture(data["url"].stringValue)
-                                        }
+                                        _ = self.navigationController?.popViewController(animated: true)
                                         let alert = DisplayAlert(title: "Playlist settings", message: "Information has been saved.")
                                         alert.openAlertSuccess()
                                     }
@@ -191,7 +190,7 @@ class SettingsPlaylistUser: FormViewController {
                     else {
                         let namePlaylist = jsonResponse["name"].stringValue
                         let descriptionPlaylist = jsonResponse["description"].stringValue
-                        let coverPlaylist = jsonResponse["picture"].stringValue
+                        self.coverPlaylist = jsonResponse["picture"].stringValue
                         let publicPlaylist = jsonResponse["public"].boolValue
 
                         self.form
@@ -214,7 +213,7 @@ class SettingsPlaylistUser: FormViewController {
                                 $0.tag = "picture"
                                 $0.sourceTypes = .PhotoLibrary
                                 $0.clearAction = .no
-                                let picPath = NSURL(string: coverPlaylist)
+                                let picPath = NSURL(string: self.coverPlaylist)
                                 let data = NSData(contentsOf: picPath! as URL)
                                 $0.value = data != nil ? UIImage(data:data! as Data) : UIImage(named: "UnknownMusicCover")
                             }

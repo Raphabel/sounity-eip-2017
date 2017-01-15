@@ -20,6 +20,7 @@ class User {
     var id_country: Int
     var id_language: Int
    
+    /// Init class without data
     init() {
         self.description = UserDefaults.standard.string(forKey: "") ?? ""
         self.first_name = UserDefaults.standard.string(forKey: "firstname") ?? ""
@@ -33,6 +34,17 @@ class User {
         
     }
 
+    /// Init class with datas
+    ///
+    /// - Parameters:
+    ///   - _description: user description
+    ///   - _first_name:  user first_name
+    ///   - _last_name: user lastname
+    ///   - _picture: user picture
+    ///   - _nickname: user nickname
+    ///   - _id: user id
+    ///   - _id_country: user id_country
+    ///   - _id_language: user id_language
     init(_description: String, _first_name: String, _last_name: String, _picture: String, _nickname: String, _id: Int, _id_country: Int, _id_language: Int) {
         self.description = _description
         self.first_name = _first_name

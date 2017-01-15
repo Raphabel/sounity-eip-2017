@@ -7,13 +7,32 @@
 //
 
 import UIKit
+import SwiftMoment
 
 class PlaylistTableViewCell: UITableViewCell {
     
-    // MARK: Properties
+    var playlist: Playlist! {
+        didSet {
+            self.updateUI()
+        }
+    }
     
+    // MARK: Properties
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var descriptionPlaylist: UILabel!
     @IBOutlet weak var picturePlaylist: UIImageView!
+    
+    func updateUI() {
+        nameLabel.text = playlist.name
+        descriptionPlaylist.text = playlist.desc
+        date.text = moment(playlist.create_date)?.format("YYYY-MM-dd HH:mm")
+        
+        picturePlaylist.load.request(with: playlist.picture, onCompletion: { image, error, operation in
+            if (self.picturePlaylist.image?.size == nil) {
+                self.picturePlaylist.image = UIImage(named: "unknownCoverMusic")
+            }
+            MakeElementRounded().makeElementRounded(self.picturePlaylist, newSize: self.picturePlaylist.frame.width)
+        })
+    }
 }

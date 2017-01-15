@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import InteractivePlayerView
 import GuillotineMenu
 import AVFoundation
 import Alamofire
+import SCLAlertView
 import SwiftyJSON
 
 class EventController: UIViewController, InteractivePlayerViewDelegate {
@@ -27,11 +27,14 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     @IBOutlet var navItem: UINavigationItem!
     @IBOutlet var barButton: UIButton!
     @IBOutlet var settingsButton: UIButton!
+    @IBOutlet var addPlaylistButton: UIBarButtonItem!
+    
     
     // MARK: Media player variables
     var playerItem:AVPlayerItem?
     var player:AVPlayer?
     var trackPlayed: SounityTrackResearch!
+    var loading: Bool = false
     
     // Infos user connected variable
     var user = UserConnect()
@@ -49,6 +52,12 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         case activity = 3
     }
     
+    //MARK: User's playlist
+    var ownPlaylist = [Playlist]()
+    
+    //MARK: Tableview prgramatically created to display user's playlists
+    var tableviewPopup = UITableView()
+    
     // MARK: Guillotine menu variable
     fileprivate lazy var presentationAnimator = GuillotineTransitionAnimation()
     
@@ -61,6 +70,7 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         self.view.backgroundColor = UIColor.clear
 
         self.initPlayer()
+        self.getUserOwnPlaylists()
         
         self.listenMusicPlayed()
         self.listenMusicPaused()
@@ -69,11 +79,12 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         // In order to make user aware the user has left the event
-        print("Restart socket connection")
         SocketIOManager.sharedInstance.restartConnection()
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        self.reloadEvent()
+
         if (!user.checkUserConnected() && self.isViewLoaded) {
             DispatchQueue.main.async(execute: { () -> Void in
                 let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Authentication", bundle: nil)
@@ -94,9 +105,12 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    // Allow to handle the stop a AVPlayerItem when this last one has finished
-    override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+    // Segue that show the setting's event page
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showSettingsEvent") {
+            let vc = segue.destination as! ChangeSettingsEventController
+            vc.idEventSent = self.idEventSent
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -116,17 +130,146 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "rate" {
             if let rate = change?[NSKeyValueChangeKey.newKey] as? Float {
-                if rate == 0.0 { /*print("playback stopped")*/ }
-                if rate == 1.0 { /*print("normal playback")*/ }
+                if rate == 0.0 { print("music has been stopped") }
+                if rate == 1.0 { print("music has been played") }
                 if rate == -1.0 { /*print("reverse playback")*/ }
             }
         }
     }
 }
 
+// MARK: Playlists User Manager
+extension EventController: UITableViewDelegate, UITableViewDataSource {
+    @IBAction func displayPopupAddToPlaylist(_ sender: AnyObject) {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCircularIcon: true,
+            kCircleIconHeight: 30,
+            kCircleHeight: 55,
+            showCloseButton: true,
+            shouldAutoDismiss: false,
+            hideWhenBackgroundViewIsTapped: true
+        )
+        
+        // Initialize SCLAlertView using custom Appearance
+        let alert = SCLAlertView(appearance: appearance)
+        
+        // Create the subview
+        let subview = UIView(frame: CGRect(x: 0,y: 10,width: 200,height: 250))
+        
+        // Add subtitle
+        let label = UILabel(frame: CGRect(x: ((subview.frame.width - 180) / 2),y: 0,width: 190,height: 20))
+        label.font = UIFont(name: "TimesNewRomanPS-ItalicMT", size: 12)
+        label.text = "Add this playlist to your event"
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        subview.addSubview(label)
+        
+        // Add tableview
+        self.tableviewPopup.frame =  CGRect(x: ((subview.frame.width - 180) / 2),y: 40,width: 180,height: 200)
+        self.tableviewPopup.delegate = self
+        self.tableviewPopup.dataSource = self
+        self.tableviewPopup.allowsSelection = true
+        self.tableviewPopup.register(UITableViewCell.self, forCellReuseIdentifier: "cellPlaylistName")
+        if (self.ownPlaylist.count > 0) {
+            subview.addSubview(self.tableviewPopup)
+        } else {
+            // Add message no playlist
+            let labelEmptyPlaylistsList = UILabel(frame: CGRect(x: ((subview.frame.width - 180) / 2),y: 40,width: 190,height: 20))
+            labelEmptyPlaylistsList.font = UIFont(name: "TimesNewRomanPS-BoldMT", size: 12)
+            labelEmptyPlaylistsList.text = "You don't have any playlist"
+            labelEmptyPlaylistsList.textAlignment = .center
+            labelEmptyPlaylistsList.lineBreakMode = .byWordWrapping
+            labelEmptyPlaylistsList.numberOfLines = 0
+            
+            subview.addSubview(labelEmptyPlaylistsList)
+            subview.frame = CGRect(x: 0,y: 10,width: 200,height: 90)
+        }
+        alert.customSubview = subview
+        _ = alert.showCustom(self.nameEvent, subTitle: "", color: ColorSounity.navigationBarColor, icon: UIImage(named: "iconSounityWhite")!, closeButtonTitle: "Cancel")
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellPlaylistName", for: indexPath)
+        cell.isUserInteractionEnabled = true
+        cell.textLabel?.text = self.ownPlaylist[indexPath.row].name
+        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(EventController.addPlaylistToUserEvent)))
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ownPlaylist.count
+    }
+    
+    /// Get all the playlist of the current user in order to eventually add one or few of them to the event
+    func getUserOwnPlaylists() {
+        print("getUserOwnPlaylists")
+
+        let api = SounityAPI()
+        let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)/playlists"
+        let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
+        
+        Alamofire.request(url, method: .get, headers: headers)
+            .validate(statusCode: 200..<501)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response in
+                if let apiResponse = response.result.value {
+                    let jsonResponse = JSON(apiResponse)
+                    if ((response.response?.statusCode)! != 200) {
+                        let alert = DisplayAlert(title: "Load your playlist", message: jsonResponse["message"].stringValue)
+                        alert.openAlertError()
+                    }
+                    else {
+                        for (_,subJson):(String, JSON) in jsonResponse {
+                            self.ownPlaylist.append(Playlist(name: subJson["name"].stringValue, create_date: subJson["create_date"].stringValue, id: subJson["id"].intValue, desc: subJson["description"].stringValue, _picture: subJson["picture"].stringValue))
+                        }
+                    }
+                }
+        }
+    }
+    
+    /// Function call when the user wants to add a playlist to the current event
+    ///
+    /// - Parameter sender: reference of the cell where the user clicked on on the playlists table view
+    func addPlaylistToUserEvent(_ sender: UITapGestureRecognizer) {
+        let touch = sender.location(in: tableviewPopup)
+        if let indexPath = tableviewPopup.indexPathForRow(at: touch) {
+            let api = SounityAPI()
+            let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
+            let parameters : [String : AnyObject] = [
+                "id": self.ownPlaylist[indexPath.row].id as AnyObject,
+            ]
+            
+            Alamofire.request(api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT) + "/" + "\(self.idEventSent)" + "/" + "playlist", method: .post, parameters : parameters, headers: headers)
+                .validate(statusCode: 200..<500)
+                .validate(contentType: ["application/json"])
+                .responseJSON { response in
+                    if let apiResponse = response.result.value {
+                        let jsonResponse = JSON(apiResponse)
+                        if ((response.response?.statusCode)! == 400) {
+                            let alert = DisplayAlert(title: "Add playlist", message: jsonResponse["message"].stringValue)
+                            alert.openAlertError()
+                        }
+                        else {
+                            let alert = DisplayAlert(title: "Add Playlist", message: ("The playlist : '\(self.ownPlaylist[indexPath.row].name)' has been added to the event."))
+                            alert.openAlertSuccess()
+                        }
+                    }
+            }
+            
+        }
+    }
+}
+
 // MARK: Media player functions
 extension EventController {
+    /// Allows to initialise the entire player available for the event's owner
     func initPlayer() {
+        print("initPlayer")
         self.InteractivePView!.delegate = self
         self.InteractivePView.progress = 120
         self.InteractivePView.isUserInteractionEnabled = true
@@ -151,7 +294,8 @@ extension EventController {
         if (owner == false) {
             self.playPauseView.isHidden = true
             self.player?.isMuted = true
-            self.settingsButton.isHidden = true
+            self.settingsButton.isEnabled = false
+            self.addPlaylistButton.isEnabled = false
         }
     }
     
@@ -167,7 +311,11 @@ extension EventController {
         self.sendNextMusicToUsersEvent()
     }
     
+    /// Call when a song has stopped playing
+    ///
+    /// - Parameter myNotification: notification element set during page loading
     func finishedPlaying(_ myNotification:Notification) {
+        print("finishedPlaying")
         self.InteractivePView.stop()
         self.playButton.isHidden = false
         self.pauseButton.isHidden = true
@@ -181,7 +329,9 @@ extension EventController {
         }
     }
     
+    /// Allows to reload the event by making a event:joined
     func reloadEvent() {
+        print("reloadEvent")
         if (self.player != nil) {
             self.InteractivePView.stop()
             self.playButton.isHidden = false
@@ -199,6 +349,7 @@ extension EventController {
 
 // MARK: Listen functions
 extension EventController {
+    /// Listen the broadcast music:played
     func listenMusicPlayed() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_PLAYED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -217,6 +368,7 @@ extension EventController {
         }
     }
     
+    /// Listen the broadcast music:paused
     func listenMusicPaused() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_PAUSED.rawValue) { (dataArray, Socket) -> Void in
             //NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -237,6 +389,7 @@ extension EventController {
         }
     }
     
+    /// Listen the broadcast music:changed
     func listenMusicChanged() {
         SocketIOManager.sharedInstance.socket.on(SounityAPI.SOCKET.MUSIC_CHANGED.rawValue) { (dataArray, Socket) -> Void in
             let data = JSON(dataArray[0])
@@ -256,6 +409,7 @@ extension EventController {
 
 // MARK: Sockets functions
 extension EventController {
+    /// send socket music:play
     func sendPlayMusicToUsersEvent() {
         SocketIOManager.sharedInstance.playMusicInEvent(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
@@ -287,6 +441,7 @@ extension EventController {
         })
     }
     
+    /// send socket music:pause
     func sendPauseMusicToUsersEvent() {
         SocketIOManager.sharedInstance.pauseMusicInEvent(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject, "time": Int((self.playerItem?.currentTime().seconds)! * 1000) as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
@@ -313,7 +468,13 @@ extension EventController {
         })
     }
     
+    /// send socket event:next
     func sendNextMusicToUsersEvent() {
+        if (self.loading) {
+            print("Block because loading")
+            return
+        }
+        
         SocketIOManager.sharedInstance.nextMusicInEvent(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
                 if !(datasList.null != nil) {
@@ -337,6 +498,12 @@ extension EventController {
 
 // MARK: Set Up & Play music
 extension EventController {
+    /// Request to play music from Music Provider API when the user joins the event
+    ///
+    /// - Parameters:
+    ///   - infoMusic: info related to the music that should be played first
+    ///   - statusMusic: music's status in order to now i the music should be played or not [PLAY | PAUSE | EMPTY]
+    ///   - timeMusic: time where the music is supposed to play first
     func setMediaPlayerFromEventJoin(_ infoMusic: JSON, timeMusic: Int64, statusMusic: String) {
         if (statusMusic == "EMPTY") {
             return
@@ -354,6 +521,7 @@ extension EventController {
                     } else {
                         self.trackPlayed = SounityTrackResearch(_jsonResponse: jsonResponse, _music_provider: MusicProvider.sharedInstance.getNameMusicProviderById(infoMusic["apiId"].intValue), _apiId: infoMusic["apiId"].intValue)
                         
+                        print("setMediaPlayerFromEventJoin -> \(self.trackPlayed.title)")
                         self.titleMusic.text = self.trackPlayed.title
                         self.typeMusic.text = self.trackPlayed.artist
                         if (self.trackPlayed.cover.isEmpty) {
@@ -385,7 +553,10 @@ extension EventController {
                             self.player?.isMuted = true
                         }
                         
+                        /// Make observable in order to keep an eye on the music status
+                        NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
                         self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
+
                         if (statusMusic == "PLAY") {
                             if (self.owner) {
                                 self.InteractivePView.restartWithProgress(duration: self.trackPlayed.preview ? 30 : self.trackPlayed.duration, _progress: Double(timeMusic / 1000), _play: true) // Music Time
@@ -394,7 +565,7 @@ extension EventController {
                             self.pauseButton.isHidden = false
                             
                             self.player?.play()
-                        } else if (statusMusic == "PAUSE") {
+                        } else {
                             if (self.owner) {
                                 self.InteractivePView.restartWithProgress(duration: self.trackPlayed.preview ? 30 : self.trackPlayed.duration, _progress: Double(timeMusic / 1000), _play: false) // Music Time
                             }
@@ -409,10 +580,14 @@ extension EventController {
         }
     }
     
-    /*
-     ** Request to play music from Music Provider API
-     */
+    /// Request to play music from Music Provider API when the user joins the event
+    ///
+    /// - Parameters:
+    ///   - idMusic: id of the music to play
+    ///   - apiId: id api of the music [Deezer | Soundcloud]
+    ///   - time: time where the music is supposed to play first
     func gatherDataMusicAndPlay(_ idMusic: String, apiId: Int, time: Int64) {
+        self.loading = true
         Alamofire.request(MusicProvider.sharedInstance.getUrlTrackByMusicProvider(idMusic, _apiId: apiId), method: .get)
             .validate(statusCode: 200..<501)
             .validate(contentType: ["application/json"])
@@ -427,6 +602,8 @@ extension EventController {
                         self.pauseButton.isHidden = false
                         
                         self.trackPlayed = SounityTrackResearch(_jsonResponse: jsonResponse, _music_provider: MusicProvider.sharedInstance.getNameMusicProviderById(apiId), _apiId: apiId)
+                        
+                        print("gatherDataMusicAndPlay -> \(self.trackPlayed.title)")
                         
                         self.titleMusic.text = self.trackPlayed.title
                         self.typeMusic.text = self.trackPlayed.artist
@@ -462,7 +639,8 @@ extension EventController {
                             self.player?.isMuted = true
                         }
                         
-                        self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
+                        NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
+                        //self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
                         self.player?.play()
                         
                         if (self.trackPlayed.idTrack >= 0) {
@@ -472,19 +650,9 @@ extension EventController {
                             svc.removeMusicInPlaylistById(Int(idMusic)!, apiId: apiId)
                         }
                     }
+                    self.loading = false
                 }
         }
-    }
-}
-
-// MARK: Go to settings 
-extension EventController {
-    @IBAction func goToSettingsEvent (_ sender: UIButton) {
-        print("coucou")
-        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
-        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ChangeSettingsEventView") as! ChangeSettingsEventController
-        vc.idEventSent = self.idEventSent
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -529,6 +697,19 @@ extension EventController {
 extension EventController {
     override var prefersStatusBarHidden : Bool {
         return false
+    }
+}
+
+// MARK: Access to settingsButton
+extension EventController {    
+    @IBAction func accessSettings(_ sender: AnyObject) {
+        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ChangeSettingsEventView") as! ChangeSettingsEventController
+        let navController = UINavigationController.init(rootViewController: vc)
+
+        vc.idEventSent = self.idEventSent
+        
+        self.present(navController, animated: true, completion: nil)
     }
 }
 

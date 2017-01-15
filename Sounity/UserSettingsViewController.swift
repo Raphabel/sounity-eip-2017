@@ -67,13 +67,6 @@ extension UserSettingsViewController {
         let url = api.getRoute(SounityAPI.ROUTES.CHECK_NICKNAME)
         let parameters : Parameters = ["nickname": nickname as AnyObject ]
         
-        let semaphore = DispatchSemaphore(value: 1)
-        
-        let watchdogTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(100)
-        if case DispatchTimeoutResult.timedOut = semaphore.wait(timeout: watchdogTime) {
-            print("Semaphore blocking app")
-        }
-        
         Alamofire.request(url, method: .post, parameters: parameters, headers : headers)
             .validate(statusCode: 200..<499)
             .validate(contentType: ["application/json"])
@@ -83,7 +76,6 @@ extension UserSettingsViewController {
                 } else {
                     self.checkNickname = true
                 }
-                semaphore.signal()
         }
         
         return self.checkNickname
@@ -118,6 +110,19 @@ extension UserSettingsViewController {
             self.present(alert.getPopAlert() , animated : true, completion : nil)
             return
         }
+        
+        if firstname == nil {
+            let alert = DisplayAlert(title: "Invalid parameters", message: "Enter a name")
+            self.present(alert.getPopAlert() , animated : true, completion : nil)
+            return
+        }
+        
+        if description == nil {
+            let alert = DisplayAlert(title: "Invalid parameters", message: "Add a description please")
+            self.present(alert.getPopAlert() , animated : true, completion : nil)
+            return
+        }
+
         if date == nil {
             let alert = DisplayAlert(title: "Invalid parameters", message: "Enter a date")
             self.present(alert.getPopAlert() , animated : true, completion : nil)
@@ -145,12 +150,10 @@ extension UserSettingsViewController {
                             self.present(alert.getPopAlert() , animated : true, completion : nil)
                         }
                         else {
-                            
-                            self.user.setHisUsername(jsonResponse["nickname"].stringValue)
-                            self.user.setHisFirstName(jsonResponse["first_name"].stringValue)
-                            self.user.setHisLastName(jsonResponse["last_name"].stringValue)
-                            self.user.setHisBirthday(jsonResponse["birth_date"].stringValue)
-                            self.user.setHisDescription(jsonResponse["description"].stringValue)
+                            self.user.setHisUsername((allFormData["nickname"] as? String)!)
+                            self.user.setHisFirstName((allFormData["firstname"] as? String)!)
+                            self.user.setHisLastName((allFormData["lastname"] as? String)!)
+                            self.user.setHisDescription((allFormData["description"] as? String)!)
                             
                             if (newCoverURL == nil) {
                                 self.dismiss(animated: true, completion: nil)
@@ -163,7 +166,6 @@ extension UserSettingsViewController {
                     }
                 }
         }
-        dismiss(animated: true, completion: nil)
     }
     
     func uploadPicture(path: NSURL) {
@@ -193,6 +195,7 @@ extension UserSettingsViewController {
                                         if (data["url"].exists()) {
                                             self.user.setHisPicture(data["url"].stringValue)
                                         }
+                                        self.dismiss(animated: true, completion: nil)
                                         let alert = DisplayAlert(title: "Profil settings", message: "Information has been saved.")
                                         alert.openAlertSuccess()
                                     }
@@ -279,11 +282,10 @@ extension UserSettingsViewController {
             }
             
             +++ Section()
-            
-            <<< NameRow(){ row in
-                row.title = "Description"
-                row.tag = "description"
-                row.value = user.descriptionUser
+            <<< TextAreaRow("description") {
+                $0.placeholder = "Description"
+                $0.value = user.descriptionUser
+                $0.textAreaHeight = .dynamic(initialTextViewHeight: 40)
             }
             +++ Section()
             

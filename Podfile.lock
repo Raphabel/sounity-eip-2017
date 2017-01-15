@@ -9,7 +9,6 @@ PODS:
   - FaveButton (2.0.2)
   - GuillotineMenu (3.0)
   - ImageLoader (0.12.0)
-  - InteractivePlayerView (2.0)
   - KMPlaceholderTextView (1.3.0)
   - LiquidFloatingActionButton (1.2.0)
   - PageMenu (1.2.9)
@@ -32,7 +31,6 @@ DEPENDENCIES:
   - FaveButton (~> 2.0.0)
   - GuillotineMenu (~> 3.0)
   - ImageLoader
-  - InteractivePlayerView (from `https://github.com/AhmettKeskin/InteractivePlayerView.git`)
   - KMPlaceholderTextView (~> 1.3.0)
   - LiquidFloatingActionButton (from `https://github.com/carloscorreia94/LiquidFloatingActionButton.git`, branch `swift3`)
   - PageMenu (from `https://github.com/orazz/PageMenu.git`)
@@ -48,8 +46,6 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   DZNEmptyDataSet:
     :git: https://github.com/dzenbot/DZNEmptyDataSet.git
-  InteractivePlayerView:
-    :git: https://github.com/AhmettKeskin/InteractivePlayerView.git
   LiquidFloatingActionButton:
     :branch: swift3
     :git: https://github.com/carloscorreia94/LiquidFloatingActionButton.git
@@ -60,9 +56,6 @@ CHECKOUT OPTIONS:
   DZNEmptyDataSet:
     :commit: e7e101bf821e0acbb26c46e6547c347ec97e3a7a
     :git: https://github.com/dzenbot/DZNEmptyDataSet.git
-  InteractivePlayerView:
-    :commit: 09c9125e84503b444cceea9b7357baaf17afcaf4
-    :git: https://github.com/AhmettKeskin/InteractivePlayerView.git
   LiquidFloatingActionButton:
     :commit: abba6fabb856e0eb51f7fe58257b4572fc1a7978
     :git: https://github.com/carloscorreia94/LiquidFloatingActionButton.git
@@ -80,7 +73,6 @@ SPEC CHECKSUMS:
   FaveButton: e26f7964669b4befda7d92a6779be7b2a70ab161
   GuillotineMenu: 611ccb58ae092f2d929535377570ef25a7b5bc63
   ImageLoader: e55ba1da78f5b007d177d9d0aa05156fd56a021a
-  InteractivePlayerView: 630fe0184ce7400a8db4ce39ece45c146e040c13
   KMPlaceholderTextView: 2bbcd19a273648a80a61e1e48f9743a24d8930e3
   LiquidFloatingActionButton: 9c28961915754e08cf596ea6bdd60f9cd949f172
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
@@ -93,6 +85,6 @@ SPEC CHECKSUMS:
   SwiftMoment: dc6dd27012e267819104cbb03f74ff9192dd0b42
   SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
 
-PODFILE CHECKSUM: 1dbef67c94ab431d040036314b3ff2e7969582c3
+PODFILE CHECKSUM: 29b36a0b0655d14bc9e84cb817e4867a98f4cbdf
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0.beta.1

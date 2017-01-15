@@ -73,6 +73,13 @@ class ActivitiesEventController: UIViewController, UITableViewDataSource, UITabl
 
 // MARK: Add new feed to the event timeline
 extension ActivitiesEventController {
+    /// Generic function that adds activities to the event's timeline of the user
+    ///
+    /// - Parameters:
+    ///   - username: name of the user involved with the activity
+    ///   - content: message of the activity based on [TYPE_ACTIVITY]
+    ///   - type: type of activity based on [TYPE_ACTIVITY_ICON]
+    ///   - extra: secondary message of the activity
     func addActivitiesTimeline(_ username: String, content: TYPE_ACTIVITY, type: TYPE_ACTIVITY_ICON, extra: String) {
         self.activities.append(Activity(_username: username, _content: content.rawValue, _picture: type.rawValue, _extra: extra))
         self.tableview?.reloadData()
@@ -82,14 +89,21 @@ extension ActivitiesEventController {
         }
         
         if let badgeValue = self.tabBarController?.tabBar.items?[3].badgeValue {
-            if let nextValue: Int = ((Int(badgeValue))! + 1) {
-                self.tabBarController?.tabBar.items?[3].badgeValue = String(nextValue)
-            }
+            let nextValue: Int = (Int(badgeValue)! + 1)
+            self.tabBarController?.tabBar.items?[3].badgeValue = String(nextValue)
         } else {
             self.tabBarController?.tabBar.items?[3].badgeValue = "1"
         }
     }
     
+    /// Generic function that adds activities to the event's timeline of the user
+    ///
+    /// - Parameters:
+    ///   - username: name of the user involved with the activity
+    ///   - content: message of the activity [string]
+    ///   - type: type of activity based on [TYPE_ACTIVITY_ICON]
+    ///   - extra: secondary message of the activity
+
     func addActivitiesTimeline(_ username: String, content: String, type: TYPE_ACTIVITY_ICON, extra: String) {
         self.activities.append(Activity(_username: username, _content: content, _picture: type.rawValue, _extra: extra))
         self.tableview?.reloadData()
@@ -99,9 +113,8 @@ extension ActivitiesEventController {
         }
         
         if let badgeValue = self.tabBarController?.tabBar.items?[3].badgeValue {
-            if let nextValue: Int = ((Int(badgeValue))! + 1) {
-                self.tabBarController?.tabBar.items?[3].badgeValue = String(nextValue)
-            }
+            let nextValue = ((Int(badgeValue))! + 1)
+            self.tabBarController?.tabBar.items?[3].badgeValue = String(nextValue)
         } else {
             self.tabBarController?.tabBar.items?[3].badgeValue = "1"
         }
@@ -119,21 +132,15 @@ extension ActivitiesEventController {
 
 // MARK: Table view functions
 extension ActivitiesEventController {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:ActivitiesEventTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ActivitiesEventTableViewCell", for: indexPath) as! ActivitiesEventTableViewCell
         
-        cell.username.text = self.activities[indexPath.row].username == user.username ? "You" : self.activities[indexPath.row].username
-        cell.content.text = self.activities[indexPath.row].content
-        cell.extra.text = self.activities[indexPath.row].extra
-        cell.picture.image = UIImage(named: self.activities[indexPath.row].pictureAsset)!
+        cell.activity = self.activities[indexPath.row]
         
         return cell
-        
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.activities.count
     }
 }

@@ -87,21 +87,7 @@ extension ManageAdminEvent: UICollectionViewDataSource {
             tmp = self.resultResearch
         }
         
-        cell.userName.text = tmp[indexPath.item].nickname
-        cell.pictureUser.load.request(with: tmp[indexPath.item].picture, onCompletion: { image, error, operation in
-            if (cell.pictureUser.image?.size == nil) {
-                cell.pictureUser.image = UIImage(named: "emptyPicture")
-            }
-            MakeElementRounded().makeElementRounded(cell.pictureUser, newSize: cell.pictureUser.frame.width)
-        })
-        
-        if (tmp[indexPath.item].owner) {
-            cell.backgroundColor = ColorSounity.orangeSounity
-        } else if (tmp[indexPath.item].admin) {
-            cell.backgroundColor = ColorSounity.navigationBarColor
-        } else {
-            cell.backgroundColor = UIColor.lightGray
-        }
+        cell.user = tmp[indexPath.row]
         
         return cell
     }
@@ -133,6 +119,9 @@ extension ManageAdminEvent {
 
 //MARK: Action on users
 extension ManageAdminEvent {
+    /// Remove admin attribute to a user
+    ///
+    /// - Parameter user: user selected [UserBasicInfo]
     func removeAdminFromEvent(_ user: UserBasicInfo) {
         let idUserToRemove = user.id
         
@@ -165,6 +154,10 @@ extension ManageAdminEvent {
         }
     }
     
+    /// Add admin attribute to a user
+    ///
+    /// - Parameter user: user selected [UserBasicInfo]
+
     func addAdminToEvent(_ user: UserBasicInfo) {
         let idUserToRemove = user.id
         
@@ -197,6 +190,9 @@ extension ManageAdminEvent {
         }
     }
     
+    /// Options that are showed when user clicks on a user
+    ///
+    /// - Parameter userInfo: <#userInfo description#>
     func showOptionsUser(userInfo: UserBasicInfo) {
         let optionMenu = UIAlertController(title: nil, message: userInfo.nickname, preferredStyle: .actionSheet)
         
@@ -235,6 +231,10 @@ extension ManageAdminEvent {
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ManageAdminEvent.searchResultFromString(_:)), userInfo: searchText, repeats: false)
     }
+    
+    /// Search function for the user according to their name
+    ///
+    /// - Parameter timer: timer in order to avoid maing research at every character changed
     func searchResultFromString(_ timer: Timer) {
         self.textSearchBox = timer.userInfo! as! String
         
@@ -288,29 +288,11 @@ extension ManageAdminEvent {
     }
 }
 
-//MARK: AdminInfoClass 
-extension ManageAdminEvent {
-    class UserBasicInfo {
-        var nickname: String
-        var picture: String
-
-        var id: Int
-
-        var owner: Bool
-        var admin: Bool
-        
-        init(_nickname: String, _id: Int, _picture: String, _owner: Bool, _admin: Bool) {
-            self.nickname = _nickname
-            self.id = _id
-            self.picture = _picture
-            self.owner = _owner
-            self.admin = _admin
-        }
-    }
-}
-
 //MARK: Initialisation functions
 extension ManageAdminEvent {
+    /// Get info of a specific event in order to get the owner and the admins of an event
+    ///
+    /// - Parameter idEvent: id of the event
     func loadFromIdEvent(_ idEvent: Int) {
         let api = SounityAPI()
         let parameters = [ "id": idEvent ]
