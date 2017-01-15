@@ -142,8 +142,15 @@ extension SearchMusicEventController {
                             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                             let myDate = dateFormatter.string(from: NSDate() as Date)
                             
-                            svc.playlist.insert(MusicPlaylistEvent(_id: datasList["id"].intValue, _apiId: datasList["apiId"].intValue, _artist: self.resultResearch[indexPath.row].artist, _title: self.resultResearch[indexPath.row].title, _url: self.resultResearch[indexPath.row].streamLink, _cover: self.resultResearch[indexPath.row].cover, _duration: Double(self.resultResearch[indexPath.row].duration), _addedBy: self.user.username, _addedAt: myDate, _like: 1, _dislike: 0, _liked: true, _disliked: false), at: datasList["newPos"].intValue)
-                            svc.tableview.reloadData()
+                            if (svc.playlist.count >= datasList["newPos"].intValue) {
+                                print("Insert at [\(datasList["newPos"].intValue)] whereas playlist contains [\(svc.playlist.count)]")
+                                svc.playlist.insert(MusicPlaylistEvent(_id: datasList["id"].intValue, _apiId: datasList["apiId"].intValue, _artist: self.resultResearch[indexPath.row].artist, _title: self.resultResearch[indexPath.row].title, _url: self.resultResearch[indexPath.row].streamLink, _cover: self.resultResearch[indexPath.row].cover, _duration: Double(self.resultResearch[indexPath.row].duration), _addedBy: self.user.username, _addedAt: myDate, _like: 1, _dislike: 0, _liked: true, _disliked: false), at: datasList["newPos"].intValue)
+                                svc.tableview.reloadData()
+                            } else {
+                                print("Insert at [\(datasList["newPos"].intValue)] whereas playlist contains [\(svc.playlist.count)]")
+                                let controllerEvent = self.parent?.parent as! EventController
+                                controllerEvent.reloadEvent()
+                            }
                             
                         } else {
                             for elem in svc.playlist {

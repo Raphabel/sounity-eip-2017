@@ -88,33 +88,30 @@
                                             </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="125" id="S87-uU-0ag"/>
-                                            <constraint firstAttribute="width" constant="125" id="tWR-As-5Bg"/>
+                                            <constraint firstAttribute="height" constant="125" id="SnL-L4-dbV"/>
+                                            <constraint firstAttribute="width" constant="125" id="kYJ-dL-hbw"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="Cwf-1W-5wF" firstAttribute="leading" secondItem="swa-pc-wK0" secondAttribute="leading" constant="125" id="03Z-Ig-iNs"/>
                                     <constraint firstItem="jXm-ai-tQe" firstAttribute="leading" secondItem="swa-pc-wK0" secondAttribute="leadingMargin" id="0xf-ne-CZF"/>
                                     <constraint firstItem="UQy-KH-1ab" firstAttribute="leading" secondItem="swa-pc-wK0" secondAttribute="leading" id="1up-17-cEJ"/>
                                     <constraint firstItem="ghb-Ws-UWc" firstAttribute="leading" secondItem="jXm-ai-tQe" secondAttribute="leading" id="2Az-Sb-hfr"/>
                                     <constraint firstItem="ghb-Ws-UWc" firstAttribute="trailing" secondItem="jXm-ai-tQe" secondAttribute="trailing" id="39H-Yx-a3R"/>
-                                    <constraint firstAttribute="bottom" secondItem="Cwf-1W-5wF" secondAttribute="bottom" constant="37" id="4uy-Ti-R3j"/>
-                                    <constraint firstItem="jXm-ai-tQe" firstAttribute="centerX" secondItem="Cwf-1W-5wF" secondAttribute="centerX" id="5Af-Oi-Nuu"/>
                                     <constraint firstAttribute="bottom" secondItem="UQy-KH-1ab" secondAttribute="bottom" id="Af2-k3-gqO"/>
                                     <constraint firstItem="13p-6S-7np" firstAttribute="bottom" secondItem="swa-pc-wK0" secondAttribute="bottomMargin" id="JRB-mC-iU8"/>
+                                    <constraint firstItem="Cwf-1W-5wF" firstAttribute="top" secondItem="ghb-Ws-UWc" secondAttribute="bottom" constant="8" symbolic="YES" id="L8l-dG-9jf"/>
                                     <constraint firstItem="ghb-Ws-UWc" firstAttribute="trailing" secondItem="13p-6S-7np" secondAttribute="trailing" id="N4S-Hs-PJt"/>
                                     <constraint firstAttribute="trailing" secondItem="UQy-KH-1ab" secondAttribute="trailing" id="QIK-Go-d4Z"/>
-                                    <constraint firstItem="13p-6S-7np" firstAttribute="leading" secondItem="Cwf-1W-5wF" secondAttribute="trailing" constant="67" id="aBx-Ne-8HX"/>
                                     <constraint firstItem="UQy-KH-1ab" firstAttribute="top" secondItem="swa-pc-wK0" secondAttribute="top" constant="-8" id="c3v-w8-Dud"/>
                                     <constraint firstItem="jXm-ai-tQe" firstAttribute="firstBaseline" secondItem="ghb-Ws-UWc" secondAttribute="firstBaseline" id="cUN-FU-eQL"/>
-                                    <constraint firstItem="UQy-KH-1ab" firstAttribute="centerX" secondItem="Cwf-1W-5wF" secondAttribute="centerX" id="rv8-jX-l97"/>
+                                    <constraint firstItem="Cwf-1W-5wF" firstAttribute="centerX" secondItem="ghb-Ws-UWc" secondAttribute="centerX" id="gUf-w5-Dgj"/>
+                                    <constraint firstItem="Cwf-1W-5wF" firstAttribute="top" secondItem="swa-pc-wK0" secondAttribute="top" constant="56" id="vMU-Vy-1bi"/>
                                     <constraint firstItem="13p-6S-7np" firstAttribute="top" secondItem="swa-pc-wK0" secondAttribute="top" constant="160" id="vc1-QM-OFQ"/>
                                     <constraint firstItem="ghb-Ws-UWc" firstAttribute="top" secondItem="swa-pc-wK0" secondAttribute="topMargin" id="x3Y-E5-TYF"/>
+                                    <constraint firstItem="Cwf-1W-5wF" firstAttribute="centerX" secondItem="UQy-KH-1ab" secondAttribute="centerX" id="yAV-cL-uat"/>
                                     <constraint firstItem="jXm-ai-tQe" firstAttribute="baseline" secondItem="ghb-Ws-UWc" secondAttribute="baseline" constant="-9.5" id="yD5-2p-XfN"/>
-                                    <constraint firstItem="UQy-KH-1ab" firstAttribute="centerY" secondItem="Cwf-1W-5wF" secondAttribute="centerY" constant="-13.5" id="yWJ-f7-gMy"/>
-                                    <constraint firstItem="Cwf-1W-5wF" firstAttribute="top" secondItem="jXm-ai-tQe" secondAttribute="bottom" constant="18" id="z3L-Gg-RL0"/>
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jre-2Y-czr">

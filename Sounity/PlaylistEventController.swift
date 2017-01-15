@@ -101,6 +101,7 @@ extension PlaylistEventController {
     
     /// send a socket event:join in order to get all the information related to the event 
     func getPlaylistEvent () {
+        print("getPlaylistEvent")
         SocketIOManager.sharedInstance.connectToEventWithToken(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
                 if !(datasList.null != nil) {
@@ -109,6 +110,7 @@ extension PlaylistEventController {
                         alert.openAlertConfirmationWithCallbackNoOption(self.getBackHomePage)
                         return
                     } else {
+                        print(datasList)
                         SocketIOManager.sharedInstance.setCurrentTransactionId(idTransactionReceived: datasList["transactionId"].intValue)
                         self.playlist.removeAll()
                         for (_,subJson):(String, JSON) in datasList["musics"] {
@@ -132,6 +134,7 @@ extension PlaylistEventController {
     ///   - apiId: apiId of the music that should be removed
     func removeMusicInPlaylistById(_ idMusic: Int, apiId: Int) {
         if (self.playlist.count > 0 && self.playlist[0].id == idMusic && self.playlist[0].apiId == apiId) {
+            print("removeMusicInPlaylistById -> \(self.playlist[0].title)")
             self.playlist.remove(at: 0)
         }
         self.tableview.reloadData()
@@ -144,6 +147,8 @@ extension PlaylistEventController {
     ///   - _apiId: api id of the music where the datas changed
     ///   - _newPosition: the new position where the music changed should be
     func sortPlaylistEvent (_ _idMusic: Int, _apiId: Int, _newPosition: Int) {
+        print("sortPlaylistEvent [idMusic -> \(_idMusic)] [_apiId -> \(_apiId)] [_newPosition -> \(_newPosition)]")
+        
         var musicToMove: MusicPlaylistEvent?
         var indexMusicToMove: Int?
         
@@ -156,7 +161,14 @@ extension PlaylistEventController {
         if (indexMusicToMove < self.playlist.count) {
             self.playlist.remove(at: indexMusicToMove!)
         }
-        self.playlist.insert(musicToMove!, at: (_newPosition))
+        if (self.playlist.count >= _newPosition) {
+            print("Move music [title -> \(musicToMove)] from position[\(indexMusicToMove)] to [\(_newPosition)]")
+            self.playlist.insert(musicToMove!, at: (_newPosition))
+        } else {
+            print("Insert at [\(_newPosition)] whereas playlist contains [\(self.playlist.count)]")
+            let controllerEvent = self.parent?.parent as! EventController
+            controllerEvent.reloadEvent()
+        }
     }
 }
 
@@ -312,7 +324,14 @@ extension PlaylistEventController {
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                 let myDate = dateFormatter.string(from: NSDate() as Date)
                 
-                self.playlist.insert(MusicPlaylistEvent(_id: subJson["id"].intValue, _apiId: subJson["apiId"].intValue, _artist: subJson["artist"].stringValue, _title: subJson["title"].stringValue, _url: subJson["url"].stringValue, _cover: subJson["cover"].stringValue, _duration: subJson["duration"].doubleValue, _addedBy: subJson["nickname"].stringValue, _addedAt: myDate, _like: 1, _dislike: 0, _liked: false, _disliked: false), at: subJson["newPos"].intValue)
+                if (self.playlist.count >= subJson["newPos"].intValue) {
+                    print("Insert at [\(subJson["newPos"].intValue)] whereas playlist contains [\(self.playlist.count)]")
+                    self.playlist.insert(MusicPlaylistEvent(_id: subJson["id"].intValue, _apiId: subJson["apiId"].intValue, _artist: subJson["artist"].stringValue, _title: subJson["title"].stringValue, _url: subJson["url"].stringValue, _cover: subJson["cover"].stringValue, _duration: subJson["duration"].doubleValue, _addedBy: subJson["nickname"].stringValue, _addedAt: myDate, _like: 1, _dislike: 0, _liked: false, _disliked: false), at: subJson["newPos"].intValue)
+                } else {
+                    print("Insert at [\(subJson["newPos"].intValue)] whereas playlist contains [\(self.playlist.count)]")
+                    let controllerEvent = self.parent?.parent as! EventController
+                    controllerEvent.reloadEvent()
+                }
                 
                 self.addNewBadgeOnTabBar(EventController.TABITEM.playlist)
                 self.tableview.reloadData()

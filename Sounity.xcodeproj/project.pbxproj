@@ -127,7 +127,6 @@
 		54FFF2DF1DF4A15F00E6DA7B /* ImageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FFF2DE1DF4A15F00E6DA7B /* ImageRow.swift */; };
 		54FFF2E11DF4A8AA00E6DA7B /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FFF2E01DF4A8AA00E6DA7B /* ImagePickerController.swift */; };
 		719928C2FAD9CC50E7D848D5 /* Pods_SounityUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5558511B18F8CF8F439A9664 /* Pods_SounityUITests.framework */; };
-		80BEB7B99826BA78E140E1D6 /* Pods_Sounity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCA80301D72D78FFD541F54A /* Pods_Sounity.framework */; };
 		D1DC4001D499455995BA7BDF /* Pods_SounityTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EE5351374C238F5A787B1D1 /* Pods_SounityTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -288,7 +287,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80BEB7B99826BA78E140E1D6 /* Pods_Sounity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1455,7 +1453,7 @@
 				DEVELOPMENT_TEAM = CU3VFVSKVK;
 				INFOPLIST_FILE = Sounity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sounity.Sounity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eip.Sounity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1469,7 +1467,7 @@
 				DEVELOPMENT_TEAM = CU3VFVSKVK;
 				INFOPLIST_FILE = Sounity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sounity.Sounity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eip.Sounity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

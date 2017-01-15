@@ -34,6 +34,7 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     var playerItem:AVPlayerItem?
     var player:AVPlayer?
     var trackPlayed: SounityTrackResearch!
+    var loading: Bool = false
     
     // Infos user connected variable
     var user = UserConnect()
@@ -82,6 +83,8 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        self.reloadEvent()
+
         if (!user.checkUserConnected() && self.isViewLoaded) {
             DispatchQueue.main.async(execute: { () -> Void in
                 let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Authentication", bundle: nil)
@@ -100,11 +103,6 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    // Allow to handle the stop a AVPlayerItem when this last one has finished
-    override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
     
     // Segue that show the setting's event page
@@ -132,8 +130,8 @@ class EventController: UIViewController, InteractivePlayerViewDelegate {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "rate" {
             if let rate = change?[NSKeyValueChangeKey.newKey] as? Float {
-                if rate == 0.0 { /*print("playback stopped")*/ }
-                if rate == 1.0 { /*print("normal playback")*/ }
+                if rate == 0.0 { print("music has been stopped") }
+                if rate == 1.0 { print("music has been played") }
                 if rate == -1.0 { /*print("reverse playback")*/ }
             }
         }
@@ -209,6 +207,8 @@ extension EventController: UITableViewDelegate, UITableViewDataSource {
     
     /// Get all the playlist of the current user in order to eventually add one or few of them to the event
     func getUserOwnPlaylists() {
+        print("getUserOwnPlaylists")
+
         let api = SounityAPI()
         let url = api.getRoute(SounityAPI.ROUTES.CREATE_USER) + "/" + "\(user.id)/playlists"
         let headers = [ "Authorization": "Bearer \(user.token)", "Content-Type": "application/x-www-form-urlencoded"]
@@ -269,6 +269,7 @@ extension EventController: UITableViewDelegate, UITableViewDataSource {
 extension EventController {
     /// Allows to initialise the entire player available for the event's owner
     func initPlayer() {
+        print("initPlayer")
         self.InteractivePView!.delegate = self
         self.InteractivePView.progress = 120
         self.InteractivePView.isUserInteractionEnabled = true
@@ -314,6 +315,7 @@ extension EventController {
     ///
     /// - Parameter myNotification: notification element set during page loading
     func finishedPlaying(_ myNotification:Notification) {
+        print("finishedPlaying")
         self.InteractivePView.stop()
         self.playButton.isHidden = false
         self.pauseButton.isHidden = true
@@ -329,6 +331,7 @@ extension EventController {
     
     /// Allows to reload the event by making a event:joined
     func reloadEvent() {
+        print("reloadEvent")
         if (self.player != nil) {
             self.InteractivePView.stop()
             self.playButton.isHidden = false
@@ -467,6 +470,11 @@ extension EventController {
     
     /// send socket event:next
     func sendNextMusicToUsersEvent() {
+        if (self.loading) {
+            print("Block because loading")
+            return
+        }
+        
         SocketIOManager.sharedInstance.nextMusicInEvent(datas: ["eventId": self.idEventSent as AnyObject, "token": self.user.token as AnyObject], completionHandler: { (datasList) -> Void in
             DispatchQueue.main.async(execute: { () -> Void in
                 if !(datasList.null != nil) {
@@ -513,6 +521,7 @@ extension EventController {
                     } else {
                         self.trackPlayed = SounityTrackResearch(_jsonResponse: jsonResponse, _music_provider: MusicProvider.sharedInstance.getNameMusicProviderById(infoMusic["apiId"].intValue), _apiId: infoMusic["apiId"].intValue)
                         
+                        print("setMediaPlayerFromEventJoin -> \(self.trackPlayed.title)")
                         self.titleMusic.text = self.trackPlayed.title
                         self.typeMusic.text = self.trackPlayed.artist
                         if (self.trackPlayed.cover.isEmpty) {
@@ -544,7 +553,10 @@ extension EventController {
                             self.player?.isMuted = true
                         }
                         
+                        /// Make observable in order to keep an eye on the music status
+                        NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
                         self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
+
                         if (statusMusic == "PLAY") {
                             if (self.owner) {
                                 self.InteractivePView.restartWithProgress(duration: self.trackPlayed.preview ? 30 : self.trackPlayed.duration, _progress: Double(timeMusic / 1000), _play: true) // Music Time
@@ -553,7 +565,7 @@ extension EventController {
                             self.pauseButton.isHidden = false
                             
                             self.player?.play()
-                        } else if (statusMusic == "PAUSE") {
+                        } else {
                             if (self.owner) {
                                 self.InteractivePView.restartWithProgress(duration: self.trackPlayed.preview ? 30 : self.trackPlayed.duration, _progress: Double(timeMusic / 1000), _play: false) // Music Time
                             }
@@ -575,6 +587,7 @@ extension EventController {
     ///   - apiId: id api of the music [Deezer | Soundcloud]
     ///   - time: time where the music is supposed to play first
     func gatherDataMusicAndPlay(_ idMusic: String, apiId: Int, time: Int64) {
+        self.loading = true
         Alamofire.request(MusicProvider.sharedInstance.getUrlTrackByMusicProvider(idMusic, _apiId: apiId), method: .get)
             .validate(statusCode: 200..<501)
             .validate(contentType: ["application/json"])
@@ -589,6 +602,8 @@ extension EventController {
                         self.pauseButton.isHidden = false
                         
                         self.trackPlayed = SounityTrackResearch(_jsonResponse: jsonResponse, _music_provider: MusicProvider.sharedInstance.getNameMusicProviderById(apiId), _apiId: apiId)
+                        
+                        print("gatherDataMusicAndPlay -> \(self.trackPlayed.title)")
                         
                         self.titleMusic.text = self.trackPlayed.title
                         self.typeMusic.text = self.trackPlayed.artist
@@ -624,7 +639,8 @@ extension EventController {
                             self.player?.isMuted = true
                         }
                         
-                        self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
+                        NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
+                        //self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
                         self.player?.play()
                         
                         if (self.trackPlayed.idTrack >= 0) {
@@ -634,6 +650,7 @@ extension EventController {
                             svc.removeMusicInPlaylistById(Int(idMusic)!, apiId: apiId)
                         }
                     }
+                    self.loading = false
                 }
         }
     }

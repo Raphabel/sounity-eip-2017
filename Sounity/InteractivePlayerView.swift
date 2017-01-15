@@ -482,16 +482,20 @@ class InteractivePlayerView : UIView {
     }
     
     func restartWithProgress(duration : Double){
+        print("restartWithProgress")
         progress = duration
         self.resetAnimationCircle()
         Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(InteractivePlayerView.start), userInfo: nil, repeats: false)
     }
     
     func restartWithProgress(duration : Double, _progress: Double, _play: Bool){
+        print("restart Interactive Media Player")
         progress = duration
         self.duration = _progress
         if (_play) {
-            Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(InteractivePlayerView.start), userInfo: nil, repeats: false)
+            self.stopTimer()
+            self.startTimer()
+            //Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(InteractivePlayerView.start), userInfo: nil, repeats: false)
         } else {
             let totalDuration = Int(self.duration)
             let min = totalDuration / 60

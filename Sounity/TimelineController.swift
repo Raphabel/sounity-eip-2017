@@ -10,8 +10,10 @@ import Alamofire
 import SwiftyJSON
 import GuillotineMenu
 import SwiftMoment
+import PullToRefresh
+import StatefulViewController
 
-class TimelineController: UIViewController {
+class TimelineController: UIViewController, StatefulViewController {
     
     // MARK: Infos user connected
     var user = UserConnect()
@@ -43,10 +45,25 @@ class TimelineController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        GetTimelineUser()
+        loadingView = LoadingView(_view: self.collectionView)
+        setupInitialViewState()
+        
+        newfeeds.removeAll()
+        collectionView.reloadData()
+        
+        self.GetTimelineUser()
+    }
+    
+    deinit {
+        self.collectionView.removePullToRefresh(collectionView.topPullToRefresh!)
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        let refresher = PullToRefresh()
+        collectionView.addPullToRefresh(refresher) {
+            self.GetTimelineUser()
+        }
+        
         if (!user.checkUserConnected() && self.isViewLoaded) {
             DispatchQueue.main.async(execute: { () -> Void in
                 let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Authentication", bundle: nil)
@@ -145,6 +162,8 @@ extension TimelineController {
         let parameters: [String : AnyObject] = ["id": user.id as AnyObject, "minDate": minDate.date.iso8601 as AnyObject]
         
         self.loading = true
+        self.startLoading()
+
         Alamofire.request(url, method: .get, parameters : parameters, headers : headers)
             .validate(statusCode: 200..<501)
             .validate(contentType: ["application/json"])
@@ -177,9 +196,16 @@ extension TimelineController {
                             }
                         }
                         self.collectionView?.reloadData()
+                        self.collectionView.endRefreshing(at: Position.top)
                         self.loading = false
                     }
                 }
+                else {
+                    self.newfeeds.removeAll();
+                    self.collectionView.endRefreshing(at: Position.top)
+                    self.collectionView.reloadData()
+                }
+                self.endLoading()
         }
     }
 }

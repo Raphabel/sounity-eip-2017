@@ -67,13 +67,6 @@ extension UserSettingsViewController {
         let url = api.getRoute(SounityAPI.ROUTES.CHECK_NICKNAME)
         let parameters : Parameters = ["nickname": nickname as AnyObject ]
         
-        let semaphore = DispatchSemaphore(value: 1)
-        
-        let watchdogTime = DispatchTime.now() + DispatchTimeInterval.milliseconds(100)
-        if case DispatchTimeoutResult.timedOut = semaphore.wait(timeout: watchdogTime) {
-            print("Semaphore blocking app")
-        }
-        
         Alamofire.request(url, method: .post, parameters: parameters, headers : headers)
             .validate(statusCode: 200..<499)
             .validate(contentType: ["application/json"])
@@ -83,7 +76,6 @@ extension UserSettingsViewController {
                 } else {
                     self.checkNickname = true
                 }
-                semaphore.signal()
         }
         
         return self.checkNickname
@@ -292,8 +284,8 @@ extension UserSettingsViewController {
             +++ Section()
             <<< TextAreaRow("description") {
                 $0.placeholder = "Description"
-                $0.value = self.user.descriptionUser
-                $0.textAreaHeight = .dynamic(initialTextViewHeight: 50)
+                $0.value = user.descriptionUser
+                $0.textAreaHeight = .dynamic(initialTextViewHeight: 40)
             }
             +++ Section()
             
