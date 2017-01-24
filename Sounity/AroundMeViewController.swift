@@ -61,6 +61,8 @@ class AroundMeViewController: UIViewController {
         }
         else {
             print("Location service disabled");
+            let alert = DisplayAlert(title: "Location Service", message: "Location service disabled")
+            alert.openAlertError()
         }
         
         self.setFloatingButton()
