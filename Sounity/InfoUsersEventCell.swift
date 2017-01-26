@@ -25,12 +25,17 @@ class InfoUsersEventCell: UICollectionViewCell {
         backgroundView?.backgroundColor = UIColor.white
         
         nickname.text = user.nickname
-        picture.load.request(with: user.picture, onCompletion: { image, error, operation in
-            if (self.picture.image?.size == nil) {
-                self.picture.image = UIImage(named: "emptyPicture")
-            }
+        if (user.nickname == "sounity") {
+            self.picture.image = UIImage(named: "defaultCoverIPV")
             MakeElementRounded().makeElementRounded(self.picture, newSize: self.picture.frame.width)
-        })
+        } else {
+            picture.load.request(with: user.picture, onCompletion: { image, error, operation in
+                if (self.picture.image?.size == nil) {
+                    self.picture.image = UIImage(named: "emptyPicture")
+                }
+                MakeElementRounded().makeElementRounded(self.picture, newSize: self.picture.frame.width)
+            })
+        }
         
         if (user.adminMode) {
             if (user.owner) {
