@@ -144,12 +144,12 @@ extension TimelineController: UICollectionViewDelegate, UICollectionViewDataSour
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    /*func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) && self.loading == false) {
             self.minDate = self.minDate.subtract(1, TimeUnit.Weeks)
             self.GetTimelineUser()
         }
-    }
+    }*/
 }
 
 // MARK: Get Timeline of users
