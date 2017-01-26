@@ -281,7 +281,8 @@ extension EventSearchController: QRCodeReaderViewControllerDelegate {
         reader.stopScanning()
         
         self.dismiss(animated: true) { [weak self] in
-            let idEventScanned = Int(result.value)
+            print(result.value)
+            let idEventScanned = Int(result.value.replacingOccurrences(of: "sounity-", with: ""))
             self!.getEventInfoById(idEventScanned!)
         }
     }

@@ -263,6 +263,30 @@ extension EventController: UITableViewDelegate, UITableViewDataSource {
             
         }
     }
+    
+    /// Function call to launch sounity smart salon
+    @IBAction func askMusicToSounitySmartSalon(_ sender: AnyObject) {
+        let api = SounityAPI()
+        let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
+        let parameters : [String : AnyObject] = ["id": 0 as AnyObject]
+        
+        Alamofire.request(api.getRoute(SounityAPI.ROUTES.SMART) + "/" + "\(self.idEventSent)" + "/" + "start", method: .post, parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<500)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response in
+                if let apiResponse = response.result.value {
+                    let jsonResponse = JSON(apiResponse)
+                    if ((response.response?.statusCode)! == 400) {
+                        let alert = DisplayAlert(title: "Sounity smart salon", message: jsonResponse["message"].stringValue)
+                        alert.openAlertError()
+                    }
+                    else {
+                        let alert = DisplayAlert(title: "Sounity smart salon", message: jsonResponse["message"].stringValue)
+                        alert.openAlertSuccess()
+                    }
+                }
+        }
+    }
 }
 
 // MARK: Media player functions

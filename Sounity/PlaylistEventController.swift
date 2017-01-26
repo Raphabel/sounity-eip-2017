@@ -150,25 +150,22 @@ extension PlaylistEventController {
         print("sortPlaylistEvent [idMusic -> \(_idMusic)] [_apiId -> \(_apiId)] [_newPosition -> \(_newPosition)]")
         
         var musicToMove: MusicPlaylistEvent?
-        var indexMusicToMove: Int?
         
         for (index, music) in self.playlist.enumerated() {
             if (music.id == _idMusic && music.apiId == _apiId) {
                 musicToMove = music
-                indexMusicToMove = index
+                
+                print("Remove music from playlist at position[\(index)]")
+                self.playlist.remove(at: index)
+                print("Move music [title -> \(musicToMove)] from position[\(index)] to [\(_newPosition)]")
+                self.playlist.insert(musicToMove!, at: (_newPosition))
+
+                return
             }
         }
-        if (indexMusicToMove < self.playlist.count) {
-            self.playlist.remove(at: indexMusicToMove!)
-        }
-        if (self.playlist.count >= _newPosition) {
-            print("Move music [title -> \(musicToMove)] from position[\(indexMusicToMove)] to [\(_newPosition)]")
-            self.playlist.insert(musicToMove!, at: (_newPosition))
-        } else {
-            print("Insert at [\(_newPosition)] whereas playlist contains [\(self.playlist.count)]")
-            let controllerEvent = self.parent?.parent as! EventController
-            controllerEvent.reloadEvent()
-        }
+        print("Insert at [\(_newPosition)] whereas playlist contains [\(self.playlist.count)]")
+        let controllerEvent = self.parent?.parent as! EventController
+        controllerEvent.reloadEvent()
     }
 }
 

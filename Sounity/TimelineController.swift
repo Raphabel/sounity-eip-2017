@@ -115,14 +115,21 @@ extension TimelineController: UICollectionViewDelegate, UICollectionViewDataSour
                 vc.idEventSent = self.newfeeds[indexPath.row].eventInfo!.id
                 let navController = UINavigationController.init(rootViewController: vc)
                 self.present(navController, animated: true, completion: nil)
-            } else if (self.newfeeds[indexPath.row].followerInfo != nil || self.newfeeds[indexPath.row].user.id != self.user.id) {
+            } else if ((self.newfeeds[indexPath.row].followerInfo != nil && self.newfeeds[indexPath.row].followerInfo?.id! != self.user.id) || (self.newfeeds[indexPath.row].followerInfo == nil && self.newfeeds[indexPath.row].user.id != self.user.id)) {
                 let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
                 let vc = eventStoryBoard.instantiateViewController(withIdentifier: "ProfileViewID") as! ConsultProfileController
                 
-                vc.IDUserConsulted = self.newfeeds[indexPath.row].user.id
-                vc.nicknameUserConsulted = self.newfeeds[indexPath.row].user.nickname
-                vc.descriptionUserConsulted = self.newfeeds[indexPath.row].user.description
-                vc.pictureUserConsulted = self.newfeeds[indexPath.row].user.picture
+                if (self.newfeeds[indexPath.row].followerInfo != nil) {
+                    vc.IDUserConsulted = self.newfeeds[indexPath.row].followerInfo?.id
+                    vc.nicknameUserConsulted = self.newfeeds[indexPath.row].followerInfo?.nickname
+                    vc.descriptionUserConsulted = ""
+                    vc.pictureUserConsulted = self.newfeeds[indexPath.row].followerInfo?.picture
+                } else {
+                    vc.IDUserConsulted = self.newfeeds[indexPath.row].user.id
+                    vc.nicknameUserConsulted = self.newfeeds[indexPath.row].user.nickname
+                    vc.descriptionUserConsulted = self.newfeeds[indexPath.row].user.description
+                    vc.pictureUserConsulted = self.newfeeds[indexPath.row].user.picture
+                }
                 
                 let navController = UINavigationController.init(rootViewController: vc)
                 self.present(navController, animated: true, completion: nil)
@@ -144,12 +151,12 @@ extension TimelineController: UICollectionViewDelegate, UICollectionViewDataSour
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    /*func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) && self.loading == false) {
             self.minDate = self.minDate.subtract(1, TimeUnit.Weeks)
             self.GetTimelineUser()
         }
-    }
+    }*/
 }
 
 // MARK: Get Timeline of users

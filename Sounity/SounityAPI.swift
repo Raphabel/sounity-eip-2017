@@ -26,6 +26,7 @@ class SounityAPI {
         case PROVIDERS_MUSIC = "/musicProviders"
         case TIMELINE = "/newsfeed"
         case TROPHIES = "/trophies/"
+        case SMART = "/smart"
     }
     
     enum SOCKET: String {
@@ -57,6 +58,6 @@ class SounityAPI {
     }
     
     func getRoute(_ route: ROUTES) -> String {
-        return ("\(API.DEMO.rawValue)\(route.rawValue)");
+        return ("\(API.DEV.rawValue)\(route.rawValue)");
     }
 }
