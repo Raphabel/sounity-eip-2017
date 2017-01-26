@@ -50,10 +50,13 @@ class ChatMessageTableCell: UITableViewCell {
             nicknameOwn.text = "You"
             timeOwn.text = moment(message.time)?.format("EEE, HH:mm")
             messageOwn.text = message.message
-            if (message.picture != "" && Reachability.isConnectedToNetwork() == true) {
+            pictureOwnUser.image = UIImage(named: "UnknownUserCover")
+            
+            // Useless memory request
+            /*if (message.picture != "" && Reachability.isConnectedToNetwork() == true) {
                 pictureOwnUser.load.request(with: message.picture)
                 MakeElementRounded().makeElementRounded(pictureOwnUser, newSize: pictureOwnUser.frame.width)
-            }
+            }*/
         } else {
             viewOtherUser.isHidden = false
             viewOwnUser.isHidden = true
@@ -61,10 +64,13 @@ class ChatMessageTableCell: UITableViewCell {
             nicknameOther.text = user.username == message.nickname ? "You" : message.nickname
             timeOther.text = moment(message.time)?.format("EEE, HH:mm")
             messageOther.text = message.message
-            if (message.picture != "" && Reachability.isConnectedToNetwork() == true) {
+            pictureOtherUser.image = UIImage(named: "UnknownUserCover")
+            
+            // Useless memory request
+            /*if (message.picture != "" && Reachability.isConnectedToNetwork() == true) {
                 pictureOtherUser.load.request(with: message.picture)
                 MakeElementRounded().makeElementRounded(pictureOtherUser, newSize: pictureOtherUser.frame.width)
-            }
+            }*/
         }
 
     }

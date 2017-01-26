@@ -92,18 +92,27 @@ extension ChangeSettingsEventController {
     func stopEvent () {
         let api = SounityAPI()
         let headers = [ "Authorization": "Bearer \(user.token)", "Accept": "application/json"]
-        Alamofire.request((api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT) + String(self.idEventSent) + "/stop"), method: .post, headers: headers)
+        let url: String = "\(api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT))\(self.idEventSent)/stop"
+            
+        Alamofire.request(url, method: .post, headers: headers)
             .validate(statusCode: 200..<501)
             .validate(contentType: ["application/json"])
             .responseJSON { response in
                 if let apiResponse = response.result.value {
                     let jsonResponse = JSON(apiResponse)
                     if ((response.response?.statusCode)! != 200) {
+                        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+                        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
+                        self.present(vc, animated: true, completion: nil)
+                        
                         let alert = DisplayAlert(title: "Stop Event", message: jsonResponse["message"].stringValue)
                         alert.openAlertError()
                     }
                     else {
-                        self.dismiss(animated: true, completion: nil)
+                        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+                        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
+                        self.present(vc, animated: true, completion: nil)
+                        
                         let alert = DisplayAlert(title: "Stop Event", message: jsonResponse["message"].stringValue)
                         alert.openAlertSuccess()
                     }
@@ -115,10 +124,9 @@ extension ChangeSettingsEventController {
     func deleteEvent() {
         let api = SounityAPI()
         let headers = [ "Authorization": "Bearer \(self.user.token)", "Accept": "application/json"]
-        let parameters: Parameters = [ "id": self.idEventSent as AnyObject ]
+        let url: String = "\(api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT))\(self.idEventSent)"
         
-        Alamofire.request(
-            api.getRoute(SounityAPI.ROUTES.GET_INFO_EVENT), method: .delete, parameters: parameters, headers: headers)
+        Alamofire.request(url, method: .delete, headers: headers)
             .validate(statusCode: 200..<501)
             .validate(contentType: ["application/json"])
             .responseJSON { response in
@@ -129,7 +137,10 @@ extension ChangeSettingsEventController {
                         alert.openAlertError()
                     }
                     else {
-                        self.dismiss(animated: true, completion: nil)
+                        let eventStoryBoard: UIStoryboard = UIStoryboard(name: "Search", bundle: nil)
+                        let vc = eventStoryBoard.instantiateViewController(withIdentifier: "HomeViewID") as! HomeController
+                        self.present(vc, animated: true, completion: nil)
+                        
                         let alert = DisplayAlert(title: "Delete Event", message: "Your event has been deleted.")
                         alert.openAlertSuccess()
                     }
