@@ -340,15 +340,15 @@ extension EventController {
     /// - Parameter myNotification: notification element set during page loading
     func finishedPlaying(_ myNotification:Notification) {
         print("finishedPlaying")
-        self.InteractivePView.stop()
-        self.playButton.isHidden = false
-        self.pauseButton.isHidden = true
-        
-        if (self.player != nil) {
-            self.player!.pause();
-        }
-        
         if (owner) {
+            self.InteractivePView.stop()
+            self.playButton.isHidden = false
+            self.pauseButton.isHidden = true
+            
+            if (self.player != nil) {
+                self.player!.pause();
+            }
+            
             self.sendNextMusicToUsersEvent()
         }
     }
@@ -563,41 +563,38 @@ extension EventController {
                             }
                         }
                         
-                        self.playerItem = AVPlayerItem( url:NSURL( string:self.trackPlayed.streamLink )! as URL )
-                        self.player = AVPlayer(playerItem:self.playerItem!)
-                        
-                        let playerLayer=AVPlayerLayer(player: self.player)
-                        playerLayer.frame=CGRect(0, 0, 300, 50)
-                        self.view.layer.addSublayer(playerLayer)
-                        
-                        let timeToSeek: CMTime = CMTimeMake((timeMusic / 1000), 1)
-                        self.playerItem!.seek(to: timeToSeek)
-                        
-                        if (self.owner == false) {
-                            self.player?.isMuted = true
+                        if (self.owner) {
+                            self.playerItem = AVPlayerItem( url:NSURL( string:self.trackPlayed.streamLink )! as URL )
+                            self.player = AVPlayer(playerItem:self.playerItem!)
+                            
+                            let playerLayer=AVPlayerLayer(player: self.player)
+                            playerLayer.frame=CGRect(0, 0, 300, 50)
+                            self.view.layer.addSublayer(playerLayer)
+                            
+                            let timeToSeek: CMTime = CMTimeMake((timeMusic / 1000), 1)
+                            self.playerItem!.seek(to: timeToSeek)
+                            
+                            /// Make observable in order to keep an eye on the music status
+                            NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
+                            self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
                         }
-                        
-                        /// Make observable in order to keep an eye on the music status
-                        NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
-                        self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
 
                         if (statusMusic == "PLAY") {
                             if (self.owner) {
                                 self.InteractivePView.restartWithProgress(duration: self.trackPlayed.preview ? 30 : self.trackPlayed.duration, _progress: Double(timeMusic / 1000), _play: true) // Music Time
+                                self.player?.play()
                             }
                             self.playButton.isHidden = true
                             self.pauseButton.isHidden = false
                             
-                            self.player?.play()
                         } else {
                             if (self.owner) {
                                 self.InteractivePView.restartWithProgress(duration: self.trackPlayed.preview ? 30 : self.trackPlayed.duration, _progress: Double(timeMusic / 1000), _play: false) // Music Time
+                                self.player?.pause()
                             }
                             self.InteractivePView.stop()
                             self.playButton.isHidden = false
                             self.pauseButton.isHidden = true
-                            
-                            self.player?.pause()
                         }
                     }
                 }
@@ -646,26 +643,23 @@ extension EventController {
                             }
                         }
                         
-                        self.playerItem = AVPlayerItem( url:NSURL( string:self.trackPlayed.streamLink )! as URL )
-                        self.player = AVPlayer(playerItem:self.playerItem!)
-                        
-                        let playerLayer=AVPlayerLayer(player: self.player)
-                        playerLayer.frame=CGRect(0, 0, 300, 50)
-                        self.view.layer.addSublayer(playerLayer)
-                        
                         if (self.owner) {
+                            self.playerItem = AVPlayerItem( url:NSURL( string:self.trackPlayed.streamLink )! as URL )
+                            self.player = AVPlayer(playerItem:self.playerItem!)
+                            
+                            let playerLayer=AVPlayerLayer(player: self.player)
+                            playerLayer.frame=CGRect(0, 0, 300, 50)
+                            self.view.layer.addSublayer(playerLayer)
+                            
+                            let timeToSeek: CMTime = CMTimeMake((time / 1000), 1)
+                            self.playerItem!.seek(to: timeToSeek)
+                            
+                            NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
+                            //self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
+                            self.player?.play()
+                            
                             self.InteractivePView.restartWithProgress(duration: self.trackPlayed.preview ? 30 : self.trackPlayed.duration, _progress: Double(time / 1000), _play: true) // Music Time
                         }
-                        let timeToSeek: CMTime = CMTimeMake((time / 1000), 1)
-                        self.playerItem!.seek(to: timeToSeek)
-                        
-                        if (self.owner == false) {
-                            self.player?.isMuted = true
-                        }
-                        
-                        NotificationCenter.default.addObserver(self, selector: #selector(EventController.finishedPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
-                        //self.player!.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
-                        self.player?.play()
                         
                         if (self.trackPlayed.idTrack >= 0) {
                             let tabBar = self.childViewControllers[0] as! UITabBarController

@@ -58,6 +58,6 @@ class SounityAPI {
     }
     
     func getRoute(_ route: ROUTES) -> String {
-        return ("\(API.DEV.rawValue)\(route.rawValue)");
+        return ("\(API.DEMO.rawValue)\(route.rawValue)");
     }
 }

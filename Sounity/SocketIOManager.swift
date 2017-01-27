@@ -12,7 +12,7 @@ import SwiftyJSON
 class SocketIOManager: NSObject {
     
     static let sharedInstance = SocketIOManager()
-    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: SounityAPI.API.DEV.rawValue)! as URL)
+    var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: SounityAPI.API.DEMO.rawValue)! as URL)
     
     var idLastTransaction: Int = 0
     
@@ -36,6 +36,7 @@ class SocketIOManager: NSObject {
     
     func setCurrentTransactionId(idTransactionReceived: Int) {
         self.idLastTransaction = idTransactionReceived
+        print("id last transaction on joined -> \(idLastTransaction)")
     }
     
     func registerNewTransaction(idTransactionReceived: Int) -> Bool {
