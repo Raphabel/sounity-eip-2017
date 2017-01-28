@@ -47,7 +47,7 @@ class PlaylistEventController: UIViewController, UITableViewDelegate, DZNEmptyDa
         self.listenNewMusicAddedSocket()
         self.listenNewJoined()
         self.listenMusicLiked()
-        self.listenBanSocket()
+        // self.listenBanSocket()
         self.listenBannedSocket()
         self.listenLeftSocket()
         self.listenStopSocket()
